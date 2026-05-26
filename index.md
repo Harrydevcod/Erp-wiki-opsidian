@@ -25,15 +25,21 @@ This is the navigation layer for the second brain. Read this file first before a
 
 ### Sources
 
-No sources ingested yet.
+- [[2026-05-26 - Captura Raw e Docs]] - Consolidated capture of `raw/` and `docs/` source folders, including NOVA-ERP product docs and fiscal/Cegid Primavera documents.
 
 ### Entities
 
-No entity pages yet.
+- [[Cegid Primavera]] - ERP reference corpus for fiscal, accounting, treasury, logistics, HR, asset and extensibility workflows.
+- [[DNRE]] - Cabo Verde tax authority context behind invoice and electronic invoice materials.
+- [[Supabase]] - Backend platform for NOVA-ERP: PostgreSQL, Auth, RLS, storage and Edge Functions.
 
 ### Concepts
 
-No concept pages yet.
+- [[ERP SaaS Multi-Tenant]] - Tenant-isolated ERP SaaS architecture model for NOVA-ERP.
+- [[Fiscalidade Cabo Verde]] - Tax/compliance domain for IVA, invoices, declarations, e-Fatura and SAF-T CV.
+- [[e-Fatura Cabo Verde]] - Electronic invoice domain and DNRE integration context.
+- [[SAF-T CV]] - Cabo Verde fiscal audit/export reporting domain.
+- [[Supabase Deployment]] - Deployment and runtime process for the Supabase backend stack.
 
 ### Syntheses
 
@@ -45,7 +51,7 @@ No filed answers yet.
 
 ### Projects
 
-No project pages yet.
+- [[NOVA-ERP]] - Modern multi-tenant ERP SaaS for Cabo Verde with fiscal compliance and future AI layer.
 
 ### People
 
@@ -53,11 +59,11 @@ No people pages yet.
 
 ### Places
 
-No place pages yet.
+- [[Cabo Verde]] - Primary jurisdiction and market context for NOVA-ERP.
 
 ### Maps
 
-No map pages yet.
+- [[Mapa de Fontes - NOVA-ERP e Fiscalidade]] - Source map connecting product, architecture, fiscal and ERP reference materials.
 
 ### Contradictions
 
@@ -65,6 +71,8 @@ No contradiction notes yet.
 
 ## Maintenance Queue
 
-- Ingest the first source from `raw/inbox/`.
-- Decide whether this wiki should start with a personal, business, research, or mixed ontology.
-- Add domain-specific tags after the first three ingests reveal recurring structure.
+- Deep-ingest `raw/assets/SSD/PRD.MD` as the canonical product source.
+- Deep-ingest `raw/assets/SSD/SSD.md` and reconcile it against the PRD.
+- Deep-ingest the e-Fatura technical manual before implementation decisions.
+- Verify current Cabo Verde fiscal rules before treating old fiscal documents as implementation authority.
+- Deduplicate the two Cegid Primavera fiscalidade decks.
