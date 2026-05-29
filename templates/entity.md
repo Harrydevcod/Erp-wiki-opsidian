@@ -16,6 +16,10 @@ confidence: medium
 
 One-paragraph current understanding.
 
+## Role In NOVA-ERP
+
+Why this entity matters to the product, compliance model, architecture or source corpus.
+
 ## Known Facts
 
 - Fact:
@@ -33,6 +37,12 @@ One-paragraph current understanding.
   Event:
   Source:
 
+## Authority And Interfaces
+
+- Authority:
+- Interface/API:
+- Operational dependency:
+
 ## Contradictions Or Tensions
 
 - None identified yet.
@@ -40,4 +50,3 @@ One-paragraph current understanding.
 ## Open Questions
 
 - Question:
-

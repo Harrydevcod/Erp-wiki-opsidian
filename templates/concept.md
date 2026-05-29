@@ -19,11 +19,28 @@ Define the concept in one clear paragraph.
 
 Explain what the wiki currently believes about this concept.
 
+## Source Basis
+
+- Source:
+
 ## Evidence
 
 - Evidence:
   Source:
   Confidence:
+
+## Implementation Implications
+
+- Product:
+- Architecture:
+- Data model:
+- Security/audit:
+- Compliance:
+
+## Uncertainty Register
+
+- Uncertainty:
+- Evidence needed:
 
 ## Related Pages
 
@@ -32,4 +49,3 @@ Explain what the wiki currently believes about this concept.
 ## Open Questions
 
 - Question:
-

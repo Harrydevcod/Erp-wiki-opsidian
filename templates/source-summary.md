@@ -15,9 +15,21 @@ confidence: medium
 
 # Source Title
 
+## Source Role
+
+Why this source matters for [[NOVA-ERP]].
+
 ## Summary
 
 Write the durable summary here.
+
+## Authority And Currency
+
+- Authority level:
+- Date/currency:
+- Compliance sensitivity:
+- Supersedes:
+- Superseded by:
 
 ## Key Claims
 
@@ -25,9 +37,17 @@ Write the durable summary here.
   Evidence:
   Confidence:
 
-## Important Details
+## Implementation-Relevant Details
 
 - Detail:
+
+## Domain Implications
+
+- Product:
+- Architecture:
+- Security/audit:
+- Data model:
+- UX/workflow:
 
 ## Entities Mentioned
 
@@ -41,7 +61,11 @@ Write the durable summary here.
 
 - None identified yet.
 
+## Legal/Fiscal Uncertainty
+
+- Uncertainty:
+- Evidence needed:
+
 ## Follow-up Questions
 
 - Question:
-

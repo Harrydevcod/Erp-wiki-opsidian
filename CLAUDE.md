@@ -1,14 +1,37 @@
-# LLM Wiki Operating Schema
+# NOVA-ERP Cabo Verde Wiki Operating Schema
 
-This file is the primary operating contract for this vault. Any LLM agent working here must treat the vault as a persistent, compounding second brain: raw sources are immutable evidence, and the wiki is the maintained knowledge layer built from them.
+This file is the primary operating contract for this vault. Any LLM agent working here must treat the vault as the persistent product, domain and engineering memory for [[NOVA-ERP]]: raw sources are immutable evidence, and the wiki is the maintained knowledge layer used to design, build and audit an ERP SaaS for Cabo Verde.
 
 ## Mission
 
-Maintain a personal knowledge base where knowledge compounds over time.
+Maintain a compounding knowledge base for the NOVA-ERP project.
 
-The agent does not merely answer from raw documents. The agent reads sources, extracts durable knowledge, updates interlinked markdown pages, records contradictions, maintains indexes, and files valuable answers back into the wiki.
+The agent does not merely answer from raw documents. The agent reads product specs, fiscal documents, ERP references and implementation notes; extracts durable knowledge; updates interlinked markdown pages; records contradictions; maintains indexes; and files valuable decisions back into the wiki.
 
-The human curates sources, asks questions, and directs emphasis. The agent does the maintenance work.
+The human is the founder/CTO and sets product direction, architectural judgment and quality bar. The agent maintains the knowledge system, writes synthesis, preserves evidence and turns scattered material into operational clarity.
+
+## Project Identity
+
+The vault is dedicated to [[NOVA-ERP]], a modern multi-tenant ERP SaaS for Cabo Verde with native fiscal compliance, electronic invoicing, SAF-T CV readiness, accounting, treasury, inventory, HR/payroll, assets, subscriptions, dashboards and future AI assistance.
+
+The wiki must help answer practical build questions:
+
+- What should NOVA-ERP do?
+- Why should it do it that way?
+- Which Cabo Verde fiscal or operational evidence supports the decision?
+- Which legacy ERP behavior is useful reference, and which should not be copied?
+- What is uncertain, outdated, legally sensitive or implementation-blocking?
+
+## Domain Priority
+
+When maintaining or querying this vault, prioritize knowledge in this order:
+
+1. Product direction for [[NOVA-ERP]].
+2. Cabo Verde fiscal compliance: [[Fiscalidade Cabo Verde]], [[e-Fatura Cabo Verde]], [[SAF-T CV]], DNRE, invoice rules and IVA.
+3. Core ERP operating modules: sales, purchases, inventory, treasury, accounting, HR/payroll and assets.
+4. SaaS platform architecture: tenancy, auth, permissions, auditability, billing/subscriptions and deployment.
+5. UX and workflow quality that lets NOVA-ERP surpass legacy ERP systems.
+6. Future extensions: AI assistant, analytics, multi-country expansion and integrations.
 
 ## Non-negotiable Principles
 
@@ -21,6 +44,9 @@ The human curates sources, asks questions, and directs emphasis. The agent does 
 7. Prefer durable synthesis over transient summaries.
 8. Keep the system operable with plain files, Obsidian, shell search, and git. Add tools only when the wiki outgrows the simple workflow.
 9. Maintain the highest standard: clear structure, strong reasoning, explicit uncertainty, and no lazy bookkeeping.
+10. Never treat a legacy ERP training flow as target architecture without first translating it into a NOVA-ERP design rationale.
+11. Never treat old fiscal material as current law without marking the need for verification against current Cabo Verde authority.
+12. Security, auditability, tenant isolation and fiscal correctness are design constraints, not later cleanup tasks.
 
 ## Directory Contract
 
@@ -52,6 +78,20 @@ CLAUDE.md         Primary schema and operating contract.
 AGENTS.md         Codex bridge back to this contract.
 ```
 
+## NOVA-ERP Knowledge Architecture
+
+Use this domain taxonomy when creating or updating pages:
+
+- `wiki/projects/` - product direction, milestones, architecture decisions and implementation plans for NOVA-ERP.
+- `wiki/concepts/` - fiscal, technical and ERP domain concepts such as tenancy, e-Fatura, SAF-T CV, payroll processing and inventory valuation.
+- `wiki/entities/` - institutions, vendors, systems and authorities such as DNRE, Supabase and Cegid Primavera.
+- `wiki/syntheses/` - cross-source decisions, module designs and reconciliations between PRD, SSD, backlog and fiscal references.
+- `wiki/questions/` - durable answers to questions asked during product and engineering work.
+- `wiki/maps/` - navigation maps, module maps, source maps and knowledge architecture.
+- `wiki/contradictions/` - stale legal assumptions, conflicting source claims, unresolved implementation tensions and superseded decisions.
+
+Root-level notes should be entry points only. Durable generated knowledge belongs under `wiki/` unless the root note already exists as an Obsidian navigation page.
+
 ## Required Startup Ritual For Every Interaction
 
 At the beginning of every task in this vault:
@@ -66,6 +106,10 @@ At the beginning of every task in this vault:
    - `schema`
    - `tooling`
    - `chat-only`
+   - `product-design`
+   - `architecture`
+   - `compliance`
+   - `module-design`
 4. Search or inspect relevant files before answering or editing.
 5. Decide whether the interaction should update the wiki.
 6. If the wiki changes, update `index.md` and append `log.md`.
@@ -189,6 +233,17 @@ Use one of these citation forms:
 When a source has not yet been summarized into a source page, cite the raw path and create the source page during ingestion.
 
 Never present an inference as if it were directly stated in a source.
+
+## Evidence Hierarchy For NOVA-ERP
+
+Use the strongest available evidence for each claim:
+
+1. Current Cabo Verde law, DNRE guidance or official technical manuals for compliance-sensitive claims.
+2. NOVA-ERP source documents: PRD, SSD, backlog, implementation prompt, database and deployment docs.
+3. Cegid Primavera and other ERP training material as workflow/domain reference.
+4. Agent synthesis, clearly marked as inference.
+
+If a claim affects taxes, invoices, SAF-T, payroll deductions, legal retention, certification, signatures or regulatory reporting, mark it as requiring current legal verification unless the cited source is current and authoritative.
 
 ## Ingest Workflow
 
@@ -348,6 +403,18 @@ Use this order:
 
 Prefer `rg` for search when available.
 
+## Module Design Workflow
+
+When asked about an ERP module such as invoicing, inventory, accounting, treasury, HR/payroll or assets:
+
+1. Read `index.md` and the relevant module/concept pages.
+2. Search PRD, SSD and backlog for module intent.
+3. Search fiscal/legal docs if compliance is involved.
+4. Search Cegid Primavera material for legacy workflow reference.
+5. Produce a NOVA-ERP design synthesis instead of copying a legacy flow.
+6. Record assumptions, required entities, core workflows, integration points, edge cases, audit needs, open questions and source citations.
+7. Update the relevant module page, `index.md` and `log.md`.
+
 ## Page Quality Bar
 
 A good page has:
@@ -424,15 +491,13 @@ Ask questions only when:
 
 Otherwise, use judgment and continue.
 
-## Current Initial State
+## Current Project State
 
-This vault has been initialized as an LLM Wiki on 2026-05-26.
+This vault has been initialized and adapted as the NOVA-ERP Cabo Verde knowledge base on 2026-05-26.
 
-No sources have been ingested yet.
+The first source capture exists and identifies the primary corpus:
 
-The next best action is to place the first source in `raw/inbox/` and ask:
+- NOVA-ERP PRD, SSD, backlog and implementation/deployment notes in `raw/assets/`.
+- Cabo Verde fiscal, invoice, e-Fatura, accounting, treasury, inventory, payroll and Cegid Primavera reference material in `docs/docsfiscal/`.
 
-```text
-Ingest the source in raw/inbox/<filename>.
-```
-
+The next best action is to deep-ingest the canonical product and compliance sources, starting with `raw/assets/SSD/PRD.MD`, `raw/assets/SSD/SSD.md` and the e-Fatura technical manual.

@@ -4,8 +4,8 @@ status: active
 created: 2026-05-26
 updated: 2026-05-26
 tags: [nova-erp, erp, saas, cabo-verde, fiscalidade]
-sources: ["raw/assets/SSD/PRD.MD", "raw/assets/SSD/SSD.md", "raw/assets/SSD/PROMPT.MD", "raw/assets/SSD/Backlog Estruturado — NOVA-ERP.MD", "raw/assets/SSD/BACKLOG SCRUM — NOVA-ERP.MD", "raw/assets/DATABASE_ER_DIAGRAM.md", "raw/assets/SUBSCRIPTION_ARCHITECTURE.md", "raw/assets/SUPABASE_DEPLOY.md"]
-related: ["[[ERP SaaS Multi-Tenant]]", "[[Fiscalidade Cabo Verde]]", "[[e-Fatura Cabo Verde]]", "[[Supabase Deployment]]"]
+sources: ["[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "raw/assets/SSD/PROMPT.MD", "raw/assets/SSD/BACKLOG SCRUM — NOVA-ERP.MD", "raw/assets/DATABASE_ER_DIAGRAM.md", "raw/assets/SUBSCRIPTION_ARCHITECTURE.md", "raw/assets/SUPABASE_DEPLOY.md"]
+related: ["[[ERP SaaS Multi-Tenant]]", "[[Fiscalidade Cabo Verde]]", "[[e-Fatura Cabo Verde]]", "[[Supabase Deployment]]", "[[NOVA-ERP Product Authority Synthesis]]", "[[NOVA-ERP Module Priority Map]]"]
 confidence: high
 ---
 
@@ -15,7 +15,7 @@ confidence: high
 
 NOVA-ERP is a planned modern ERP SaaS for Cabo Verde, designed as a multi-tenant platform with native fiscal compliance, electronic invoicing, DNRE/e-Fatura integration, SAF-T CV readiness, operational modules, dashboards, auditability and future AI assistance.
 
-Source: `raw/assets/SSD/PRD.MD`
+Source: [[2026-05-26 - PRD NOVA-ERP]]
 
 ## Product Thesis
 
@@ -57,6 +57,13 @@ The product aims to compete with or replace systems such as Primavera, PHC, Odoo
 - Deployment: Supabase project link, `db push`, secrets and Edge Function deploy.
 
 Sources: `raw/assets/LOCAL_SETUP.md`, `raw/assets/SUPABASE_DEPLOY.md`, `raw/assets/DATABASE_ER_DIAGRAM.md`
+
+## Canonical Product Authority
+
+- [[2026-05-26 - PRD NOVA-ERP]] defines product identity, scope, MVP intent and roadmap.
+- [[2026-05-26 - SSD NOVA-ERP]] defines implementation requirements and module contracts before code.
+- [[2026-05-26 - Backlog Estruturado NOVA-ERP]] defines execution epics, stories and acceptance criteria.
+- [[NOVA-ERP Product Authority Synthesis]] reconciles the three.
 
 ## MVP Priority
 
