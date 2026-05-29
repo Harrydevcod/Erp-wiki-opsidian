@@ -4,9 +4,9 @@ status: active
 created: 2026-05-29
 updated: 2026-05-29
 tags: [contradiction, fiscalidade, irps, payroll, needs-review, open-question]
-sources: ["[[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]"]
+sources: ["[[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]]", "[[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]"]
 related: ["[[Processamento de Salarios ERP]]", "[[Fiscalidade Cabo Verde]]", "[[2026-05-29 - Schema Decision - Payroll Runs and Payslips]]"]
-confidence: low
+confidence: medium
 ---
 
 # Contradiction - IRPS Category A Withholding Brackets
@@ -33,18 +33,24 @@ Source: [Rivermate — Taxes in Cabo Verde](https://rivermate.com/guides/cabo-ve
 - Position B's source self-flags as unconfirmed; Position A is a consultancy summary, not the statute text.
 - Neither is the **official DNRE withholding table/formula**, which is the operative authority for monthly retention.
 
+## Position C — official IUR-2013 scale (primary source)
+
+The official [[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]] (Boletim Oficial, primary law) gives the exact withholding scale on taxable income for the **IUR regime**: marginal rates **11.67% / 15.56% / 21.39% / 27.22% / 35%** across five brackets (up to 408.843$ / …/ over 2.580.490$), each with a `parcela a abater` (0 / 15.904$ / 66.051$ / 166.347$ / 367.109$), plus a separate `α` family-charges coefficient table and a 35% monthly cap. IUR-2013 monthly withholding starts above 30.701$.
+
+This **resolves the scale for the IUR era** and shows Positions A and B were both inaccurate. Caveat: **IUR was replaced by IRPS** (Lei nº 78/VIII/2014); Portaria 5/2013 may have been superseded by an IRPS-era withholding portaria.
+
 ## Current best interpretation
 
-Treat both as **non-authoritative orientation**. For NOVA-ERP, IRPS Category A withholding must be implemented as a **rule-versioned, source-linked table/formula** ([[2026-05-29 - Schema Decision - Payroll Runs and Payslips]]) populated from the **official DNRE withholding table or formula**, not from either summary above. The only figure used consistently across sources is the **withholding threshold: annual > 420,000$ / monthly > 35,000$**.
+Use the **IUR-2013 formula and scale from [[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]]** as the source-linked baseline for the [[2026-05-29 - Schema Decision - Payroll Runs and Payslips]] withholding engine, encoded as rule-versioned config. Do **not** treat the 11.67–35% IUR scale as confirmed current IRPS law: obtain the IRPS-era withholding portaria to confirm or replace the rates, the `α`/PA tables, `EF`/`ME`, and the monthly threshold (IUR 30.701$ vs the IRPS-era 35.000$ reported by secondary sources). Discard the earlier Positions A (16.5–27.5%) and B (0–27%) as inaccurate.
 
 ## Confidence
 
-Low. The operative bracket scale is unresolved from current evidence.
+Medium. The scale is now precise for IUR-2013 (primary source); IRPS-era currency is the remaining unknown.
 
 ## What would resolve it
 
-- The current **official DNRE IRPS withholding table and/or retention formula** for the applicable year.
-- The consolidated current text of **Lei nº 78/VIII/2014** with any budget-law (OE) amendments to the IRPS rate scale.
+- The current **IRPS-era withholding portaria** (post-Lei 78/VIII/2014) confirming whether the Portaria 5/2013 IUR scale was carried forward or replaced, with the current `α`/rate/PA tables and the monthly threshold.
+- The current **Mínimo de Existência (ME)** value and any OE-year updates to `EF` (640.000$) and the brackets.
 
 ## Resolution attempt log
 

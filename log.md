@@ -9,6 +9,25 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] ingest | Portaria 5/2013 — primary IUR withholding regulation
+
+- The founder supplied the official `docs/docsfiscal/Portaria nº5 -2013 - Retenção IUR trabalho dependente.pdf` (Boletim Oficial, I Série, 10 Jan 2013); read it directly (machine-readable) and extracted the full withholding model.
+- Captured the exact monthly withholding formula (with income-splitting for single-titular couples), the 5-bracket marginal scale **11.67% / 15.56% / 21.39% / 27.22% / 35%** with parcelas a abater (0 / 15.904$ / 66.051$ / 166.347$ / 367.109$), the `α` family-charges table (5%–10%), `EF = 640.000$`, the 35% monthly cap, autonomous holiday/Christmas subsidy withholding, the 100$ no-withhold floor, and the full Anexo I monthly table (0% up to 30.701$ … 26% above 399.567$).
+- Resolved [[Contradiction - IRPS Category A Withholding Brackets]] for the **IUR era** with primary law (Positions A/B were inaccurate); flagged the open question of whether the IRPS regime (Lei 78/VIII/2014) superseded these rates. Marked IUR→IRPS currency caution throughout.
+- Folded the formula/scale into the Payroll ADR statutory-parameters section as rule-versioned config keyed to Portaria 5/2013.
+- Files created:
+  - `wiki/sources/2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente.md`
+- Files updated:
+  - `wiki/contradictions/Contradiction - IRPS Category A Withholding Brackets.md`
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md`
+  - `wiki/sources/2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Did an IRPS-era portaria (post-2014) replace the Portaria 5/2013 IUR scale, and what are the current rates/α/PA/threshold?
+  - Mínimo de Existência (ME) value and any OE updates to EF/brackets?
+  - Still pending: INPS ceiling, Código Laboral subsidy/overtime formulas, Portaria 42/2015 depreciation rate annex.
+
 ## [2026-05-29] ingest | Cabo Verde payroll and depreciation legal sources
 
 - Researched and ingested current Cabo Verde statutory parameters to unblock the payroll and fixed-assets ADRs (figures from secondary web sources; primary-law verification flagged throughout).

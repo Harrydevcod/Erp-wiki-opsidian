@@ -94,7 +94,7 @@ The financial-core ADRs define document, treasury, inventory and accounting boun
 These seed `payroll_components` / `payroll_component_rules`; each rule carries a `legal_source_ref` and stays rule-versioned so a rate change is config, not code. Figures are from secondary web sources and **require primary-law confirmation** before production (see [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]).
 
 - INPS (general employees): total **24.5%** = **16% employer-charge** + **8.5% employee-deduction**; due by the 15th of the following month; a contribution **ceiling** applies (value to confirm). Self-employed 19.5%; domestic 23% (15%+8%).
-- IRPS Category A: **final withholding** via the official DNRE table/formula; threshold annual **> 420,000$** (monthly **> 35,000$**); employee INPS 8.5% deductible from the IRPS base; bracket scale unresolved — populate from the official DNRE table, never hard-coded (see [[Contradiction - IRPS Category A Withholding Brackets]]).
+- Income-tax withholding: the official primary regulation [[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]] gives the exact **IUR-era** model — monthly formula `I_R = [(V_m·p·N − PA) − α·(ME + EF)]/p` (income-splitting for single-titular couples), a 5-bracket marginal scale **11.67% / 15.56% / 21.39% / 27.22% / 35%** with `parcela a abater` (0 / 15.904$ / 66.051$ / 166.347$ / 367.109$), `α` family-charges table (5%–10%), `EF = 640.000$`, a **35% monthly cap**, autonomous withholding for holiday/Christmas subsidies, and a 100$ no-withhold floor. Encode this as rule-versioned config (`legal_source_ref = Portaria 5/2013`). **Caveat:** IUR was replaced by IRPS (Lei 78/VIII/2014) — confirm/replace rates against the current IRPS-era withholding portaria (see [[Contradiction - IRPS Category A Withholding Brackets]]). Employee INPS 8.5% is deductible from the base; `ME` (Mínimo de Existência) value still to capture.
 - National minimum wage: **17,000$/month** private, **19,000$/month** public administration (from 2025-01-01) — a validation floor, not a deduction.
 - Subsidies/overtime: governed by the Código Laboral; formulas not yet captured — modeled as components awaiting `legal_source_ref`.
 
@@ -139,7 +139,7 @@ Payroll also does not mark payments as settled by itself. It creates treasury pa
 
 ## Open Questions
 
-- Resolved (provisionally): the governing sources are Lei 78/VIII/2014 (IRPS), INPS contribution regulation and the Código Laboral, captured in [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]. Still open: the official DNRE IRPS withholding table/formula, the INPS contribution ceiling value, and statutory subsidy/overtime formulas and required payroll maps.
+- Resolved: the withholding formula and scale are now captured from primary law ([[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]], IUR-era); governing sources are Lei 78/VIII/2014 (IRPS), INPS regulation and the Código Laboral ([[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]). Still open: the current **IRPS-era** withholding portaria (does it supersede Portaria 5/2013?), the `ME` (Mínimo de Existência) value, the INPS contribution ceiling, and statutory subsidy/overtime formulas and required payroll maps.
 - Is minimal payroll in first sellable release, or phase two/three?
 - Which launch roles may view salary data?
 - Should payslips be employee-facing in the first release?
