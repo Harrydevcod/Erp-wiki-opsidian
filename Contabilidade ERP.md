@@ -4,8 +4,8 @@ status: active
 created: 2026-05-26
 updated: 2026-05-28
 tags: [erp-module, contabilidade, fiscalidade, cabo-verde]
-sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Faturacao Eletronica]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "docs/docsfiscal/FPG003 - Using - Contabilidade e Fiscalidade (2022-VC1-PT).pdf", "docs/docsfiscal/FPG032 - Configuring - Financeira (2022-v1.0-PT).pdf"]
-related: ["[[NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Faturacao Eletronica]]", "[[SAF-T CV]]", "[[Tesouraria ERP]]", "[[Inventario ERP]]", "[[Processamento de Salarios ERP]]", "[[Gestao de Ativos ERP]]"]
+sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Faturacao Eletronica]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "[[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]]", "[[2026-05-29 - Codigo do IVA Cabo Verde]]", "docs/docsfiscal/FPG032 - Configuring - Financeira (2022-v1.0-PT).pdf"]
+related: ["[[NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Faturacao Eletronica]]", "[[SAF-T CV]]", "[[Tesouraria ERP]]", "[[Inventario ERP]]", "[[Processamento de Salarios ERP]]", "[[Gestao de Ativos ERP]]", "[[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]]"]
 confidence: medium
 ---
 

@@ -29,6 +29,7 @@ NOVA-ERP models accounting as an **immutable double-entry journal driven by post
 - Compliance source: [[SAF-T CV]] accounting export readiness; Cabo Verde chart-of-accounts (PNC) and IVA maps (current legal verification still required — see [[Fiscalidade Cabo Verde]]).
 - Technical source: [[2026-05-28 - DATABASE ER Diagram Snapshot]] (no real ledger present — accounting is a new build, not an adapt).
 - Inference: the posting-rule-over-events design and projection-based balances are architecture inferences grounded in standard double-entry practice.
+- Legacy workflow reference: [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]] corroborates the spine — chart hierarchy with movement-only posting, posting by integration of upstream module events vs manual direct entries, periodic IVA apuramento, period open/close with year-end result apportionment, and SAF-T (SVAT) audit. It also validates **projection-based balances**: the legacy stored "Acumulados" require a "Reconstrução de Acumulados" step that computed balances eliminate. Legacy editable postings and stored accumulators are rejected.
 
 ## Context
 

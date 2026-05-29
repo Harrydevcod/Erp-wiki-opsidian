@@ -9,6 +9,23 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] ingest | Cegid Contabilidade e Fiscalidade (legacy workflow reference)
+
+- Read the 101-page Cegid Primavera "Contabilidade e Fiscalidade" manual via bounded sandbox extraction and captured the legacy accounting/fiscal workflow.
+- Translated it into a NOVA-ERP adopt/adapt/reject rationale: adopt the chart hierarchy (movement-only posting), integration-driven postings, periodic IVA apuramento, period open/close + year-end result apportionment, and SAF-T (SVAT) audit; adapt stored "Acumulados"/"Reconstrução de Acumulados" → projection-based computed balances (validating the ADR choice); reject editable postings and file-import as the primary path.
+- Linked to the Accounting Ledger ADR (source basis) and upgraded the Contabilidade module page citations to the new source page + the IVA code.
+- Files created:
+  - `wiki/sources/2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference).md`
+- Files updated:
+  - `wiki/syntheses/2026-05-28 - Schema Decision - Accounting Ledger and Posting.md`
+  - `Contabilidade ERP.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Which CV PNC version seeds the default chart and its digit structure?
+  - Which Mapas Legais/Fiscais (Balanço, DR, IVA apuramento, SAF-T) are statutorily required and in what cadence/format?
+  - Year-end Apuramento de Resultados posting rules.
+
 ## [2026-05-29] ingest | Cegid Processamento de Salários (legacy workflow reference)
 
 - Read the 118-page Cegid Primavera payroll training manual via bounded sandbox extraction (TOC/structure, not dumped into context) and captured the legacy workflow.
