@@ -9,6 +9,23 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] ingest | Cegid Processamento de Salários (legacy workflow reference)
+
+- Read the 118-page Cegid Primavera payroll training manual via bounded sandbox extraction (TOC/structure, not dumped into context) and captured the legacy workflow.
+- Translated it into a NOVA-ERP adopt/adapt/reject rationale per the module-design contract: adopt the employee master-data decomposition, batch+individual processing, monthly-variable set, autonomous subsidy runs and retroativos/anulação; adapt anulação→superseding/reversing runs and INPS/IRPS→rule-versioned config; reject UI-editable processed values and legacy fiscal maps as authority.
+- Linked it to the Payroll ADR (source basis) and upgraded the Payroll module page's raw-path citations to the new source page + the CV legal sources.
+- Files created:
+  - `wiki/sources/2021 - Cegid Primavera Processamento de Salarios (Legacy Reference).md`
+- Files updated:
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md`
+  - `Processamento de Salarios ERP.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Which statutory mapas de análise / obrigações fiscais (INPS FOS, IRPS maps) must NOVA-ERP produce?
+  - Subsídio de turno/alimentação: statutory vs discretionary and their tax/INPS treatment?
+  - Annual rollover (abertura de ano): what payroll state carries over?
+
 ## [2026-05-29] ingest | Código do IVA Cabo Verde (primary law)
 
 - Read the 48-page `docs/docsfiscal/Código IVA.pdf` via bounded sandbox text extraction (not dumped into context) and captured its structure and durable rules.

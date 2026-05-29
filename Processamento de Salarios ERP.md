@@ -4,8 +4,8 @@ status: active
 created: 2026-05-26
 updated: 2026-05-29
 tags: [erp-module, rh, payroll, salarios, cabo-verde]
-sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Permissoes e Auditoria ERP]]", "[[Contabilidade ERP]]", "[[Tesouraria ERP]]", "docs/docsfiscal/RPG001 - Using - Processamento de Salários (2021-VC1).pdf", "docs/docsfiscal/Configuring - Recursos Humanos (2023-v1.0-PT).pdf"]
-related: ["[[NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Tesouraria ERP]]", "[[Permissoes e Auditoria ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Dashboards e Relatorios ERP]]"]
+sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Permissoes e Auditoria ERP]]", "[[Contabilidade ERP]]", "[[Tesouraria ERP]]", "[[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]]", "[[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]]", "[[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]"]
+related: ["[[NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Tesouraria ERP]]", "[[Permissoes e Auditoria ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Dashboards e Relatorios ERP]]", "[[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]]"]
 confidence: medium
 schema_decision: "[[2026-05-29 - Schema Decision - Payroll Runs and Payslips]]"
 ---

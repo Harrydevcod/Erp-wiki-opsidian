@@ -30,6 +30,7 @@ NOVA-ERP models payroll as a period-based, privacy-restricted calculation subsys
 - Backlog source: employee records must include personal, fiscal, contractual and payment data; payroll must run by period, calculate remuneration/discounts, generate receipts and block improper reprocessing.
 - Compliance source: Cabo Verde payroll parameters are now captured (provisionally, from secondary web sources) in [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]] — INPS contributions, IRPS withholding and minimum wage. The IRPS bracket scale remains unresolved (see [[Contradiction - IRPS Category A Withholding Brackets]]) and statutory subsidy/overtime formulas are still uncaptured.
 - Technical source: payroll inherits tenant/RLS/audit foundation and posts to accounting only through approved source events.
+- Legacy workflow reference: [[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]] confirms the employee master-data decomposition, batch+individual processing, monthly-variable set, autonomous subsidy runs and retroactives/anulação — adopted as domain coverage, not as architecture (legacy editable/UI patterns rejected in favor of immutable approved runs).
 
 ## Context
 
