@@ -37,7 +37,7 @@ Source: [Rivermate — Taxes in Cabo Verde](https://rivermate.com/guides/cabo-ve
 
 The official [[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]] (Boletim Oficial, primary law) gives the exact withholding scale on taxable income for the **IUR regime**: marginal rates **11.67% / 15.56% / 21.39% / 27.22% / 35%** across five brackets (up to 408.843$ / …/ over 2.580.490$), each with a `parcela a abater` (0 / 15.904$ / 66.051$ / 166.347$ / 367.109$), plus a separate `α` family-charges coefficient table and a 35% monthly cap. IUR-2013 monthly withholding starts above 30.701$.
 
-This **resolves the scale for the IUR era** and shows Positions A and B were both inaccurate. Caveat: **IUR was replaced by IRPS** (Lei nº 78/VIII/2014); Portaria 5/2013 may have been superseded by an IRPS-era withholding portaria.
+This **resolves the scale for the IUR era** and shows Positions A and B were both inaccurate. The earlier [[2008-12-29 - Tabela de Retencao IUR 2009]] corroborates it: identical marginal rates (11.67–35%) with only the brackets/parcelas re-indexed between 2009 and 2013, confirming the rate scale is stable while bands are re-indexed by each year's OE. Caveat: **IUR was replaced by IRPS** (Lei nº 78/VIII/2014); Portaria 5/2013 may have been superseded by an IRPS-era withholding portaria.
 
 ## Current best interpretation
 

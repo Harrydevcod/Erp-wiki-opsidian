@@ -25,7 +25,7 @@ A 2026-05-29 web-research capture of Cabo Verde's fiscal depreciation/amortizati
 - **Default method: quotas constantes** (straight-line) — cost spread equally over the asset's fiscal useful life; the **quotas decrescentes** (declining-balance) method exists as an alternative for eligible assets.
 - **Low-value assets (art. 15º)**: elements subject to wear whose **unit acquisition/production cost does not exceed 20,000$** may be **fully depreciated/amortized in a single tax period**.
 - **Light vehicles (art. 10º)**: depreciation is **not accepted as a cost on the portion of acquisition cost above 4,000,000$00**.
-- **Transition (art. 20º)**: assets acquired **before 1 Jan 2015** keep the old rules/rates (**Portaria 2/84, de 28 de Janeiro**); the new tables apply only to assets acquired **after 1 Jan 2015**.
+- **Transition**: corrected against the primary text in [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]] — art. 19º **revokes Portaria 2/84** outright and art. 20º applies the new portaria to tax periods from 1 Jan 2015; the only date carve-out is that the **declining-balance method** is limited to assets entering service from 1 Jan 2015 (art. 18º). The earlier "pre-2015 assets keep Portaria 2/84" framing below was secondary-commentary and is superseded by the primary source.
 - Per-class rates/useful lives (buildings, equipment, vehicles, furniture, intangibles, etc.) are defined in the **Portaria 42/2015 annex** — **not captured**, obtain from the official text.
 - IRPC nominal base rate: **25%** (context for the accounting/tax boundary).
 
@@ -41,4 +41,4 @@ Evidence: [Fisco Cabo Verde — Nova Portaria de Depreciações e Amortizações
 
 - **Obtain the Portaria 42/2015 annex rate table** (per asset class) from the official Boletim Oficial before configuring depreciation rates.
 - Confirm whether any post-2015 budget law (e.g. OE amendments) altered thresholds/caps; the 20,000$ and 4,000,000$ figures and the 2/84 transition should be re-validated against the current consolidated text.
-- Attempted on 2026-05-29 to extract the per-class rate annex from the [Portaria 42/2015 edited regulation PDF](https://sanchesconsult.files.wordpress.com/2016/06/regulamento-das-depreciac3a7c3a3o-e-amortizac3a7c3a3o-de-elementos-do-activo.pdf) and the [Boletim Oficial copy](https://boe.incv.cv/Bulletins/View?id=26358); both are scanned/compressed PDFs whose tables are non-machine-readable in this environment. The numeric rate/useful-life table requires an OCR or manual pass on the official text.
+- 2026-05-29: the founder supplied the official Boletim Oficial PDF; the full **20 articles are now captured** in [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]]. The only remaining gap is the **per-class rate annex** (the actual percentages by asset type), which is not in that PDF copy and still needs an OCR/manual pass on the annexed table.

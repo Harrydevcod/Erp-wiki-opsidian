@@ -9,6 +9,26 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] ingest | IUR 2009 table + Portaria 42/2015 depreciation (primary law)
+
+- The founder supplied two more official Boletim Oficial PDFs (`Tabela de Retenção IUR - 2009.pdf`, `Portaria nº 42 - 2015 -Depreciações e Amortização.pdf`), both machine-readable; read directly and ingested.
+- IUR 2009: captured Anexo I monthly table (0% to 22.288$ … 26%), Anexo II practical income table (same 11.67/15.56/21.39/27.22/35% rates with 2009 brackets/parcelas), and the 10% own-account/independent withholding (art. 8º). Confirms the IUR marginal scale is stable across 2009→2013 with only brackets/parcelas re-indexed — strong support for the rule-versioned, effective-dated payroll design.
+- Portaria 42/2015: captured all 20 articles — straight-line default, declining-balance coefficients ×1.5/×2/×2.5 with eligibility filter and 2015 cutoff, low-value ≤20.000$ single-period, vehicle/boat/aircraft cost cap 4.000.000$, minimum quota = half, multi-shift +25%/+50%, real-estate construction-only + 25% land split, non-deductible IVA capitalized, intangibles vs non-amortizable goodwill, financial-leasing lessee depreciation.
+- **Correction:** primary text art. 19º **revokes Portaria 2/84** and art. 20º applies from 2015 tax periods — superseding the earlier secondary claim that pre-2015 assets keep Portaria 2/84. Fixed in the secondary depreciation source and the Fixed Assets ADR.
+- Folded precise rules into the Fixed Assets ADR data model; corroborated the IRPS-brackets contradiction with the 2009 source.
+- Files created:
+  - `wiki/sources/2008-12-29 - Tabela de Retencao IUR 2009.md`
+  - `wiki/sources/2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes.md`
+- Files updated:
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Fixed Assets and Depreciation.md`
+  - `wiki/sources/2026-05-29 - Cabo Verde Depreciation and Amortization Sources.md`
+  - `wiki/contradictions/Contradiction - IRPS Category A Withholding Brackets.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Per-asset-class depreciation rate annex (not in the supplied PDF) — still needed to seed rates.
+  - Current IRPS-era withholding portaria vs the IUR scale; Mínimo de Existência; INPS ceiling; Código Laboral subsidy/overtime.
+
 ## [2026-05-29] ingest | Portaria 5/2013 — primary IUR withholding regulation
 
 - The founder supplied the official `docs/docsfiscal/Portaria nº5 -2013 - Retenção IUR trabalho dependente.pdf` (Boletim Oficial, I Série, 10 Jan 2013); read it directly (machine-readable) and extracted the full withholding model.

@@ -28,7 +28,7 @@ NOVA-ERP models fixed assets as a lifecycle register separate from inventory. Pu
 - Product source: PRD requires fixed asset/equipment lifecycle, acquisition, depreciation criteria, plans, classes, revaluation, maintenance, disposal, write-off, casualty/loss, legal maps and accounting integration.
 - Product source: SSD requires parametrizable depreciation plans, complete lifecycle history and accounting integration.
 - Backlog source: asset record must include type, classification, account, depreciation criteria, asset state and lifecycle history; depreciation calculation must follow configured plan and be auditable.
-- Compliance source: Cabo Verde depreciation rules are now captured (provisionally) in [[2026-05-29 - Cabo Verde Depreciation and Amortization Sources]] — Portaria 42/2015 under the IRPC Code. The per-asset-class rate table (Portaria annex) is still uncaptured and must be obtained from the official text.
+- Compliance source: the full primary regulation is captured in [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]] (20 articles, in force for tax periods from 1 Jan 2015, under IRPC art. 43º nº5). Only the per-asset-class rate annex is still uncaptured. Note: this primary text **revokes Portaria 2/84** (art. 19º), correcting the earlier secondary note in [[2026-05-29 - Cabo Verde Depreciation and Amortization Sources]].
 - Technical source: assets inherit tenant/RLS/audit foundation and post to accounting through approved source events.
 
 ## Context
@@ -55,7 +55,8 @@ The current database snapshot has product inventory but no fixed-asset register.
 
 - Entity/table: `asset_depreciation_policies`
   - Key fields: `id`, `tenant_id`, `code`, `method` (`straight_line|declining_balance|low_value_expense|manual|other`), `useful_life_months`, `rate`, `residual_value_rule`, `start_rule`, `cost_cap`, `acquisition_date_rule`, `effective_from`, `effective_to`, `legal_source_ref`, `status`.
-  - Constraints: statutory/tax policies require source references before production claims. Per Cabo Verde (Portaria 42/2015): default `straight_line` (quotas constantes), `declining_balance` (quotas decrescentes) where eligible; `low_value_expense` for unit cost ≤ 20,000$ (single-period write-off); `cost_cap` = 4,000,000$ for light vehicles; `acquisition_date_rule` selects Portaria 42/2015 (acquired after 2015-01-01) vs Portaria 2/84 (before). Rates seed from the Portaria 42/2015 annex (to obtain).
+  - Constraints: statutory/tax policies require source references before production claims. Per [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]]: default `straight_line` (quotas constantes); `declining_balance` (degressivas) optional with coefficient **×1.5 / ×2 / ×2.5** by useful life (<5y / 5–6y / >6y), excluded for used assets, buildings, light/mixed vehicles, furniture and social equipment, and only for assets in service from 2015-01-01 (art. 18º); `low_value_expense` for unit cost ≤ 20,000$ (single-period write-off, art. 15º); `cost_cap` = 4,000,000$ for light vehicles/boats/aircraft (art. 10º); minimum quota = **half** the rate (art. 14º); multi-shift uplift +25%/+50% (art. 7º). Rates seed from the Portaria 42/2015 annex (still to obtain).
+  - Real-estate rule: depreciate **construction value only, not land**; when land value is not stated, attribute **25% of global value** to land (art. 3º). Capitalize non-deductible IVA into the asset base. Intangibles: development-project and limited-life industrial property amortizable; **goodwill (trespasses) not amortizable** by default (art. 13º). Financial leasing: the **lessee** depreciates (art. 11º).
 
 - Entity/table: `asset_depreciation_schedules`
   - Key fields: `id`, `tenant_id`, `asset_id`, `policy_id`, `period_id`, `planned_amount`, `opening_book_value`, `closing_book_value`, `status`.
@@ -131,7 +132,7 @@ Treasury owns supplier payment and disposal proceeds settlement. Asset state sho
 
 ## Open Questions
 
-- Resolved (provisionally): methods (quotas constantes default / decrescentes), the 20,000$ low-value expensing rule, the 4,000,000$ light-vehicle cap and the 2015 transition are captured in [[2026-05-29 - Cabo Verde Depreciation and Amortization Sources]]. Still open: the per-asset-class rate/useful-life table from the Portaria 42/2015 annex, and whether later budget laws changed the thresholds/caps.
+- Resolved (primary law): methods, coefficients, low-value/vehicle/min-quota/multi-shift/real-estate/intangibles/leasing rules are captured from [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]]. Still open: the per-asset-class **rate/useful-life annex** (not in the supplied PDF) and whether later OE laws changed the 20,000$/4,000,000$ thresholds.
 - Should tax depreciation (Portaria limits) and accounting depreciation be tracked as separate schedules per asset?
 - Are assets in first sellable release, or only source-ready for later capitalization?
 - Should purchase documents create draft assets automatically or require manual creation?
