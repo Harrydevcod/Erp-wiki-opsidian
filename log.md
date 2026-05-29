@@ -9,6 +9,19 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] lint | Vault health check (clean) + helper script
+
+- Added `tools/lint.py` and ran a full cross-reference lint: frontmatter, orphans, broken wikilinks, index coverage and un-ingested sources across 85 markdown files.
+- Result: vault is healthy. Index coverage 0 gaps; raw/inbox empty; every maintained `wiki/` page has frontmatter and an inbound link. All flagged frontmatter/orphan items are `raw/assets/*` (immutable sources cited by path) or `templates/*` (not graph nodes) — correct by design. 9 of 11 "broken" links are placeholder examples inside `CLAUDE.md`/templates.
+- Fixed the only real finding: two stale forward-ref wikilinks in [[NOVA-ERP Knowledge Architecture]] (`[[Entidades ERP]]`, `[[Produtos e Servicos ERP]]`) repointed to where that knowledge now lives ([[Compras e Vendas ERP]] entities, [[Inventario ERP]] items).
+- Files created:
+  - `tools/lint.py`
+- Files updated:
+  - `wiki/maps/NOVA-ERP Knowledge Architecture.md`
+  - `log.md`
+- Open questions:
+  - None from lint; standing gaps remain the Supabase artifact validation and payroll/asset legal ingestion.
+
 ## [2026-05-29] maintain | Consolidated downstream permission keys into the catalog
 
 - Closed the loop on the permission catalog: the projects, reporting and AI ADRs each flagged new permission keys that were never folded into the canonical catalog, leaving it incomplete as the single source of truth.

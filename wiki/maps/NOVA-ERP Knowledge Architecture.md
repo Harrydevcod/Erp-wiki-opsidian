@@ -2,7 +2,7 @@
 type: map
 status: active
 created: 2026-05-26
-updated: 2026-05-26
+updated: 2026-05-29
 tags: [map, nova-erp, operating-model, knowledge-architecture]
 sources: ["[[2026-05-26 - Captura Raw e Docs]]", "raw/assets/SSD/PRD.MD", "raw/assets/SSD/SSD.md"]
 related: ["[[NOVA-ERP]]", "[[Mapa de Fontes - NOVA-ERP e Fiscalidade]]", "[[Fiscalidade Cabo Verde]]", "[[ERP SaaS Multi-Tenant]]"]
@@ -63,10 +63,10 @@ Use these module notes as working doors into module-specific synthesis:
 - [[NOVA-ERP Product Authority Synthesis]] - reconciles PRD, SSD and structured backlog into source authority and implementation implications.
 - [[NOVA-ERP Module Priority Map]] - first-pass synthesis of foundation, fiscal/commercial core, accounting/operational depth, SaaS business layer and intelligence layer.
 
-Potential next module pages:
+Cross-cutting domains now absorbed into existing pages rather than standalone modules:
 
-- [[Entidades ERP]]
-- [[Produtos e Servicos ERP]]
+- Entities (customers/suppliers unified as `entities`) - see [[Compras e Vendas ERP]] and [[2026-05-28 - Schema Decision - Commercial and Fiscal Document Core]].
+- Products/services (items, no stored quantity) - see [[Inventario ERP]] and [[2026-05-28 - Schema Decision - Inventory Movements and Valuation]].
 
 ## Evidence Discipline
 
