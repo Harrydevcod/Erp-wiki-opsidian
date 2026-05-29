@@ -9,6 +9,22 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] ingest | Código do IVA Cabo Verde (primary law)
+
+- Read the 48-page `docs/docsfiscal/Código IVA.pdf` via bounded sandbox text extraction (not dumped into context) and captured its structure and durable rules.
+- Key facts: standard rate **15%** (art. 17º); **monthly** periodic self-assessed declaration (art. 37º/23º); deduction with exclusions (art. 20º) and pro-rata partial deduction (art. 22º); invoice issuance obligation (art. 32º) and tax-inclusive retail pricing (art. 35º); three regimes — **normal**, **isenção** (no deduction), and **simplificado** (tax = 5% × sales/services), with volume-de-negócios thresholds set by ministerial despacho (not hard-coded).
+- Implementation impact: tenant IVA regime + rates modeled as versioned config; feeds the accounting `tax_maps` (IVA↔account↔SAF-T), the document-core IVA fields, e-Fatura payloads and a monthly fiscal cadence.
+- Replaced the raw `docs/docsfiscal/Código IVA.pdf` citation in [[Fiscalidade Cabo Verde]] with the new source page.
+- Files created:
+  - `wiki/sources/2026-05-29 - Codigo do IVA Cabo Verde.md`
+- Files updated:
+  - `wiki/concepts/Fiscalidade Cabo Verde.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Current consolidated IVA code identity (law nº) and any OE amendments to the 15%/5% rates and exempt categories?
+  - Current volume-de-negócios thresholds (by despacho) for the isenção/simplificado regimes?
+
 ## [2026-05-29] ingest | IUR 2009 table + Portaria 42/2015 depreciation (primary law)
 
 - The founder supplied two more official Boletim Oficial PDFs (`Tabela de Retenção IUR - 2009.pdf`, `Portaria nº 42 - 2015 -Depreciações e Amortização.pdf`), both machine-readable; read directly and ingested.

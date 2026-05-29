@@ -4,8 +4,8 @@ status: active
 created: 2026-05-26
 updated: 2026-05-28
 tags: [fiscalidade, cabo-verde, iva, compliance]
-sources: ["docs/docsfiscal/Código IVA.pdf", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]", "[[2026-05-28 - Vigencia do Manual de Faturas 2018 apos e-Fatura]]", "[[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]]", "[[2026-05-28 - Pacote XML XSD e-Fatura 2024-05-27]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2026-05-28 - Current Database Snapshot Classification]]", "docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf", "docs/docsfiscal/SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf", "raw/assets/SSD/PRD.MD"]
-related: ["[[NOVA-ERP]]", "[[e-Fatura Cabo Verde]]", "[[Faturacao Eletronica]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "[[SAF-T CV]]", "[[ERP SaaS Multi-Tenant]]", "[[DNRE]]"]
+sources: ["[[2026-05-29 - Codigo do IVA Cabo Verde]]", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]", "[[2026-05-28 - Vigencia do Manual de Faturas 2018 apos e-Fatura]]", "[[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]]", "[[2026-05-28 - Pacote XML XSD e-Fatura 2024-05-27]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2026-05-28 - Current Database Snapshot Classification]]", "docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf", "docs/docsfiscal/SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf", "raw/assets/SSD/PRD.MD"]
+related: ["[[NOVA-ERP]]", "[[e-Fatura Cabo Verde]]", "[[Faturacao Eletronica]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "[[SAF-T CV]]", "[[ERP SaaS Multi-Tenant]]", "[[DNRE]]", "[[2026-05-29 - Codigo do IVA Cabo Verde]]"]
 confidence: medium
 ---
 
