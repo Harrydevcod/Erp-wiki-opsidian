@@ -41,3 +41,4 @@ Evidence: [Fisco Cabo Verde — Nova Portaria de Depreciações e Amortizações
 
 - **Obtain the Portaria 42/2015 annex rate table** (per asset class) from the official Boletim Oficial before configuring depreciation rates.
 - Confirm whether any post-2015 budget law (e.g. OE amendments) altered thresholds/caps; the 20,000$ and 4,000,000$ figures and the 2/84 transition should be re-validated against the current consolidated text.
+- Attempted on 2026-05-29 to extract the per-class rate annex from the [Portaria 42/2015 edited regulation PDF](https://sanchesconsult.files.wordpress.com/2016/06/regulamento-das-depreciac3a7c3a3o-e-amortizac3a7c3a3o-de-elementos-do-activo.pdf) and the [Boletim Oficial copy](https://boe.incv.cv/Bulletins/View?id=26358); both are scanned/compressed PDFs whose tables are non-machine-readable in this environment. The numeric rate/useful-life table requires an OCR or manual pass on the official text.

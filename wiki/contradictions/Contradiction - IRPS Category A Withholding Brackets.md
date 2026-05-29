@@ -45,3 +45,7 @@ Low. The operative bracket scale is unresolved from current evidence.
 
 - The current **official DNRE IRPS withholding table and/or retention formula** for the applicable year.
 - The consolidated current text of **Lei nº 78/VIII/2014** with any budget-law (OE) amendments to the IRPS rate scale.
+
+## Resolution attempt log
+
+- 2026-05-29: fetched the primary Lei 78/VIII/2014 PDF, but it is compressed/non-machine-readable in this environment — the escalão table could not be extracted programmatically. Needs an OCR/manual pass on the official text or the DNRE withholding table.
