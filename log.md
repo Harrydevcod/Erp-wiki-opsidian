@@ -9,6 +9,17 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] maintain | Consolidated downstream permission keys into the catalog
+
+- Closed the loop on the permission catalog: the projects, reporting and AI ADRs each flagged new permission keys that were never folded into the canonical catalog, leaving it incomplete as the single source of truth.
+- Added Projects/dimensions (`project.*`, `dimension.manage`), Reporting (`report.*`, `kpi.manage`, `dashboard.manage`, `reporting.dataset_manage`) and AI (`ai.*`) groups to the catalog seed; added `projects` to the `permission_groups` enum; extended the audit event taxonomy with project, reporting and AI event categories.
+- Files updated:
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Permission Catalog and Audit Taxonomy.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Same as the permission-catalog ADR (launch role mapping for the new keys, second-approver for critical permissions).
+
 ## [2026-05-29] schema | Added AI assistant governance schema decision (module sequence complete)
 
 - Produced the final module ADR, closing the NOVA-ERP module schema-decision sequence. Designed the AI layer as a thin governed consumer that composes the existing reporting/permission/audit/entitlement mechanisms rather than introducing a new privileged path.

@@ -40,7 +40,7 @@ The foundation ADR committed the RBAC *tables* and the RLS *predicate* but delib
 ## Data Model
 
 - Entity/table: `permission_groups`
-  - Key fields: `id`, `key` (`tenant_admin|fiscal_config|fiscal_issue|efatura_ops|efatura_raw|secrets|accounting|treasury|inventory|payroll|assets|subscriptions|audit|reports|ai`), `name`, `risk_level` (`standard|high|critical`), `display_order`.
+  - Key fields: `id`, `key` (`tenant_admin|fiscal_config|fiscal_issue|efatura_ops|efatura_raw|secrets|accounting|treasury|inventory|payroll|assets|subscriptions|projects|reports|ai|audit`), `name`, `risk_level` (`standard|high|critical`), `display_order`.
   - Purpose: organizes the global `permissions` catalog into reviewable risk groups; not tenant-scoped.
 
 - Catalog seed: `permissions` (foundation table) — committed `module.action` keys
@@ -57,6 +57,9 @@ The foundation ADR committed the RBAC *tables* and the RLS *predicate* but delib
   - Payroll: `payroll.employee_view`, `payroll.salary_view`, `payroll.process`, `payroll.approve`, `payroll.payslip_publish`, `payroll.payment_export`.
   - Assets: `assets.manage`, `assets.depreciation_run`, `assets.dispose`.
   - Subscriptions: `saas.subscription_view`, `saas.subscription_manage`, `saas.entitlement_override`, `saas.billing_run`, `saas.invoice_view`.
+  - Projects/dimensions: `project.view`, `project.manage`, `project.allocate`, `project.budget_manage`, `project.budget_approve`, `project.profitability_view`, `project.close`, `dimension.manage` (from [[2026-05-29 - Schema Decision - Project and Analytical Dimensions]]).
+  - Reporting: `report.view`, `report.run`, `report.export`, `report.schedule`, `kpi.manage`, `dashboard.manage`, `reporting.dataset_manage` (from [[2026-05-29 - Schema Decision - Reporting Semantic Layer and Dashboards]]).
+  - AI: `ai.use`, `ai.suggest`, `ai.action_confirm`, `ai.config`, `ai.logs_view` (from [[2026-05-29 - Schema Decision - AI Assistant Governance and Action Boundary]]).
   - Audit: `audit.view`, `audit.export`.
 
 - Entity/table: `user_permission_overrides`
@@ -79,6 +82,9 @@ The foundation ADR committed the RBAC *tables* and the RLS *predicate* but delib
   - Security/RBAC: `tenant.created`, `member.invited`, `member.activated`, `member.role_changed`, `member.disabled`, `permission.override_granted`, `permission.override_revoked`.
   - Fiscal: `fiscal_document.number_assigned`, `fiscal_document.issued`, `fiscal_document.corrective_document_created`, `dfe.payload_generated`, `dfe.validation_completed`, `dfe.transmission_attempted`, `dfe.authorized`, `dfe.rejected`, `dfe.contingency_entered`, `dfe.retry_scheduled`, `efatura.certificate_uploaded`, `efatura.certificate_rotated`, `efatura.middleware_config_changed`.
   - Accounting: `accounting.journal_entry_posted`, `accounting.journal_entry_reversed`, `accounting.posting_rule_changed`, `accounting.tax_profile_changed`, `accounting.period_closed`, `accounting.period_reopened`, `accounting.saft_export_generated`.
+  - Projects: `project.created`, `project.activated`, `project.status_changed`, `project.budget_approved`, `project.budget_revised`, `project.allocation_added`, `project.allocation_removed`, `project.closed`, `project.reopened`.
+  - Reporting: `report.definition_changed`, `kpi.definition_changed`, `report.run_requested`, `report.run_completed`, `report.run_failed`, `report.export_generated`, `report.export_downloaded`, `report.access_denied`, `reporting.dataset_refreshed`.
+  - AI: `ai.prompt_received`, `ai.context_retrieved`, `ai.response_generated`, `ai.suggestion_created`, `ai.suggestion_confirmed`, `ai.tool_call_requested`, `ai.tool_call_blocked`, `ai.tool_call_executed`, `ai.safety_policy_triggered`.
 - Payload rule: events on raw fiscal/secret evidence use `payload_policy = reference` or `hash_only` — `audit_log` links to the immutable evidence row or stores a hash, never copies XML/ZIP/keys/response bodies.
 - Attribution rule: every `service_role`/SECURITY DEFINER/Edge-Function write sets `actor_user_id` to the initiating user and carries a correlation/`job_id`; unattributable system writes are marked `actor_kind = service` explicitly.
 
