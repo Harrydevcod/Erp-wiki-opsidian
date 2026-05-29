@@ -49,3 +49,4 @@ Low. The operative bracket scale is unresolved from current evidence.
 ## Resolution attempt log
 
 - 2026-05-29: fetched the primary Lei 78/VIII/2014 PDF, but it is compressed/non-machine-readable in this environment — the escalão table could not be extracted programmatically. Needs an OCR/manual pass on the official text or the DNRE withholding table.
+- 2026-05-29 (2nd attempt): confirmed the withholding uses a formula `Retenção = (base × taxa) − parcela a abater` with a practical table up to ~68,235$ and formulas above; threshold annual 420,000$ / monthly 35,000$ reconfirmed. Beware: vendus.cv "Tabelas de retenção" is actually **Portugal IRS** (euros, Continente/Regiões), not Cabo Verde — do not use it for CV brackets. The CV `taxa` / `parcela a abater` values per band still require the official DNRE table.
