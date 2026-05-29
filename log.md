@@ -9,6 +9,28 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-29] ingest | Cabo Verde payroll and depreciation legal sources
+
+- Researched and ingested current Cabo Verde statutory parameters to unblock the payroll and fixed-assets ADRs (figures from secondary web sources; primary-law verification flagged throughout).
+- Payroll: INPS 24.5% (16% employer + 8.5% employee; self-employed 19.5%; domestic 23%), due by the 15th, with a contribution ceiling (value to confirm); IRPS Category A final withholding via the official DNRE table/formula, threshold annual >420,000$ (monthly >35,000$), employee INPS deductible; minimum wage 17,000$ private / 19,000$ public from 2025-01-01 (Lei 78/VIII/2014 + Código Laboral + governo.cv).
+- Depreciation: Portaria 42/2015 under IRPC Code art. 43º; quotas constantes default (decrescentes alt), low-value ≤20,000$ single-period expensing, light-vehicle cost cap 4,000,000$, pre-2015 assets keep Portaria 2/84; per-class rate annex still to obtain; IRPC base rate 25%.
+- Preserved the unresolved IRPS bracket scale as a contradiction rather than guessing (16.5%–27.5% vs a wider illustrative 0%–27% table; neither is the official DNRE table).
+- Updated the Payroll ADR (new "Cabo Verde Statutory Parameters" section, source basis, open questions) and the Fixed Assets ADR (depreciation method enum extended with declining_balance/low_value_expense, cost_cap + acquisition_date_rule fields, source basis, open questions).
+- Files created:
+  - `wiki/sources/2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources.md`
+  - `wiki/sources/2026-05-29 - Cabo Verde Depreciation and Amortization Sources.md`
+  - `wiki/contradictions/Contradiction - IRPS Category A Withholding Brackets.md`
+- Files updated:
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md`
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Fixed Assets and Depreciation.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Official DNRE IRPS withholding table/formula and current bracket scale?
+  - INPS contribution ceiling value?
+  - Código Laboral subsidy/overtime formulas and required payroll maps?
+  - Portaria 42/2015 per-asset-class rate/useful-life annex; any post-2015 budget-law changes to thresholds/caps?
+
 ## [2026-05-29] lint | Vault health check (clean) + helper script
 
 - Added `tools/lint.py` and ran a full cross-reference lint: frontmatter, orphans, broken wikilinks, index coverage and un-ingested sources across 85 markdown files.

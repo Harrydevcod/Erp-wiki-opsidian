@@ -28,7 +28,7 @@ NOVA-ERP models payroll as a period-based, privacy-restricted calculation subsys
 - Product source: PRD requires employee records, remuneration, deductions, absences, overtime, subsidies, individual/batch payroll, receipts, payments, maps and accounting integration.
 - Product source: SSD requires a rubric-based payroll engine, country-parametrizable labor rules, sensitive data separated by permissions, remuneration history and sequential period processing.
 - Backlog source: employee records must include personal, fiscal, contractual and payment data; payroll must run by period, calculate remuneration/discounts, generate receipts and block improper reprocessing.
-- Compliance source: current Cabo Verde payroll legal sources are not yet ingested; formulas and statutory reports remain unresolved.
+- Compliance source: Cabo Verde payroll parameters are now captured (provisionally, from secondary web sources) in [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]] — INPS contributions, IRPS withholding and minimum wage. The IRPS bracket scale remains unresolved (see [[Contradiction - IRPS Category A Withholding Brackets]]) and statutory subsidy/overtime formulas are still uncaptured.
 - Technical source: payroll inherits tenant/RLS/audit foundation and posts to accounting only through approved source events.
 
 ## Context
@@ -89,6 +89,15 @@ The financial-core ADRs define document, treasury, inventory and accounting boun
 - Events: `payroll.employee_created`, `payroll.employment_terms_changed`, `payroll.variable_recorded`, `payroll.run_calculated`, `payroll.run_approved`, `payroll.run_cancelled`, `payroll.payslip_generated`, `payroll.payslip_published`, `payroll.payment_batch_created`, `payroll.accounting_event_created`, `payroll.period_closed`, `payroll.period_reopened`.
 - Transition rule: approved payroll is not edited in place; reprocessing creates a new run that supersedes or reverses prior evidence.
 
+## Cabo Verde Statutory Parameters (provisional, source-linked)
+
+These seed `payroll_components` / `payroll_component_rules`; each rule carries a `legal_source_ref` and stays rule-versioned so a rate change is config, not code. Figures are from secondary web sources and **require primary-law confirmation** before production (see [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]).
+
+- INPS (general employees): total **24.5%** = **16% employer-charge** + **8.5% employee-deduction**; due by the 15th of the following month; a contribution **ceiling** applies (value to confirm). Self-employed 19.5%; domestic 23% (15%+8%).
+- IRPS Category A: **final withholding** via the official DNRE table/formula; threshold annual **> 420,000$** (monthly **> 35,000$**); employee INPS 8.5% deductible from the IRPS base; bracket scale unresolved — populate from the official DNRE table, never hard-coded (see [[Contradiction - IRPS Category A Withholding Brackets]]).
+- National minimum wage: **17,000$/month** private, **19,000$/month** public administration (from 2025-01-01) — a validation floor, not a deduction.
+- Subsidies/overtime: governed by the Código Laboral; formulas not yet captured — modeled as components awaiting `legal_source_ref`.
+
 ## Security And Privacy
 
 - Permission keys should separate at least: `payroll.employee_view`, `payroll.salary_view`, `payroll.employee_manage`, `payroll.variable_manage`, `payroll.process`, `payroll.approve`, `payroll.payslip_publish`, `payroll.payment_export`, `payroll.accounting_export`, `payroll.period_manage`.
@@ -130,7 +139,7 @@ Payroll also does not mark payments as settled by itself. It creates treasury pa
 
 ## Open Questions
 
-- Which current Cabo Verde payroll, INPS, tax and labor sources govern statutory deductions and reports?
+- Resolved (provisionally): the governing sources are Lei 78/VIII/2014 (IRPS), INPS contribution regulation and the Código Laboral, captured in [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]]. Still open: the official DNRE IRPS withholding table/formula, the INPS contribution ceiling value, and statutory subsidy/overtime formulas and required payroll maps.
 - Is minimal payroll in first sellable release, or phase two/three?
 - Which launch roles may view salary data?
 - Should payslips be employee-facing in the first release?

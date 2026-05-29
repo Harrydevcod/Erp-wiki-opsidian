@@ -50,6 +50,8 @@ This is the navigation layer for the NOVA-ERP Cabo Verde knowledge base. Read th
 - [[2026-05-28 - Manual de Faturas em Cabo Verde]] - DNRE/SITA orientative guide for invoice issuance, required fields, numbering, rectification, special regimes, transport documents, archival and sanctions.
 - [[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]] - Current official e-Fatura technical manual found on 2026-05-28, superseding v10.0 for schema/API implementation authority.
 - [[2026-05-28 - Pacote XML XSD e-Fatura 2024-05-27]] - Current official XML/XSD package listed on 2026-05-28, including DFE schemas, signatures, field map and examples.
+- [[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]] - Web-research capture of INPS contributions (24.5% = 16%+8.5%), IRPS Category A final withholding (threshold 420,000$/yr) and the 2025 minimum wage (17,000$ private / 19,000$ public); secondary sources, primary-law verification required.
+- [[2026-05-29 - Cabo Verde Depreciation and Amortization Sources]] - Web-research capture of Portaria 42/2015 under the IRPC Code: quotas constantes default, 20,000$ low-value expensing, 4,000,000$ light-vehicle cap, pre-2015 Portaria 2/84 transition; per-class rate annex still to obtain.
 
 ### Entities
 
@@ -128,13 +130,14 @@ No people pages yet.
 - [[Contradiction - Current Database Snapshot vs Target ERP Architecture]] - Tracks the mismatch between the current ER diagram and target NOVA-ERP architecture.
 - [[Contradiction - Middleware URL Scope]] - Superseded tension between tenant-scoped middleware URL config and environment-level `MIDDLEWARE_URL`; resolved by the middleware topology schema decision.
 - [[Contradiction - e-Fatura Sync Authorization vs Async ERP Queue]] - Tracks official synchronous PE authorization versus NOVA-ERP internal async queue/retry architecture.
+- [[Contradiction - IRPS Category A Withholding Brackets]] - Conflicting IRPS bracket scales (16.5%–27.5% vs a wider 0%–27% illustrative table); operative scale must come from the official DNRE withholding table/formula.
 
 ## Maintenance Queue
 
-- Produce target schema decisions from [[2026-05-28 - Current Database Snapshot Classification]] before database implementation. The module schema-decision sequence is complete: foundation, document core, e-Fatura, treasury, inventory, accounting, payroll, fixed-assets, SaaS-subscriptions, permissions/audit, projects/analytical-dimensions, reporting/dashboards and AI-assistant ADRs all exist, and the `project.*`/`dimension.*`/`report.*`/`kpi.*`/`dashboard.*`/`ai.*` keys are now folded into the canonical catalog in [[2026-05-29 - Schema Decision - Permission Catalog and Audit Taxonomy]]. SQL/RLS/storage inspection remains blocked by [[2026-05-29 - Supabase Implementation Artifact Gap]]. Next: obtain implementation repository/export to validate ADRs against real migrations/RLS, and deep-ingest payroll/asset legal sources.
+- Produce target schema decisions from [[2026-05-28 - Current Database Snapshot Classification]] before database implementation. The module schema-decision sequence is complete: foundation, document core, e-Fatura, treasury, inventory, accounting, payroll, fixed-assets, SaaS-subscriptions, permissions/audit, projects/analytical-dimensions, reporting/dashboards and AI-assistant ADRs all exist, and the `project.*`/`dimension.*`/`report.*`/`kpi.*`/`dashboard.*`/`ai.*` keys are now folded into the canonical catalog in [[2026-05-29 - Schema Decision - Permission Catalog and Audit Taxonomy]]. Payroll and depreciation legal parameters are captured provisionally and folded into their ADRs. SQL/RLS/storage inspection remains blocked by [[2026-05-29 - Supabase Implementation Artifact Gap]]. Next: obtain implementation repository/export to validate ADRs against real migrations/RLS, and obtain the official DNRE IRPS withholding table and the Portaria 42/2015 rate annex.
 - Verify actual DNRE middleware emitter-group behavior before production tenant onboarding automation.
 - Verify legal retention periods for e-Fatura XML, event XML, ZIP archives, responses and DFA/PDF renders.
-- Deep-ingest payroll legal/compliance sources for Cabo Verde before designing payroll deductions or statutory reports.
+- Payroll/asset legal sources captured provisionally ([[2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources]], [[2026-05-29 - Cabo Verde Depreciation and Amortization Sources]]). Remaining: obtain the official DNRE IRPS withholding table/formula and INPS ceiling value (resolves [[Contradiction - IRPS Category A Withholding Brackets]]), the Código Laboral subsidy/overtime formulas, and the Portaria 42/2015 per-class depreciation rate annex.
 - Deep-ingest treasury and purchase/sales workflows before building financial document circuits.
 - Deep-ingest `raw/assets/SUBSCRIPTION_ARCHITECTURE.md` as a full source page; the provisional [[2026-05-29 - Schema Decision - SaaS Subscriptions Billing and Entitlements]] cites it directly until then.
 - Verify current Cabo Verde fiscal treatment (IVA/e-Fatura) for SaaS service invoicing before enabling fiscal SaaS invoices.
