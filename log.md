@@ -9,6 +9,31 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-30] lint | Post-fiscal-ingest health-check + Mapa de Fontes frontmatter fix
+
+- Vault-wide lint after the fiscal corpus + implementation-review pushes (107 wiki/root pages). **Healthy baseline:** 100% index coverage of `wiki/` pages, 0 invalid frontmatter field values (type/status/confidence), and all ~10 pages created in the last sessions (IS code, payroll updates, reconciliation, security review, 3 contradictions) pass clean.
+- **One real fix:** `wiki/maps/Mapa de Fontes - NOVA-ERP e Fiscalidade.md` began with `nex---` (three stray chars prepended) which broke its YAML frontmatter — restored to `---`.
+- Benign-as-expected: AGENTS/Bem-vindo/CLAUDE lack frontmatter (entry points); "broken" wikilinks are all CLAUDE.md examples, template placeholders, or append-only `log.md` mentions; the flagged missing raw-asset refs were a regex artifact on space-containing paths (`raw/assets/SSD/Backlog Estruturado.md`), not real.
+- Files updated: `wiki/maps/Mapa de Fontes - NOVA-ERP e Fiscalidade.md`, `log.md`
+
+## [2026-05-30] ingest | Payroll legal gaps closed + Código do Imposto de Selo incidence (primary law)
+
+- Closed the standing payroll/fiscal legal gaps with **primary law**, web-locating and pypdf-parsing two official texts in the sandbox; both preserved as immutable evidence.
+- **Código Laboral — Decreto-Legislativo 5/2007** (B.O. I Série nº 37 Sup., 16-10-2007), preserved at `raw/assets/laboral/Codigo_Laboral_CV.pdf` (64 pp.). Resolved the long-standing items:
+  - **Overtime dispute resolved:** art. 207º original = *"não inferior a 50%"* (verbatim in PDF); **DL 1/2016 amended it to 35%** → current rate **+35%**, the Vendus +50% was pre-2016/superseded. Rest-day work +100% (art. 208º); night subsídio ≥+25% (art. 169º).
+  - **Subsídio de Natal/13.º (art. 206º) — CV-specific:** it is **discretionary** (*"nos casos em que seja concedido pelo empregador"*), **not a mandatory 13th**, and when granted is **attendance-scaled** (≤3 faltas 100% / 4–6 75% / 7–10 50% / >10 none; injustified count double). Model as optional, off-by-default.
+  - **Mínimo de existência resolved (CIRPS art. 45º nº2):** ME **= the 220.000$ isenção** of taxable income, not a distinct indexed value (confirmed in the preserved CIRPS PDF).
+  - **INPS:** rates 24.5% (16%+8.5%) general / 23% doméstico / 19,5% conta própria confirmed (inps.cv); base floor tracks the minimum wage; an upper **teto** is referenced but **its value remains undocumented** (only residual).
+- **Código do Imposto de Selo — Lei 33/VII/2008** (de 24-11-2008), republicação B.O. I Série nº 3, 8-01-2015; preserved at `raw/assets/selo/Imposto_de_Selo_Lei_33_Republicacao.pdf`. Captured the **incidence/general part (arts 1–26)** that the rate-Tabela page was missing — art. 1º objectiva with the **§2 IVA non-cumulation gate** (IVA-subject ops are outside IS), art. 2º repercussão, art. 3º territoriality, special part arts 8–22 by category, arts 23–26 liquidação/arredondamento/pagamento/caducidade.
+- Files created:
+  - `wiki/sources/2008-11-24 - Lei 33-2008 Codigo do Imposto de Selo.md`
+  - `raw/assets/laboral/Codigo_Laboral_CV.pdf`, `raw/assets/selo/Imposto_de_Selo_Lei_33_Republicacao.pdf`
+- Files updated:
+  - `wiki/sources/2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources.md` (Código Laboral + ME now primary; confidence → high; Codigo Laboral PDF added to sources)
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md` (overtime/Natal/ME finalized)
+  - `wiki/sources/2015-01-08 - Imposto de Selo Cabo Verde Tabela de Verbas.md` (incidence gap closed; status → active), `index.md`, `log.md`
+- Open questions (minor): INPS teto value; OE-year re-indexing of IRPS thresholds; per-verba IS valor tributável/exemptions inside arts 8–22; subsequent OE amendments to IS rates.
+
 ## [2026-05-30] tooling | Storage buckets migration drafted (e-Fatura evidence finding 4)
 
 - Drafted `nova-erp/supabase/migrations/20260530120000_storage_buckets.sql` closing finding 4 of the Edge/storage security review. Creates the three **private** buckets from the e-Fatura evidence ADR — `fiscal-evidence` (signed XML/ZIP/responses), `fiscal-renders` (PDF/DFA), `efatura-onboarding-temp` (cert uploads, 10 MB) — with size + MIME limits, idempotent (`on conflict do nothing`). The app/functions reference no storage today, so it is purely additive.
