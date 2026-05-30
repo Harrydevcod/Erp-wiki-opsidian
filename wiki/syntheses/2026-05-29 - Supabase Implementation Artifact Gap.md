@@ -2,9 +2,9 @@
 type: synthesis
 status: active
 created: 2026-05-29
-updated: 2026-05-29
+updated: 2026-05-30
 scope: Supabase implementation artifact availability
-decision_status: evidence-gap
+decision_status: resolved
 tags: [supabase, database, rls, storage, edge-functions, implementation-gap]
 sources: ["[[2026-05-28 - Supabase Deploy]]", "raw/assets/LOCAL_SETUP.md", "raw/assets/LOCAL_SETUP-Arydson.md", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2026-05-28 - Current Database Snapshot Classification]]"]
 related: ["[[Supabase Deployment]]", "[[Contradiction - Current Database Snapshot vs Target ERP Architecture]]", "[[2026-05-28 - Schema Decision - Tenant Foundation and RLS]]"]
@@ -12,6 +12,8 @@ confidence: high
 ---
 
 # Supabase Implementation Artifact Gap
+
+> **RESOLVED 2026-05-30.** The implementation repository is now in the workspace (`nova-erp/supabase/migrations` = 13 migrations, `nova-erp/supabase/functions` = `audit-log`, `create-user`, `numbering`, `_shared`). The migrations have been read and reconciled against the ADR sequence in [[2026-05-30 - ADR vs Implementation Reconciliation - Supabase Migrations]]. The "artifacts unavailable" premise below is historical. **Still pending:** Edge Functions and storage policies are not yet reviewed (next implementation-grade pass).
 
 ## Thesis
 

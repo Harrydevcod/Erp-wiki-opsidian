@@ -9,6 +9,330 @@ updated: 2026-05-29
 
 Append-only chronological record. New entries go at the top.
 
+## [2026-05-30] tooling | Storage buckets migration drafted (e-Fatura evidence finding 4)
+
+- Drafted `nova-erp/supabase/migrations/20260530120000_storage_buckets.sql` closing finding 4 of the Edge/storage security review. Creates the three **private** buckets from the e-Fatura evidence ADR — `fiscal-evidence` (signed XML/ZIP/responses), `fiscal-renders` (PDF/DFA), `efatura-onboarding-temp` (cert uploads, 10 MB) — with size + MIME limits, idempotent (`on conflict do nothing`). The app/functions reference no storage today, so it is purely additive.
+- **Access model:** no client policies on `storage.objects` → deny-by-omission; only service-role (Edge Functions) reads/writes; reads via short-lived server-generated signed URLs. Documents the `<bucket>/<tenant_id>/…` path convention. Tenant-scoped client-read policy deferred (customer-facing PDF/DFA access is still an open ADR question).
+- **NOT committed, NOT run** (no `supabase`/`psql` CLI). The `FORCE RLS` + `TO authenticated` DB hardening was **deliberately deferred** — breakage risk for anon/role flows, needs testing not a blind migration.
+- Files created (nova-erp): `supabase/migrations/20260530120000_storage_buckets.sql`
+- Files updated (wiki): `wiki/syntheses/2026-05-30 - Edge Function and Storage Security Review.md`, `log.md`
+
+## [2026-05-30] tooling | Remediation drafted for Edge Function cross-tenant authz (create-user/audit-log/numbering)
+
+- Implemented the fix-order from the security review (code-level findings 1–3). Added a shared guard `nova-erp/supabase/functions/_shared/auth.ts`: `callerClient` (caller-JWT-scoped), `requireTenantPermission` (via `get_user_permissions`, passes on `admin.users` or `core.admin`), `requireTenantMember` (via `get_user_tenants`). The relevant seeded permission is `admin.users`.
+- **create-user** → gated on `admin.users`, audit actor from JWT; **audit-log** → gated on membership, `user_id` forced from JWT (body ignored); **numbering** → gated on active membership. Added `_shared/auth.test.ts` (mock-client unit tests of the decision logic).
+- **NOT committed, NOT run** — no `deno`/`supabase` CLI in the environment. Founder/CI must `deno test` + `deno check` + integration-serve before merge. Storage buckets (finding 4) + `FORCE RLS` hardening still open. These changes live in the nova-erp repo working tree (separate from the user's existing `web/` WIP).
+- Files created (nova-erp repo): `supabase/functions/_shared/auth.ts`, `supabase/functions/_shared/auth.test.ts`
+- Files updated (nova-erp repo): `supabase/functions/create-user/index.ts`, `audit-log/index.ts`, `numbering/index.ts`
+- Files updated (wiki): `wiki/syntheses/2026-05-30 - Edge Function and Storage Security Review.md` (Remediation section), `log.md`
+
+## [2026-05-30] lint | Edge Function + storage security review — cross-tenant authorization gap
+
+- Completed the implementation-grade pass outstanding from the reconciliation: read all four Edge Functions (`create-user`, `audit-log`, `numbering`, `_shared/*`) and checked storage policies in migrations + `config.toml`. Read-only; no implementation files modified.
+- **Headline finding (high/critical):** all three functions run on the **`SERVICE_ROLE_KEY` (bypassing RLS)** and **trust the request-body `tenant_id` with no caller identity/membership/permission check.** `verify_jwt = true` only proves the caller is *some* authenticated platform user, not a member of the target tenant. Combined with the RLS finding (gates tenant, not permission), **there is no enforced per-tenant authorization at any layer** for these privileged ops.
+  - `create-user` — **CRITICAL**: any authenticated user can POST `{tenant_id: victim, role_code: 'admin'}` and mint an admin membership in any tenant (cross-tenant takeover). Also writes audit with no acting `user_id`.
+  - `audit-log` — **HIGH**: inserts `audit_logs` straight from the body incl. acting `user_id` → audit attribution forgeable; DB append-only protects post-insert tampering only, not forged inserts.
+  - `numbering` — **HIGH**: lets any user increment another tenant's fiscal series → gap injection in a gapless invoice sequence (DNRE compliance problem). CAS optimistic lock itself is race-safe.
+  - **Storage** — **GAP**: no `storage.buckets`/`storage.objects` policies in any migration, though the e-Fatura secrets ADR requires private buckets for fiscal XML/certificates/payroll.
+- Documented the correct service-role authorization pattern (derive caller from JWT → verify membership → verify `has_permission` → derive actor `user_id` from JWT, never body) and a fix order.
+- Files created:
+  - `wiki/syntheses/2026-05-30 - Edge Function and Storage Security Review.md`
+- Files updated:
+  - `wiki/contradictions/Contradiction - DB-Layer Authorization and RLS Permission Gating.md` (Edge layer does NOT compensate — hypothesis partially falsified)
+  - `wiki/syntheses/2026-05-30 - ADR vs Implementation Reconciliation - Supabase Migrations.md` (Edge/storage review done), `index.md`, `log.md`
+- Open questions: do private storage buckets exist outside migrations (dashboard-configured)? is there an API gateway / extra auth in front of the functions? Founder decision: fix the three functions (recommended) and/or move authorization firmly to one enforced layer.
+
+## [2026-05-30] maintain | ADR-vs-implementation reconciliation (Supabase migrations) — artifact gap closed
+
+- The **nova-erp implementation repo** appeared in the workspace, closing the long-standing [[2026-05-29 - Supabase Implementation Artifact Gap]]. Read the **13 migrations** (`00001_core`…`00009_hr`, `00010_rls_policies`, `00011_seeds`, + `align_domain` and `fiscal_documents_base`) in the sandbox and reconciled them against the full target-schema ADR sequence. Migrations read read-only; no implementation files modified.
+- **Verdict pattern:** tenant isolation **MATCHES** design — `tenant_id = get_active_tenant_id()` is membership-validated (`set_tenant_context` + `get_active_tenant_id` both re-check active membership), so it is *not* an isolation hole. The recurring **DIVERGENCE** is philosophical: the implementation prefers **stored accumulators maintained by triggers/procedures** over the ADRs' **derived-from-immutable-ledger** stance.
+- **Three material contradictions opened (high confidence):** (1) inventory `stock_items` stored `qty_on_hand`/`avg_cost` + trigger vs the ADR's derived no-stored-quantity ledger (the explicitly-rejected alternative; biggest SAF-T/COGS risk); (2) `documents.status` stores `paid/partial_paid/overdue` written by `settle_document()` vs treasury ADR's derived-from-allocations; (3) RLS gates only *tenant* not *permission* — 41 `FOR ALL` policies give any active member full CRUD, no `user_permission_overrides`, no evidence tiers, no `FORCE RLS`/service-role hardening.
+- **GAPS (designed, not built):** fixed assets (0 tables), generic analytical dimensions (only concrete `cost_centers`), reporting/AI layers, SaaS entitlement computation/snapshots, per-user permission overrides. **PARTIAL MATCH:** accounting (projection balances + periods ✓, no immutability trigger, concrete cost center), treasury (allocation substrate ✓, no `obligations` table), e-Fatura (transmission/events/settings/cert present, granularity differs), audit (append-only ✓).
+- Files created:
+  - `wiki/syntheses/2026-05-30 - ADR vs Implementation Reconciliation - Supabase Migrations.md` (the reconciliation matrix + per-area conform-vs-amend decisions)
+  - `wiki/contradictions/Contradiction - Inventory Stored Stock vs Derived Movement Ledger.md`
+  - `wiki/contradictions/Contradiction - Stored Payment Status vs Derived from Allocations.md`
+  - `wiki/contradictions/Contradiction - DB-Layer Authorization and RLS Permission Gating.md`
+- Files updated:
+  - `wiki/syntheses/2026-05-29 - Supabase Implementation Artifact Gap.md` (status → resolved; resolution banner pointing to the reconciliation), `index.md` (syntheses + 3 contradictions + Maintenance Queue), `log.md`
+- Open questions: are the stored-accumulator choices intentional MVP posture or drift (decides conform-vs-amend)? is DB-layer permission gating intended or is app/Edge the accepted boundary? **Next:** review the 4 Edge Functions (`audit-log`, `create-user`, `numbering`, `_shared`) + storage policies — the only implementation-grade pass still outstanding.
+
+## [2026-05-30] ingest | Código Laboral payroll parameters + INPS base correction
+
+- Closed the payroll non-fiscal gaps (provisionally, secondary sources). Web-researched the **Código Laboral** (Decreto-Legislativo 5/2007, overtime amended by **DL 1/2016, de 3 fev**) via the Vendus employer guide + INPS pages.
+- **Captured:** normal time 8h/day·44h/week; **overtime** ≤2h/day·160h/yr (300h with consent), rate **disputed +35% (search) vs +50% (Vendus)** — flagged for primary verification; **night work 22h–06h = +25%**; **férias 22 dias úteis/yr**; salary deductions capped at 1/3. **Subsídio de Natal/13.º** formula still uncaptured (CV-specific — don't assume the PT model).
+- **Correction:** the INPS "ceiling" assumption was wrong — the **base de incidência is a minimum floor tracking the minimum wage** (13.000$→14.000$ Jan-2023; rising with the 2025 17.000$ minimum), with no clearly-documented upper cap. Model base as `max(gross, floor)`.
+- Also refreshed the payroll-sources page: IRPS section flipped to **resolved by primary law** (DL 6/2015 + CIRPS), superseding the IUR scale note.
+- Files updated:
+  - `wiki/sources/2026-05-29 - Cabo Verde Payroll and Personal Income Tax Sources.md` (Código Laboral section added; INPS base corrected; IRPS resolved; sources +DL6/2015, +CIRPS)
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md` (subsidies/overtime now parametrized), `index.md`, `log.md`
+- Open questions: the +35%/+50% overtime dispute and the subsídio de Natal/13.º formula — resolve against the **primary Código Laboral / DL 1/2016**; confirm any INPS upper cap.
+
+## [2026-05-30] ingest | Imposto de Selo — Tabela de verbas (from CIRPC B.O.)
+
+- Extracted the **Imposto de Selo (IS) Anexo — Tabela de verbas** from the same `raw/assets/irpc/Lei_82_2015_Codigo_IRPC.pdf` (B.O. I Série nº 3, 8-01-2015, which carries the tail of the IS code + the CIRPC). Rates: operações de crédito 0,5%; juros/serviços financeiros 3,5%; garantias 0,5%; seguros 3,5%; letras/livranças/títulos 0,5%; operações societárias 0,5%; **actos notariais/registo/processuais 15%**; actos administrativos & escritos de contratos **1.000$00 fixo**.
+- Partial capture: this PDF starts at art. 27º, so the IS incidence/exemption arts. 1–26 remain to ingest from the earlier B.O. issue.
+- Also fixed a **stale citation** left by the dedup: removed the deleted `SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf` path from the [[Fiscalidade Cabo Verde]] sources and added the four new tax-code sources.
+- Files created:
+  - `wiki/sources/2015-01-08 - Imposto de Selo Cabo Verde Tabela de Verbas.md`
+- Files updated:
+  - `wiki/concepts/Fiscalidade Cabo Verde.md` (sources refreshed: +IRPS/IRPC/DL 6-2015/IS, −deleted SV deck), `index.md`, `log.md`
+- Open questions: ingest the full Código do Imposto de Selo (incidence/exemptions/territoriality); per-verba computation base; OE-year rate changes.
+
+## [2026-05-30] ingest | Código do IRPC (Lei 82/2015) primary law
+
+- Ingested the corporate-tax code: **Lei nº 82/VIII/2015, de 7 de Janeiro** (Código do IRPC), B.O. I Série nº 3, 8-01-2015, from the DNRE library; preserved at `raw/assets/irpc/Lei_82_2015_Codigo_IRPC.pdf` (35 pp.). Completes the corporate axis alongside the IRPS axis.
+- **Primary parameters:** Art. 84º taxa **25%** (contabilidade organizada) / **4%** sobre volume de negócios (REMPE simplificado, art. 95º) refazendo o **tributo especial unificado (TEU)** — ties to the SAF-T `TaxType` TEU. Art. 89º **tributação autónoma** 40% (despesas não documentadas), 10% (encargos de viaturas ligeiras/motos incl. depreciações), 10% (despesas de representação). Art. 59º **dedução de prejuízos fiscais**: até 7 períodos posteriores, dedução anual ≤ 50% do lucro tributável; opção pelo regime simplificado extingue o direito. **Imparidade de créditos** 25/50/75/100% por mora (6–24 meses). Art. 43º = enabling article da Portaria 42/2015. Same B.O. carries the Imposto de Selo annex (crédito 0,5%, serviços financeiros/seguros 3,5%, actos notariais/registo 15%).
+- Files created:
+  - `wiki/sources/2015-01-07 - Lei 82-2015 Codigo do IRPC.md`, `raw/assets/irpc/Lei_82_2015_Codigo_IRPC.pdf`
+- Files updated:
+  - `wiki/syntheses/2026-05-28 - Schema Decision - Accounting Ledger and Posting.md` (IRPC rate/loss-carryforward/impairment now primary-sourced for tax_maps)
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Fixed Assets and Depreciation.md` (10% vehicle tributação autónoma noted), `index.md`, `log.md`
+- Open questions: exact ajudas-de-custo autonomous-tax rate (art. 89º d); OE-year changes to 25%/4% or the 7yr/50% loss params; REMPE special-law TEU mechanics.
+
+## [2026-05-30] ingest | Código do IRPS (Lei 78/2014) primary law — annual scale confirmed
+
+- Ingested the parent statute of the withholding regime: **Lei nº 78/VIII/2014 (Código do IRPS)**, B.O. I Série nº 81, 31-12-2014, from the DNRE library; preserved at `raw/assets/irps/Lei_78_2014_Codigo_IRPS.pdf` (16 pp.).
+- **Primary confirmations:** categories **A** trabalho dependente/pensões, **B** empresariais/profissionais, **C** prediais, **D** capitais, **E** ganhos patrimoniais (Art. 2–3). **Art. 45º** annual *englobamento* scale **16,5% (≤960.000$) / 23,1% (≤1.800.000$) / 27,5% (>1.800.000$)**, **isenção do rendimento colectável até 220.000$** (mínimo de existência) — upgrades this scale from the secondary 2017 síntese to **primary**. Art. 46º Cat. A = liberatório/progressivo per art. 70º (the DL 6/2015 formula); **Art. 47º Cat. B = 20%** (REMPE simplificado in own diploma), **Art. 48º Cat. C = 20%** — primary confirmation that the 2017 síntese's 15%/10% were wrong. Art. 52º deduction structure (withholding refundable, deductions arts. 53–56 non-refundable, fraccionados creditable over 4 yr).
+- Files created:
+  - `wiki/sources/2014-12-31 - Lei 78-2014 Codigo do IRPS.md`, `raw/assets/irps/Lei_78_2014_Codigo_IRPS.pdf`
+- Files updated:
+  - `wiki/contradictions/Contradiction - IRPS Category A Withholding Brackets.md` (annual scale now primary-confirmed; B/C 20% double-confirmed), `index.md`, `log.md`
+- Open questions: ME as a distinct indexed value vs. the 220.000$ isenção; OE-year re-indexing of the 960.000$/1.800.000$ brackets; deduction amounts in arts. 53–56 (extract when annual-reconciliation feature is built). Sibling **Lei 82/2015 (CIRPC)** still available in the same DNRE folder for future ingest.
+
+## [2026-05-30] ingest | Portaria 42/2015 depreciation rate annex captured
+
+- Closed the long-standing "per-class depreciation rate annex" gap. Located the official **B.O. I Série nº 52, 28-08-2015** (the Rectificação republication of Portaria 42/2015, which carries the full Anexo the original BO nº 50 omitted), downloaded and pypdf-parsed it; preserved at `raw/assets/irpc/Portaria_42_2015_Tabelas_Taxas_Depreciacao.pdf` (+ the 20-article regime at `Portaria_42_2015_Depreciacoes_Amortizacoes.pdf`).
+- Parsed **310 rated rows** into `raw/assets/irpc/Portaria_42_2015_Tabela_taxas.csv` (`setor_or_tabela, grupo, subcategoria, designacao, taxa`): **Tabela I** taxas específicas by economic sector (Agricultura/Pesca, Electricidade/Água/Gás, Serviços, Hotelaria, Transportes/Comunicações, Construção Civil, Indústrias transformadoras G1–9) + **Tabela II** taxas genéricas by asset nature (Imóveis, Instalações, Máquinas, Material de transporte, Elementos diversos, Intangível). Distinct rates 2,5–50% (each = 100 ÷ useful-life years).
+- Key generics now sourced: edifícios habitacionais 3% / industriais 5% / ligeiras 10%; instalações 6,66–10%; veículos ligeiros 14,28% (7 yr) / pesados 20% / motociclos 25%; aeronaves 20%; computadores·telemóveis·programas·intangível 33,33%; mobiliário 12,5%; ar condicionado 12,5%; televisores 25%.
+- Files created:
+  - `wiki/maps/Portaria 42-2015 Tabelas de Taxas de Depreciacao.md`
+  - `raw/assets/irpc/Portaria_42_2015_Tabelas_Taxas_Depreciacao.pdf`, `raw/assets/irpc/Portaria_42_2015_Depreciacoes_Amortizacoes.pdf`, `raw/assets/irpc/Portaria_42_2015_Tabela_taxas.csv`
+- Files updated:
+  - `wiki/sources/2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes.md` (gap closed)
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Fixed Assets and Depreciation.md` (rate seed now sourced)
+  - `index.md`, `log.md`
+- Open questions: verify heuristically de-wrapped CSV designations against the PDF before legal display (rates/sectors reliable); whether later OE laws re-indexed the 20.000$/4.000.000$ thresholds.
+
+## [2026-05-30] ingest | Decreto-Lei 6/2015 — IRPS withholding primary law (contradiction resolved)
+
+- Closed the IRPS-withholding gap with **primary law**. Navigated the DNRE Liferay legislation library (folder 64542), resolved the real document download URL, and pypdf-parsed the official **Decreto-Lei nº 6/2015, de 23 de Janeiro** (B.O. I Série nº 7) — preserved at `raw/assets/irps/Decreto-Lei_6_2015_Retencao_na_Fonte.pdf` (4 pp.).
+- **Operative result (Art. 5.º) — monthly Category A withholding** on gross monthly income `Rm`: **`0,15·Rm − 5.500`** (Rm ≤ 80.000$), **`0,21·Rm − 10.300`** (80.000–150.000$), **`0,25·Rm − 16.300`** (> 150.000$); round **down to ten escudos**; **100$ minimum**; no retention below ≈36.667$/mo. **Subsídios férias/Natal/prémio = retenção autónoma** (Art. 6.º). Other categories (Art. 8+): **B 20% (4% REMPE), C 20%, D 20%/10%, E 1%/20%**, non-resident PE 20%/10%, general declaration 25%.
+- **Corrections:** supersedes the IUR-2013 scale for periods ≥2015; corrected the 2017 síntese's B=15%/C=10% to the decree's 20%/20%. Clarified that the annual *englobamento* scale (220.000$/16,5/23,1/27,5%) is a distinct final-assessment table, not the monthly retention formula.
+- The DNRE folder also exposes the primary **Lei 78/2014 (CIRPS)** and **Lei 82/2015 (CIRPC)** for future ingest. A listed DL 6/2015 *Retificação* link returned an unrelated B.O. page — flagged unverified, artifact discarded.
+- Files created:
+  - `wiki/sources/2015-01-23 - Decreto-Lei 6-2015 Regime de Retencoes na Fonte IRPS.md`
+  - `raw/assets/irps/Decreto-Lei_6_2015_Retencao_na_Fonte.pdf` (preserved primary law)
+- Files updated:
+  - `wiki/contradictions/Contradiction - IRPS Category A Withholding Brackets.md` (**status → superseded/resolved, confidence high**)
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md` (withholding engine now uses the exact DL 6/2015 formula)
+  - `wiki/sources/2017-10-25 - Sistema Fiscal de Cabo Verde (CI Sintese).md` (B/C rates corrected against primary law)
+  - `index.md`, `log.md`
+- Residuals (minor, non-blocking): DL 6/2015 retificação check; OE-year re-indexing of 80.000$/150.000$ thresholds; ME value; INPS ceiling; Código Laboral subsidy/overtime formulas; Portaria 42/2015 per-class depreciation rate annex.
+
+## [2026-05-30] ingest | IRPS-era withholding regime confirmed (IUR superseded)
+
+- Tackled the standing legal gap "current IRPS-era withholding portaria vs the IUR scale." Web research → located and pypdf-parsed the **Sistema Fiscal de Cabo Verde** síntese (CVTradeInvest, 2017, 19 pp.; the context-mode fetch only indexed compressed PDF bytes, so direct sandbox extraction was used as with the Cegid/SAF-T PDFs).
+- **Key finding:** the IRPS regime (Lei nº 78/VIII/2014) **replaced the IUR scale**. IRPS progressive scale = **isenção ≤ 220.000$; 16,5% ≤ 960.000$; 23,1% ≤ 1.800.000$; 27,5% > 1.800.000$** (annual). Category A monthly retention = **progressive + liberatório from 420.000$/yr (35.000$/mo)**; other categories flat (B 15%, C 10%, D 20%/10%, E 1%/20%). This is a **second independent source** agreeing with the consultancy's 16.5–27.5% band, now with explicit brackets — so the IUR 5-band 11.67–35% scale is superseded, not carried forward.
+- Discarded vendus.cv "Tabelas de retenção" again (it is **Portugal IRS**, euros — wrong jurisdiction).
+- Files created:
+  - `wiki/sources/2017-10-25 - Sistema Fiscal de Cabo Verde (CI Sintese).md`
+- Files updated:
+  - `wiki/contradictions/Contradiction - IRPS Category A Withholding Brackets.md` (Position D added; best interpretation flipped to IRPS; status needs-review; resolution log appended)
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Payroll Runs and Payslips.md` (withholding engine default flipped to the IRPS 3-band scale, IUR config retained effective-period-keyed for pre-2015 recompute)
+  - `index.md`, `log.md`
+- Open questions (carried):
+  - The **Regime de Retenções na Fonte** decree monthly band table (taxa + parcela a abater) — the operative payslip table; provisional approach = annual scale ÷ 12.
+  - OE-year currency of the 220.000$/420.000$ thresholds and 16,5/23,1/27,5% rates (sources are 2014–2017).
+  - Still standing: Portaria 42/2015 per-class depreciation rate annex; Mínimo de Existência value; INPS ceiling; Código Laboral subsidy/overtime formulas.
+
+## [2026-05-30] maintain | Cegid fiscalidade decks deduplicated
+
+- Closed the twice-carried dedup item. Compared the two `docs/docsfiscal/` decks in the sandbox: `Fiscalidade_ERP_Cegid_Primavera.pdf` vs `SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf`.
+- **Proven identical content:** both 103 pages, same full-text md5 (`bb9aef08b8f007c358d762d4f4fb7e6d`), same author (Romane Garcia) and `CreationDate` (2023-06-12 15:31). Only the binary differed (different file md5 + a later `ModDate` on the short-named copy) — a re-export of the same PowerPoint, not a content variant.
+- Removed the redundant `SV_Documentação_...pdf` via `git rm` (both were git-tracked, so fully recoverable); kept the cleaner-named `Fiscalidade_ERP_Cegid_Primavera.pdf` as canonical.
+- The deck itself remains uningested and **optional** — its content overlaps the already-ingested [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]] (FPG003). Ingest only if an ADR needs deeper fiscal-config detail.
+- Files updated:
+  - `index.md` (Maintenance Queue dedup item marked resolved), `log.md`
+- Files removed:
+  - `docs/docsfiscal/SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf` (exact duplicate)
+- Outstanding (carried): standing legal gaps — current IRPS-era withholding portaria vs the IUR scale, and the Portaria 42/2015 per-class depreciation rate annex.
+
+## [2026-05-30] lint | Post-SAF-T health-check + stale-citation cleanup
+
+- Ran a vault-wide health-check in the sandbox (87 wiki+root pages). **Healthy baseline:** no duplicate filenames, **no orphan pages**, **100% index coverage** of `wiki/` pages, **0 frontmatter value issues** (type/status/confidence all within allowed sets; only AGENTS/Bem-vindo/CLAUDE lack frontmatter — expected entry points).
+- **Broken wikilinks:** 8 found, all benign — 6 are illustrative examples inside CLAUDE.md (`[[Page A]]`, `[[LLM Wiki]]`, etc.); 2 (`[[Entidades ERP]]`, `[[Produtos e Servicos ERP]]`) are stale aspirational mentions in the append-only log (those concepts are covered inside the Document-Core/Inventory ADRs). Left log untouched (append-only).
+- **Fixed genuine stale raw-path citations** — module/concept pages pointing at raw decks that now have source pages:
+  - `Contabilidade ERP.md` → [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]]; SAF-T targets marked ingested.
+  - `Processamento de Salarios ERP.md` → [[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]].
+  - `wiki/concepts/Fiscalidade Cabo Verde.md` → replaced raw `Código IVA.pdf` Evidence with [[2026-05-29 - Codigo do IVA Cabo Verde]] + added the Portaria 47/2021 source.
+  - `wiki/places/Cabo Verde.md` → frontmatter sources upgraded to source-page wikilinks.
+  - `wiki/maps/Mapa de Fontes - NOVA-ERP e Fiscalidade.md` → ERP-functional-reference and fiscal sections refreshed to ingested status; added a SAF-T (CV) cluster section.
+- Files updated:
+  - `Contabilidade ERP.md`, `Processamento de Salarios ERP.md`, `wiki/concepts/Fiscalidade Cabo Verde.md`, `wiki/places/Cabo Verde.md`, `wiki/maps/Mapa de Fontes - NOVA-ERP e Fiscalidade.md`, `log.md`
+- Outstanding (carried):
+  - **Dedup** the two Cegid fiscalidade decks (`Fiscalidade_ERP_Cegid_Primavera.pdf` vs `SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf`) — both still uningested duplicates.
+  - Standing legal gaps unchanged: Portaria 42/2015 per-class rate annex; current IRPS-era withholding portaria.
+
+## [2026-05-30] maintain | SAF-T (CV) Anexo II — SNCRF account taxonomy extracted
+
+- Parsed Anexo II (pp. 35–67) of the preserved Portaria 47/2021 PDF into structured data: **660 taxonomy codes** (1–660, no gaps) → SNCRF account code(s) + description, across classes 1 Meios financeiros líquidos (10), 2 Contas a receber/pagar (230), 3 Inventários e ativos biológicos (25), 4 Investimentos (95), 5 Capital/reservas (24), 6 Gastos (148), 7 Rendimentos (128).
+- Saved `raw/assets/saft-cv/Anexo_II_SNCRF_taxonomia.csv` and wrote a concise reference page (no 660-row inline dump, per the small-pages rule). This is the seed for `chart_of_accounts.taxonomy_code`.
+- Resolved the Accounting ADR's open "which CV chart standard (PNC)?" question → **SNCRF**, seeded from Anexo II; added `taxonomy_code`/`taxonomy_reference` to the `chart_of_accounts` model. Closed the residual on the SAF-T taxonomy contradiction.
+- Files created:
+  - `wiki/maps/SAF-T CV Anexo II - SNCRF Account Taxonomy.md`
+  - `raw/assets/saft-cv/Anexo_II_SNCRF_taxonomia.csv`
+- Files updated:
+  - `wiki/syntheses/2026-05-28 - Schema Decision - Accounting Ledger and Posting.md`
+  - `wiki/syntheses/2026-05-30 - SAF-T CV Field Map to NOVA-ERP Schema.md`
+  - `wiki/sources/2021-10-07 - Portaria 47-2021 Estrutura SAF-T CV.md`
+  - `wiki/contradictions/Contradiction - SAF-T CV Schema Version vs Portaria 47-2021 Taxonomy.md`
+  - `index.md`, `log.md`
+- Open questions:
+  - Which SNCRF chart edition ships as the tenant default; do NRF-PE small-entity variants need a separate seed?
+  - Descriptions were de-wrapped heuristically — verify exact wording per account against the PDF before legal display (codes + classes are reliable).
+
+## [2026-05-30] ingest | Portaria 47/2021 SAF-T (CV) primary law — code values + taxonomy resolved
+
+- Located, downloaded and **pypdf-extracted** the official **Portaria nº 47/2021, de 7 de outubro** (Boletim Oficial I Série nº 97; efatura.cv legislation), preserved at `raw/assets/saft-cv/Portaria_47_2021_SAF_T_CV.pdf`. The ctx fetch returned only PDF object bytes, so direct sandbox extraction was used (as with the Cegid decks).
+- **Resolved the convention-confirm code values** from Anexo I field definitions (primary): ProductType (P/S/O/E/I), TaxType (IVA/IS/NS/**TEU = Tributo Especial Unificado**), TaxCode IVA (NOR/RED/ISE/ESP/NS), PSProductType 4.3.1.2.1.5 (M=Mercadorias, **AB=Ativos biológicos**, MP, PCI=Produtos acabados e intermédios, SP, PC=Produtos e trabalhos em curso), ProductStatus 4.3.1.2.1.6 (A=Ativo, D=Danificado, DS=Descontinuado, O=Obsoleto, Q=Quarentena). Upgraded all rows in [[SAF-T CV Code Lists]] from convention to authoritative.
+- **Resolved the accounting-taxonomy contradiction:** Art. 4.º binds account codes to the **taxonomies in Anexo II** (SNCRF Base / NIC); Anexo I = the same `AuditFile` structure as XSD v1.01_01 (consistent, not competing); Art. 5.º in force **1 Jan 2022** (exercises 2022+). Marked the contradiction superseded/resolved.
+- **Confirmed legal scope against Boletim Oficial:** obligated = art. 107.º nº1 CIRPC + Category B organized accounting (art. 78.º nº1 CIRPS); **Category B exempt if annual turnover ≤ 5.000.000$**; REMPE may voluntarily adhere.
+- Files created:
+  - `wiki/sources/2021-10-07 - Portaria 47-2021 Estrutura SAF-T CV.md`
+  - `raw/assets/saft-cv/Portaria_47_2021_SAF_T_CV.pdf` (preserved primary law)
+- Files updated:
+  - `wiki/maps/SAF-T CV Code Lists.md` (all values now authoritative)
+  - `wiki/contradictions/Contradiction - SAF-T CV Schema Version vs Portaria 47-2021 Taxonomy.md` (resolved)
+  - `wiki/concepts/SAF-T CV.md`
+  - `wiki/sources/2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis.md`
+  - `index.md`, `log.md`
+- Open questions:
+  - Extract **Anexo II** account-code taxonomy list (SNCRF Base / NIC) to seed `chart_of_accounts.taxonomy_code`.
+  - Confirm the exact inventory-submission-deadline article (secondary sources say 31 January following year).
+
+## [2026-05-30] maintain | SAF-T (CV) code lists decoded into seed reference
+
+- Extracted all 14 enumerated `simpleType` code lists from the saved XSD with their in-schema documentation, into a seed-reference catalog.
+- Authoritative (documented in the schema): FileContentType (F/C/I/O), TaxonomyReference (S/N/P/O = SNCRF/NIRF/NRF-PE/Outros), WorkType, WorkStatus, SourceBilling, PaymentType, PaymentStatus, SourcePayment, PaymentMechanism (13 means of payment), WithholdingTaxType (IRPS/IRPC), TransactionType (N/R/A/J).
+- Values present but undocumented in the schema (flagged convention-confirm): ProductType (P/S/O/E/I), TaxType (IVA/IS/NS/TEU), PSProductType (M/AB/MP/PCI/SP/PC), ProductStatus (A/D/DS/O/Q).
+- Files created:
+  - `wiki/maps/SAF-T CV Code Lists.md`
+- Files updated:
+  - `wiki/syntheses/2026-05-30 - SAF-T CV Field Map to NOVA-ERP Schema.md`
+  - `wiki/concepts/SAF-T CV.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Resolve the convention-confirm rows (ProductType, TaxType TEU, PSProductType AB, ProductStatus D/DS/Q) against the DNRE manual.
+
+## [2026-05-30] maintain | SAF-T (CV) field map to NOVA-ERP schema
+
+- Parsed the saved official XSD (`raw/assets/saft-cv/saftcv1.01_01.xsd`) element-by-element and produced a field-mapping synthesis tying every MasterFiles/GeneralLedgerEntries/SourceDocuments block to the existing module ADRs.
+- Key cross-validations surfaced: account `TaxonomyReference`/`TaxonomyCode` confirm the **SNCRF taxonomy** binding (feeds the accounting-taxonomy contradiction); `Payment.WithholdingTax` **confirms** the withholding-to-State pattern from the Tesouraria deck; `PhysicalStock` is a **valued snapshot** with `LocationID` (validates the inventory `locations` addition and valuation design); GL account opening/closing balances are export-derived (validates projection-based balances).
+- Produced a **capture-at-transaction-time checklist** (entities GL control account + structured ISO address; chart taxonomy_code; tax_rates (TaxType,TaxCode); docs SystemEntryDate/SourceBilling/WorkType/TaxPointDate/exemption codes/serials; journal Period/GLPostingDate/DocArchivalNumber/TransactionType; treasury PaymentMechanism/SourcePayment/WithholdingTax; inventory warehouse+location+valued stock) plus header software-certificate + multi-part splitting needs.
+- Files created:
+  - `wiki/syntheses/2026-05-30 - SAF-T CV Field Map to NOVA-ERP Schema.md`
+- Files updated:
+  - `wiki/concepts/SAF-T CV.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Decode the remaining SAF-T code-list enumerations (ProductType, TaxType/TaxCode, WorkType, PaymentType/Mechanism, TransactionType, WorkStatus, SourceBilling, WithholdingTaxType) into seed tables.
+  - Confirm the SNCRF taxonomy code-list source (Portaria 47/2021).
+
+## [2026-05-30] ingest | SAF-T (CV) official XSD v1.01_01 + legal basis (web research)
+
+- The vault had **no** official SAF-T CV schema (the standing gate). Web research located the authoritative DNRE source; downloaded and **parsed the official XSD directly** in the sandbox, and preserved it at `raw/assets/saft-cv/saftcv1.01_01.xsd`.
+- Primary facts (from the XSD itself): namespace `urn:OECD:StandardAuditFile-Tax:CV_1.01_01`, version 1.01_01, author DNRE, ModificationDate 2020-05-29. `AuditFile` = Header / MasterFiles / GeneralLedgerEntries? / SourceDocuments?. **One schema, four content types** via `FileContentType` enum **F/C/I/O** (Faturação/Contabilidade/Inventário/Outros) — "Completo" is **not** official. Header carries `SoftwareCertificateNumber` + `ProductID`/`ProductVersion` (software certification) and `NumberOfParts`/`PartNumber` (multi-part splitting). MasterFiles = GeneralLedgerAccounts/Customer/Supplier/Product/TaxTable; SourceDocuments = WorkingDocuments/Payments/PhysicalStock.
+- Legal basis (secondary web, needs Boletim Oficial confirmation): **Portaria 47/2021** (SNCRF-aligned accounting/inventory SAF-T; inventory due 31 Jan); e-Fatura under **DL 79/2020** + Portarias 62/2020, 74/2020, 16/2022 + Despacho 43/2022.
+- Opened a contradiction: v1.01_01 (2020) structure is primary/safe, but whether the **Contabilidade** file needs a newer **SNCRF taxonomy/version** under Portaria 47/2021 is unresolved.
+- Flipped the SAF-T CV concept page's "official schema not ingested" gate to **ingested**, corrected the export-types section to F/C/I/O, and mapped MasterFiles to the existing chart/entities/items/tax ADRs.
+- Files created:
+  - `wiki/sources/2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis.md`
+  - `wiki/contradictions/Contradiction - SAF-T CV Schema Version vs Portaria 47-2021 Taxonomy.md`
+  - `raw/assets/saft-cv/saftcv1.01_01.xsd` (preserved official schema)
+- Files updated:
+  - `wiki/concepts/SAF-T CV.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Is v1.01_01 current for the accounting (`C`) file, or did Portaria 47/2021 publish a newer SNCRF taxonomy version?
+  - Element-by-element field map of Customer/Supplier/Product/WorkDocument/GeneralLedgerEntries/PhysicalStock → NOVA-ERP columns (available in the saved XSD when implementation starts).
+  - DNRE FAQ Q&A (deadlines/penalties/submission channel) — slide PDF is image-based, needs OCR or the HTML FAQ.
+
+## [2026-05-30] ingest | Cegid Gestão de Equipamentos e Ativos (legacy workflow reference)
+
+- Read the 89-page Cegid Primavera "Using — Gestão de Equipamentos e Ativos" deck (FPG006, 2020) via bounded sandbox PDF extraction and captured the full fixed-asset lifecycle.
+- Translated to a NOVA-ERP adopt/adapt/reject rationale and **resolved three Fixed Assets ADR open questions**: (1) tax vs accounting depreciation are tracked as **separate plan-scoped schedules** — Cegid runs a Plano Contabilístico and a Plano Fiscal in parallel; (2) depreciation periodicity is **configurable** (anual/duodecimal/diária); (3) cost-center/function allocation is **optional via Repartições** mapped to analytical dimensions.
+- Folded new structure into the ADR: `asset_depreciation_plans` (plan_kind fiscal/accounting/ias) as parent of policies/schedules/runs/lines; `periodicity` + `rate_mode` (máxima/mínima/variável/zero) on policies; `accepted_amount`/`lost_amount` (taxa perdida, aceite fiscal) on lines; `asset_extraordinary_depreciations`; richer `asset_revaluations.kind` (market-value/replacement-cost revaluation, impairment loss/reversal with cap); excess-amortization-correction-on-disposal posting rule; optional insurance policies. Confirmed straight-line/declining-balance ×1.5/×2/×2.5 against [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]].
+- Upgraded the Gestão de Ativos module page's raw-path citation to the new source page; marked the ingestion target done. This closes the Cegid "Using" module-workflow validation pass.
+- Files created:
+  - `wiki/sources/2020 - Cegid Primavera Gestao de Equipamentos e Ativos (Legacy Reference).md`
+- Files updated:
+  - `wiki/syntheses/2026-05-29 - Schema Decision - Fixed Assets and Depreciation.md`
+  - `Gestao de Ativos ERP.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - How many depreciation plans ship in MVP — just `fiscal`, or `accounting` + `fiscal`?
+  - Are impairment and free/extraordinary revaluation (IAS) in MVP scope or deferred?
+  - Is the criteria-inheritance hierarchy (class/fiscal-classification cascade) worth building vs per-asset policy?
+
+## [2026-05-30] ingest | Cegid Gestão de Inventário (legacy workflow reference)
+
+- Read the 64-page Cegid Primavera "Using — Gestão de Inventário" deck (LPG003, 2022) via bounded sandbox PDF extraction and captured the stock-movement / valuation / lot-serial / counting workflow.
+- Translated to a NOVA-ERP adopt/adapt/reject rationale: **adopt/validate** the derived-from-movements ledger (stock at any date, no stored quantity), **PCM weighted-average** valuation with cost-adjustment movement types, the reservation/previsional split and physical-count→adjustment reconciliation — all corroborating the Inventory ADR; **new inputs** folded in: `transfer_in_transit` (PTS→TST→RST in-transit state), `cost_adjustment`/`composition`/`decomposition` movement types, warehouse `locations`, the available/reserved/in-transit/blocked state framing, BOM/kits, and an inventory period lock (Fechos de Inventário); **reject** PT "Comunicação de Inventário à AT" as authority — CV uses SAF-T CV Inventário.
+- Upgraded the Inventário module page's raw-path citation to the new source page and marked the ingestion target done.
+- Files created:
+  - `wiki/sources/2022 - Cegid Primavera Gestao de Inventario (Legacy Reference).md`
+- Files updated:
+  - `wiki/syntheses/2026-05-28 - Schema Decision - Inventory Movements and Valuation.md`
+  - `Inventario ERP.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Stored per-unit/per-layer stock state vs derived from reservations + in-transit movements?
+  - BOM / composed articles / kits in MVP or deferred?
+  - Inter-warehouse transfer costing across the in-transit leg?
+  - Inventory period lock (quantity-only vs quantity+costing) aligned with accounting locks?
+
+## [2026-05-30] ingest | Cegid Tesouraria (legacy workflow reference)
+
+- Read the 123-page Cegid Primavera "Using — Tesouraria" deck (FPG001, 2023) via bounded sandbox PDF extraction and captured the contas-correntes + caixa/bancos workflow.
+- Translated to a NOVA-ERP adopt/adapt/reject rationale: **adopt/validate** the obligation (*pendente*) / movement / allocation split, derived payment status (no stored `paid` flag), reversal via anulação/estorno and manual+automatic bank reconciliation — all corroborating the Treasury ADR; **new inputs** folded in: `treasury_items` rubric dimension (*Itens de Tesouraria*, budget-vs-actual), `cash_sessions` caixa lifecycle (open/close diário, operator, balance gate), the allocation operation taxonomy (total/parcial/encontro de valores/valores em excesso/liq. c/ novo pendente + contra-settlement of entidades associadas), credit-limit guard, withholding-to-State pattern, payable approval (`AGP→APR`) and doubtful-debtor transfer; **reject** PT electronic bank-export formats and cheque/letra-centric workflows as authority pending CV verification.
+- Upgraded the Tesouraria module page's raw-path citation to the new source page and marked the ingestion target done.
+- Files created:
+  - `wiki/sources/2023 - Cegid Primavera Tesouraria (Legacy Reference).md`
+- Files updated:
+  - `wiki/syntheses/2026-05-28 - Schema Decision - Treasury Receivables Payables and Settlement.md`
+  - `Tesouraria ERP.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Should *Itens de Tesouraria* reuse the generic analytical-dimension layer or a treasury-local catalog?
+  - Is a full cash-session (caixa) model needed for MVP, or bank/DO accounts first?
+  - How is withholding-to-State modeled — treasury obligation, accounting tax map, or both?
+  - Are letras / pre-dated cheques / payment plans in CV scope or deferred?
+
+## [2026-05-30] ingest | Cegid Compras e Vendas (legacy workflow reference)
+
+- Read the 73-page Cegid Primavera "Using — O Processo de Gestão de Compras e Vendas" deck (LPG015, 2022) via bounded sandbox PDF extraction (structure + body, not dumped into context) and captured the legacy commercial circuit.
+- Translated to a NOVA-ERP adopt/adapt/reject rationale: **adopt/validate** unified entities, the commercial-vs-fiscal split (its *séries emissíveis vs não emissíveis*), the `document_links` graph (its five reproduction mechanisms — duplicação/conversão/transformação/cópia de linhas — over one quantity-traceable graph) and the no-deletion / two-correction-paths model (anulação vs estorno/crédito with mandatory origin reference); **adapt** the anulação guard list into void preconditions reconciled with the e-Fatura FDC event; **reject** all PT fiscal obligations (SAF-T PT, AT Web Service, Working Documents/Portaria 302/2016) as authority — CV uses DNRE e-Fatura + SAF-T CV.
+- Folded new inputs into the Document Core ADR: `entities` gains commercial-vs-fiscal name split, NIF-immutability-after-issuance, and an `is_generic` occasional-party sentinel; sharpened the partial-quantity, returns, occasional-party and anulation-guard open questions with legacy evidence.
+- Upgraded the Compras e Vendas module page's raw-path citation to the new source page and marked the ingestion target done.
+- Files created:
+  - `wiki/sources/2022 - Cegid Primavera Compras e Vendas (Legacy Reference).md`
+- Files updated:
+  - `wiki/syntheses/2026-05-28 - Schema Decision - Commercial and Fiscal Document Core.md`
+  - `Compras e Vendas ERP.md`
+  - `index.md`
+  - `log.md`
+- Open questions:
+  - Occasional/indiferenciados parties: `is_generic` sentinel entity vs inline name+NIF on a null-entity document?
+  - Fulfilled/satisfied quantity on `*_document_lines`, on `document_links` edges, or a fulfilment table?
+  - Which reproduction behaviors are MVP (likely transformação + conversão) vs later (cópia de linhas across modules)?
+
 ## [2026-05-29] ingest | Cegid Contabilidade e Fiscalidade (legacy workflow reference)
 
 - Read the 101-page Cegid Primavera "Contabilidade e Fiscalidade" manual via bounded sandbox extraction and captured the legacy accounting/fiscal workflow.
