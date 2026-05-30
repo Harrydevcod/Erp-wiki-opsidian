@@ -1,0 +1,661 @@
+taxonomy_code,sncrf_account_codes,description
+1,11,Caixa
+2,12,Depósitos à ordem
+3,13,Depósitos a prazo
+4,14,Outros depósitos bancários
+5,1511,Instrumentos financeiros – Derivados – Potencialmente favoráveis
+6,1512,Instrumentos financeiros – Derivados – Potencialmente desfavoráveis
+7,1521,Instrumentos financeiros – Instrumentos financeiros detidos para negociação – Ativos financeiros
+8,1522,Instrumentos financeiros – Instrumentos financeiros detidos para negociação – Passivos financeiros
+9,1531,Instrumentos financeiros – Outros ativos e passivos financeiros – Outros ativos financeiros
+10,1532,Instrumentos financeiros – Outros ativos e passivos financeiros – Outros passivos financeiros
+11,21111,Clientes – Clientes c/c – Clientes c/c em moeda nacional – Clientes gerais
+12,21112,Clientes – Clientes c/c – Clientes c/c em moeda nacional – Clientes gerais - Empresa-mãe
+13,21113,Clientes – Clientes c/c – Clientes c/c em moeda nacional – Clientes gerais - Empresas subsidiárias
+14,21114,Clientes – Clientes c/c – Clientes c/c em moeda nacional – Clientes gerais - Empresas associadas
+15,21115,Clientes – Clientes c/c – Clientes c/c em moeda nacional – Clientes gerais - Empreendimentos conjuntos
+16,21116,Clientes – Clientes c/c – Clientes c/c em moeda nacional – Clientes gerais - Outras partes relacionadas
+17,21121,Clientes – Clientes c/c – Clientes c/c em moeda estrangeira – Clientes gerais
+18,21122,Clientes – Clientes c/c – Clientes c/c em moeda estrangeira – Clientes gerais – Empresa-mãe
+19,21123,Clientes – Clientes c/c – Clientes c/c em moeda estrangeira – Clientes gerais – Empresas subsidiárias
+20,21124,Clientes – Clientes c/c – Clientes c/c em moeda estrangeira – Clientes gerais – Empresas associadas
+21,21125,Clientes – Clientes c/c – Clientes c/c em moeda estrangeira – Clientes gerais – Empreendimentos conjuntos
+22,21126,Clientes – Clientes c/c – Clientes c/c em moeda estrangeira – Clientes gerais – Outras partes relacionadas
+23,21211,Clientes – títulos a receber – em moeda nacional – Clientes gerais
+24,21212,Clientes – títulos a receber – em moeda nacional – Clientes – Empresa-Mãe
+25,21213,Clientes – títulos a receber – em moeda nacional – Clientes – Empresas subsidiárias
+26,21214,Clientes – títulos a receber – em moeda nacional – Clientes – Empresas associadas
+27,21215,Clientes – títulos a receber – em moeda nacional – Clientes – Empreendimentos conjuntos
+28,21216,Clientes – títulos a receber – em moeda nacional – Clientes – Outras partes relacionadas
+29,21221,Clientes – títulos a receber – em moeda estrangeira – Clientes gerais
+30,21222,Clientes – títulos a receber – em moeda estrangeira – Clientes – Empresa-Mãe
+31,21223,Clientes – títulos a receber – em moeda estrangeira – Clientes – Empresas subsidiárias
+32,21224,Clientes – títulos a receber – em moeda estrangeira – Clientes – Empresas associadas
+33,21225,Clientes – títulos a receber – em moeda estrangeira – Clientes – Empreendimentos conjuntos
+34,21226,Clientes – títulos a receber – em moeda estrangeira – Clientes – Outras partes relacionadas
+35,213,| 214 | 215 | 217 Clientes – outros clientes - em moeda nacional
+36,213,| 214 | 215 | 217 Clientes – outros clientes - em moeda estrangeira
+37,216,Clientes – por acréscimos de rendimento - em moeda nacional
+38,216,Clientes – por acréscimos de rendimento - em moeda estrangeira
+39,2181,Clientes – adiantamentos de clientes – em moeda nacional
+40,2182,Clientes – adiantamentos de clientes – em moeda estrangeira
+41,219,Clientes - Perdas por imparidade acumuladas gerais
+42,219,Clientes - Perdas por imparidade acumuladas - Clientes c/c em moeda nacional - Empresa-mãe
+43,219,Clientes - Perdas por imparidade acumuladas subsidiárias
+44,219,Clientes - Perdas por imparidade acumuladas associadas
+45,219,Clientes - Perdas por imparidade acumuladas Empreendimentos conjuntos
+46,219,Clientes - Perdas por imparidade acumuladas partes relacionadas
+47,219,Clientes - Perdas por imparidade acumuladas - Clientes c/c em moeda estrangeira - Clientes gerais
+48,219,Clientes - Perdas por imparidade acumuladas Empresa-mãe
+49,219,Clientes - Perdas por imparidade acumuladas Empresas subsidiárias
+50,219,Clientes - Perdas por imparidade acumuladas Empresas associadas
+51,219,Clientes - Perdas por imparidade acumuladas Empreendimentos conjuntos
+52,219,Clientes - Perdas por imparidade acumuladas partes relacionadas
+53,219,Clientes - Perdas por imparidade acumuladas nacional - Clientes gerais
+54,219,Clientes - Perdas por imparidade acumuladas nacional – Empresa-mãe
+55,219,Clientes - Perdas por imparidade acumuladas nacional – Empresas subsidiárias
+56,219,Clientes - Perdas por imparidade acumuladas nacional – Empresas associadas
+57,219,Clientes - Perdas por imparidade acumuladas nacional – Empreendimentos conjuntos
+58,219,Clientes - Perdas por imparidade acumuladas
+59,219,Clientes - Perdas por imparidade acumuladas estrangeira - Clientes gerais
+60,219,Clientes - Perdas por imparidade acumuladas estrangeira – Empresa-mãe
+61,219,Clientes - Perdas por imparidade acumuladas - Clientes — títulos a receber em moeda estrangeira – Empresas subsidiárias
+62,219,Clientes - Perdas por imparidade acumuladas - Clientes — títulos a receber em moeda estrangeira – Empresas associadas
+63,219,Clientes - Perdas por imparidade acumuladas estrangeira – Empreendimentos conjuntos
+64,219,Clientes - Perdas por imparidade acumuladas - Clientes — títulos a receber em moeda estrangeira – Outras partes relacionadas
+65,219,Clientes - Perdas por imparidade acumuladas - em moeda nacional - Outros Clientes
+66,219,Clientes - Perdas por imparidade acumuladas - em moeda estrangeira - Outros Clientes
+67,22111,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda nacional
+68,22112,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda nacional -Empresa-
+69,22113,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda nacional - Empresas subsidiárias
+70,22114,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda nacional - Empresas associadas
+71,22115,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda nacional - Empreendimentos conjuntos
+72,22116,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda nacional – Outras partes relacionadas
+73,22121,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda estrangeira - Fornecedores gerais
+74,22122,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda estrangeira
+75,22123,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda estrangeira - Empresas subsidiárias
+76,22124,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda estrangeira – Empresas associadas
+77,22125,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda estrangeira
+78,22126,Fornecedores - Fornecedores c/c – Fornecedores c/c em moeda estrangeira
+79,22211,Fornecedores – títulos a pagar – em moeda nacional – Fornecedores gerais
+80,22212,Fornecedores – títulos a pagar – em moeda nacional – Empresa-mãe
+81,22213,Fornecedores – títulos a pagar – em moeda nacional – Empresas subsidiárias
+82,22214,Fornecedores – títulos a pagar – em moeda nacional – Empresas associadas
+83,22215,Fornecedores – títulos a pagar – em moeda nacional – Empreendimentos conjuntos
+84,22216,Fornecedores – títulos a pagar – em moeda nacional – Outras partes relacionadas
+85,22221,Fornecedores – títulos a pagar – em moeda estrangeira – Fornecedores gerais
+86,22222,Fornecedores – títulos a pagar – em moeda estrangeira – Empresa-mãe
+87,22223,Fornecedores – títulos a pagar – em moeda estrangeira – Empresas subsidiárias
+88,22224,Fornecedores – títulos a pagar – em moeda estrangeira – Empresas associadas
+89,22225,Fornecedores – títulos a pagar – em moeda estrangeira – Empreendimentos conjuntos
+90,22226,Fornecedores – títulos a pagar – em moeda estrangeira – Outras partes relacionadas
+91,223,| 224 | 227 Fornecedores – Outros fornecedores - em moeda nacional
+92,223,| 224 | 227 Fornecedores – Outros fornecedores - em moeda estrangeira
+93,2251,Fornecedores – faturas em receção e conferência - em moeda nacional
+94,2252,Fornecedores – faturas em receção e conferência - em moeda estrangeira
+95,2261,Fornecedores por acréscimos de gastos – em moeda nacional
+96,2262,Fornecedores por acréscimos de gastos – em moeda estrangeira
+97,2281,Adiantamentos a fornecedores – em moeda nacional
+98,2282,Adiantamentos a fornecedores – em moeda estrangeira
+99,229,Fornecedores – perdas por imparidade acumuladas - em moeda nacional
+100,229,Fornecedores – perdas por imparidade acumuladas - em moeda estrangeira
+101,2311,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Empréstimos bancários (CORRENTE)
+102,2311,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Empréstimos bancários (NÃO CORRENTE)
+103,2312,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Descobertos bancários (CORRENTE)
+104,2312,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Descobertos bancários (NÃO CORRENTE)
+105,2313,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Locações financeiras (CORRENTE)
+106,2313,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Locações financeiras (NÃO CORRENTE)
+107,2314,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Outros financiamentos (CORRENTE)
+108,2314,Financiamentos obtidos – Instituições de crédito e sociedades financeiras – Outros financiamentos (NÃO CORRENTE)
+109,2321,Financiamentos obtidos – Mercado de valores mobiliários – Empréstimos por obrigações (CORRENTE)
+110,2321,Financiamentos obtidos – Mercado de valores mobiliários – Empréstimos por obrigações (NÃO CORRENTE)
+111,2322,Financiamentos obtidos – Mercado de valores mobiliários – Outros financiamentos (CORRENTE)
+112,2322,Financiamentos obtidos – Mercado de valores mobiliários – Outros financiamentos (NÃO CORRENTE)
+113,2331,Financiamentos obtidos – Participantes de capital – Empresa-mãe – suprimentos e outros mútuos (CORRENTE)
+114,2331,Financiamentos obtidos – Participantes de capital – Empresa-mãe – suprimentos e outros mútuos (NÃO CORRENTE)
+115,2332,Financiamentos obtidos – participantes de capital – Outros participantes – suprimentos e outros mútuos (CORRENTE)
+116,2332,Financiamentos obtidos – participantes de capital – Outros participantes – suprimentos e outros mútuos (NÃO CORRENTE)
+117,234,"Financiamentos obtidos – Subsidiárias, associadas e empreendimentos conjuntos (CORRENTE)"
+118,234,"Financiamentos obtidos – Subsidiárias, associadas e empreendimentos conjuntos (NÃO CORRENTE)"
+119,238,Financiamentos obtidos – outros financiadores (CORRENTE) Incluir contas 235 |
+120,238,Financiamentos obtidos – outros financiadores (NÃO CORRENTE) Incluir contas 235 |
+121,2411,Estado e outros entes públicos – Imposto sobre o rendimento ano N – Pagamentos por conta
+122,2412,Estado e outros entes públicos – Imposto sobre o rendimento ano N – Retenção na fonte (terceiros)
+123,2413,Estado e outros entes públicos – Imposto sobre o rendimento ano N – Imposto estimado
+124,2417,Estado e outros entes públicos – Imposto sobre o rendimento ano N – Apuramento
+125,2418,Estado e outros entes públicos – Imposto sobre o rendimento ano N – Imposto a pagar
+126,2419,Estado e outros entes públicos – Imposto sobre o rendimento ano N – Imposto a recuperar
+127,2414,| 2415 | 2416 Estado e outros entes públicos – Imposto sobre o rendimento ano N - Outros
+128,2421,Estado e outros entes públicos – Imposto sobre o rendimento anos anteriores – Excesso de estimativa
+129,2422,Estado e outros entes públicos – Imposto sobre o rendimento anos anteriores – Insuficiência de estimativa
+130,2431,Estado e outros entes públicos – Retenção de impostos sobre rendimentos – trabalho dependente
+131,24321,Estado e outros entes públicos – Retenção de impostos sobre rendimentos – trabalho independente (RESIDENTE)
+132,24322,Estado e outros entes públicos – Retenção de impostos sobre rendimentos – trabalho independente (NÃO RESIDENTE)
+133,2433,Estado e outros entes públicos – Retenção de impostos sobre rendimentos – Capitais
+134,2434,Estado e outros entes públicos – Retenção de impostos sobre rendimentos – Prediais
+135,2435,Estado e outros entes públicos – Retenção de impostos sobre rendimentos - Outros Incluir contas 2436 |
+136,24411,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Suportado - Inventários
+137,24412,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Suportado - Investimentos
+138,24413,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Suportado – Outros bens e serviços
+139,24421,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Dedutível - Inventários
+140,24422,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Dedutível - Investimentos
+141,24423,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Dedutível – Outros bens e serviços
+142,24424,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Dedutível – Não pago (decreto lei 16/2004)
+143,24425,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Dedutível – Pago (decreto lei 16/2004)
+144,24431,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Liquidado – Operações gerais
+145,24432,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Liquidado – Auto consumos e operações gratuitas
+146,24433,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Liquidado – Operações especiais
+147,24434,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Liquidado – Não cobrado (decreto lei 16/2004)
+148,24435,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Liquidado – Cobrado (decreto lei 16/2004)
+149,24441,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Regularizações
+150,24442,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Regularizações
+151,24443,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Regularizações
+152,24444,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Regularizações – Anuais por variação do pró rata
+153,24448,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Regularizações – Outras regularizações anuais
+154,24445,| 24446 | Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Regularizações - Outras
+155,2445,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Apuramento
+156,24461,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — A pagar – Valores apurados
+157,24462,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — A pagar – Liquidações oficiosas
+158,2447,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — A recuperar
+159,2448,Estado e outros entes públicos - Imposto so- bre o valor acrescentado (IVA) - IVA — Reem- bolsos pedidos
+160,2449,Estado e outros entes públicos - Imposto sobre o valor acrescentado (IVA) - IVA — Li- quidações oficiosas
+161,246,Estado e outros entes públicos - Outros im- postos
+162,247,Estado e outros entes públicos - Tributos das autarquias locais
+163,248,Estado e outros entes públicos - Contribuições para a Segurança Social
+164,245,| 249 Estado e outros entes públicos - Outras tribu- tações
+165,251,Acionistas/sócios - Acionistas c/ subscrição
+166,252,Acionistas/sócios - Quotas não liberadas
+167,253,Acionistas/sócios - Adiantamentos por conta de lucros
+168,254,Acionistas/sócios - Resultados atribuídos
+169,255,Acionistas/sócios - Lucros disponíveis
+170,256,Acionistas/sócios - Financiamentos concedi- dos — empresa-mãe - (CORRENTE)
+171,256,Acionistas/sócios - Financiamentos concedidos — empresa-mãe - (NÃO CORRENTE)
+172,258,Acionistas/sócios - Outras operações - (COR- RENTE) Incluir conta 257
+173,258,Acionistas/sócios - Outras operações - (NÃO CORRENTE)
+174,259,Acionistas/sócios - Perdas por imparidade acumuladas - Acionistas c/ subscrição
+175,259,Acionistas/sócios - Perdas por imparidade acumuladas - Quotas não liberadas
+176,259,Acionistas/sócios - Perdas por imparidade acumuladas - Adiantamentos por conta de lucros
+177,259,Acionistas/sócios - Perdas por imparidade acumuladas - Resultados atribuídos
+178,259,Acionistas/sócios - Perdas por imparidade acumuladas - Lucros disponíveis
+179,259,Acionistas/sócios - Perdas por imparidade acumuladas - Financiamentos concedidos — empresa-mãe (CORRENTE)
+180,259,Acionistas/sócios - Perdas por imparidade acumuladas - Financiamentos concedidos — empresa-mãe (NÃO CORRENTE)
+181,259,Acionistas/sócios - Perdas por imparidade acumuladas - Outras operações (CORREN-
+182,259,Acionistas/sócios - Perdas por imparidade acumuladas - Outras operações (NÃO COR- RENTE)
+183,2611,Outras contas a receber e a pagar - Fornece- dores de investimentos - Fornecedores de in- vestimentos — contas gerais - (CORRENTE)
+184,2611,Outras contas a receber e a pagar - Forne- cedores de investimentos - Fornecedores de investimentos — contas gerais - (NÃO CORRENTE)
+185,2612,Outras contas a receber e a pagar - Fornece- dores de investimentos - Faturas em receção e conferência - (CORRENTE)
+186,2612,Outras contas a receber e a pagar - Fornece- dores de investimentos - Faturas em receção e conferência - (NÃO CORRENTE)
+187,2613,Outras contas a receber e a pagar - Forne- cedores de investimentos - Adiantamentos a fornecedores de investimentos - (CORREN-
+188,2613,Outras contas a receber e a pagar Adiantamentos a fornecedores de investimentos - (NÃO CORRENTE)
+189,2621,Outras contas a receber e a pagar - Devedores e credores por acréscimos - Devedores por acréscimos de rendimentos
+190,2622,Outras contas a receber e a pagar - Devedores e credores por acréscimos - Credores por acréscimos de gastos
+191,263,Outras contas a receber e a pagar - Benefícios pós-emprego
+192,2641,Outras contas a receber e a pagar - Impostos diferidos - Ativos por impostos diferidos
+193,2642,Outras contas a receber e a pagar - Impostos diferidos - Passivos por impostos diferidos
+194,265,Outras contas a receber e a pagar - Credores por subscrições não liberadas - (CORRENTE)
+195,265,Outras contas a receber e a pagar - Credores por subscrições não liberadas - (NÃO CORRENTE)
+196,266,Outras contas a receber e a pagar - Adiantamentos por conta de vendas
+197,268,Outras contas a receber e a pagar - Outros devedores e credores - (CORRENTE) Incluir conta 267
+198,268,Outras contas a receber e a pagar - Outros devedores e credores - (NÃO CORRENTE) Incluir conta 267
+199,269,Outras contas a receber e a pagar - Perdas por imparidade acumuladas - Fornecedores de investimentos - Adiantamentos a fornecedores de investimentos (CORRENTE)
+200,269,Outras contas a receber e a pagar - Perdas por imparidade acumuladas - Fornecedores de investimentos - Adiantamentos a fornecedores de investimentos (NÃO CORRENTE)
+201,269,Outras contas a receber e a pagar - Perdas por imparidade acumuladas - Devedores e credores por acréscimos - Devedores por acréscimos de rendimentos
+202,269,Outras contas a receber e a pagar - Perdas por imparidade acumuladas - Impostos diferidos - Ativos por impostos diferidos
+203,269,Outras contas a receber e a pagar - Perdas por imparidade acumuladas - Outros devedores e credores - (CORRENTE)
+204,269,Outras contas a receber e a pagar - Perdas por imparidade acumuladas - Outros devedores e credores - (NÃO CORRENTE)
+205,2711,Pessoal - Remunerações a pagar - Aos órgãos sociais
+206,2712,Pessoal - Remunerações a pagar - Ao pessoal
+207,2721,Pessoal - Adiantamentos - Aos órgãos sociais
+208,2722,Pessoal - Adiantamentos - Ao pessoal
+209,2731,Pessoal – Adiantamentos para gastos por conta da empresa – Aos órgãos sociais
+210,2732,Pessoal – Adiantamentos para gastos por conta da empresa – Ao pessoal
+211,274,| 275 Pessoal – Adiantamentos - Outros
+212,2761,Pessoal – Acréscimos com gastos com pessoal – Acréscimos por férias e subsídio férias e encargos
+213,2762,Pessoal – Acréscimos com gastos com pessoal – Outros acréscimos
+214,2771,Pessoal - Cauções - Dos órgãos sociais - (CORRENTE)
+215,2771,Pessoal - Cauções - Dos órgãos sociais - (NÃO CORRENTE
+216,2772,Pessoal - Cauções - Do pessoal - (CORRENTE)
+217,2772,Pessoal - Cauções - Do pessoal - (NÃO CORRENTE)
+218,2781,Pessoal - Outras operações - Com os órgãos sociais - (CORRENTE)
+219,2781,Pessoal - Outras operações - Com os órgãos sociais - (NÃO CORRENTE)
+220,2782,Pessoal - Outras operações - Com o pessoal - (CORRENTE)
+221,2782,Pessoal - Outras operações - Com o pessoal - (NÃO CORRENTE)
+222,279,Pessoal - Perdas por imparidade acumuladas
+223,279,Pessoal - Perdas por imparidade acumuladas
+224,279,Pessoal - Perdas por imparidade acumuladas empresa - Aos órgãos sociais
+225,279,Pessoal - Perdas por imparidade acumuladas empresa – Ao pessoal
+226,279,Pessoal - Perdas por imparidade acumuladas (CORRENTE)
+227,279,Pessoal - Perdas por imparidade acumuladas CORRENTE)
+228,279,Pessoal - Perdas por imparidade acumuladas - Outras operações - Ao pessoal (CORRENTE)
+229,279,Pessoal - Perdas por imparidade acumuladas - Outras operações - Ao pessoal (NÃO CORRENTE)
+230,281,Diferimentos - Gastos a reconhecer
+231,282,Diferimentos - Rendimentos a reconhecer
+232,283,Diferimentos – Subsídios para investimentos
+233,291,Provisões - Impostos
+234,292,Provisões - Garantias a clientes
+235,293,Provisões - Processos judiciais em curso
+236,294,Provisões - Acidentes de trabalho e doenças profissionais
+237,295,Provisões - Matérias ambientais
+238,296,Provisões - Contratos onerosos
+239,297,Provisões - Reestruturação
+240,298,Provisões - Outras provisões
+241,3111,Ativos biológicos - Consumíveis - Animais
+242,3112,Ativos biológicos - Consumíveis - Plantas
+243,3121,Ativos biológicos - De produção - Animais
+244,3122,Ativos biológicos - De produção - Plantas
+245,313,Ativos biológicos – outros ativos biológicos
+246,3211,Mercadorias – Compra – Mercado interno
+247,3212,Mercadorias – Compra – Mercado externo
+248,3221,Mercadorias – inventário – em armazém
+249,3222,Mercadorias – inventário – em poder de terceiros
+250,3223,Mercadorias – inventário – em trânsito
+251,3224,Mercadorias – inventário – adiantamentos por conta de compras
+252,3311,Produtos acabados e intermédios – produtos acabados – em armazém
+253,3312,Produtos acabados e intermédios – produtos acabados – em poder de terceiros
+254,3321,Produtos acabados e intermédios – produtos intermédios – em armazém
+255,3322,Produtos acabados e intermédios – produtos intermédios – em poder de terceiros
+256,341,"Subprodutos, desperdícios, resíduos e refugos - Subprodutos"
+257,342,"Subprodutos, desperdícios, resíduos e refugos – Desperdícios, resíduos e refugos"
+258,35,Produtos e trabalhos em curso Incluir conta 351
+259,3611,"Matérias-primas, subsidiárias e de consumo"
+260,3612,"Matérias-primas, subsidiárias e de consumo"
+261,3621,"Matérias-primas, subsidiárias e de consumo"
+262,3622,"Matérias-primas, subsidiárias e de consumo"
+263,3623,"Matérias-primas, subsidiárias e de consumo"
+264,3624,"Matérias-primas, subsidiárias e de consumo compras"
+265,37,Outros produtos de consumo
+266,4111,Investimentos financeiros - Investimentos em subsidiárias - Participações de capital Participação de capital
+267,4111,Investimentos financeiros - Investimentos em subsidiárias - Participações de capital Trespasse (Goodwill)
+268,4112,Investimentos financeiros - Investimentos em subsidiárias - Participações de capital — outros métodos
+269,4113,Investimentos financeiros - Investimentos em subsidiárias - Empréstimos concedidos
+270,4121,Investimentos financeiros - Investimentos em associadas – Participações de capital – método da equivalência patrimonial – Participação de capital
+271,4121,Investimentos financeiros - Investimentos em associadas – Participações de capital – método da equivalência patrimonial – Trespasse (Goodwill)
+272,4122,Investimentos financeiros - Investimentos em associadas - Participações de capital — outros métodos
+273,4123,Investimentos financeiros - Investimentos em associadas – Empréstimos concedidos
+274,4131,Investimentos financeiros - Investimentos em entidades conjuntamente controladas equivalência patrimonial - Participação de capital
+275,4131,Investimentos financeiros - Investimentos em entidades conjuntamente controladas equivalência patrimonial – Trespasse (Goodwill)
+276,4132,Investimentos financeiros - Investimentos em entidades conjuntamente controladas - Participações de capital — outros métodos
+277,4133,Investimentos financeiros - Investimentos em entidades conjuntamente controladas - Empréstimos concedidos
+278,4141,Investimentos financeiros - Investimentos noutras empresas - Participações de capital
+279,4142,Investimentos financeiros - Investimentos noutras empresas - Empréstimos concedidos
+280,4151,Investimentos financeiros - Outros investimentos financeiros - Detidos até à maturidade
+281,4158,Investimentos financeiros - Outros investimentos financeiros - Outros
+282,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em subsidiárias - Participações de capital Participação de capital
+283,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em subsidiárias - Participações de capital Trespasse (Goodwill)
+284,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em subsidiárias - Participações de capital — outros métodos
+285,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em subsidiárias - Empréstimos concedidos
+286,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em associadas - Participações de capital Participação de capital
+287,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em associadas - Participações de capital Trespasse (Goodwill)
+288,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em associadas - Participações de capital — outros métodos
+289,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em associadas - Empréstimos concedidos
+290,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos em entidades conjuntamente controladas equivalência patrimonial - Participação de capital
+291,419,Investimentos financeiros - Perdas por imparidade acumuladas conjuntamente controladas - Participações de capital — método da equivalência patrimonial – Trespasse (Goodwill)
+292,419,Investimentos financeiros - Perdas por imparidade acumuladas conjuntamente controladas - Participações de capital — outros métodos
+293,419,Investimentos financeiros - Perdas por imparidade acumuladas conjuntamente controladas - Empréstimos concedidos
+294,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos noutras empresas - Participações de capital
+295,419,Investimentos financeiros - Perdas por imparidade acumuladas - Investimentos noutras empresas - Empréstimos concedidos
+296,419,Investimentos financeiros - Perdas por imparidade acumuladas - Outros investimentos financeiros - Detidos até à maturidade
+297,419,Investimentos financeiros - Perdas por imparidade acumuladas - Outros investimentos financeiros - Outros
+298,421,Propriedades de investimento - Terrenos e recursos naturais
+299,422,Propriedades de investimento - Edifícios e outras construções
+300,426,Propriedades de investimento - Outras propriedades de investimento
+301,428,Propriedades de investimento - Depreciações acumuladas - Terrenos e recursos naturais
+302,428,Propriedades de investimento - Depreciações acumuladas - Edifícios e outras construções
+303,428,Propriedades de investimento - Depreciações acumuladas - Outras propriedades de investimento
+304,429,Propriedades de investimento - Perdas por imparidade acumuladas - Terrenos e recursos naturais
+305,429,Propriedades de investimento - Perdas por imparidade acumuladas - Edifícios e outras construções
+306,429,Propriedades de investimento - Perdas por imparidade acumuladas - Outras propriedades de investimento
+307,431,Ativos fixos tangíveis - Terrenos e recursos naturais
+308,432,Ativos fixos tangíveis - Edifícios e outras construções
+309,433,Ativos fixos tangíveis - Equipamento básico
+310,434,Ativos fixos tangíveis - Equipamento de transporte
+311,435,Ativos fixos tangíveis - Equipamento administrativo
+312,436,Ativos fixos tangíveis - Equipamentos biológicos
+313,437,Ativos fixos tangíveis - Outros ativos fixos tangíveis
+314,438,Ativos fixos tangíveis - Depreciações acumuladas - Terrenos e recursos naturais
+315,438,Ativos fixos tangíveis - Depreciações acumuladas - Edifícios e outras construções
+316,438,Ativos fixos tangíveis - Depreciações acumuladas - Equipamento básico
+317,438,Ativos fixos tangíveis - Depreciações acumuladas - Equipamento de transporte
+318,438,Ativos fixos tangíveis - Depreciações acumuladas - Equipamento administrativo
+319,438,Ativos fixos tangíveis - Depreciações acumuladas - Equipamentos biológicos
+320,438,Ativos fixos tangíveis - Depreciações acumuladas - Outros ativos fixos tangíveis
+321,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Terrenos e recursos naturais
+322,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Edifícios e outras construções
+323,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Equipamento básico
+324,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Equipamento de transporte
+325,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Equipamento administrativo
+326,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Equipamentos biológicos
+327,439,Ativos fixos tangíveis - Perdas por imparidade acumuladas - Outros ativos fixos tangíveis
+328,441,Ativos intangíveis – Trespasse (Goodwill)
+329,442,Ativos intangíveis – Propriedade industrial
+330,443,Ativos intangíveis - Programas de computador
+331,446,Ativos intangíveis - Outros ativos intangíveis Incluir contas 444 |
+332,448,Ativos intangíveis - Amortizações acumuladas – Trespasse (Goodwill)
+333,448,Ativos intangíveis - Amortizações acumuladas - Propriedade industrial
+334,448,Ativos intangíveis - Amortizações acumuladas - Programas de computador
+335,448,Ativos intangíveis - Amortizações acumuladas - Outros ativos intangíveis
+336,449,Ativos intangíveis - Perdas por imparidade acumuladas – Trespasse (Goodwill)
+337,449,Ativos intangíveis - Perdas por imparidade acumuladas - Propriedade industrial
+338,449,Ativos intangíveis - Perdas por imparidade acumuladas - Programas de computador
+339,449,Ativos intangíveis - Perdas por imparidade acumuladas - Outros ativos intangíveis
+340,451,Investimentos em curso - Investimentos financeiros em curso
+341,452,Investimentos em curso – Ativos fixos tangíveis em curso
+342,453,Investimentos em curso - Ativos intangíveis em curso – Projetos de desenvolvimento Incluir conta 4532 a
+343,454,Investimentos em curso - Adiantamentos por conta de investimentos - Investimentos financeiros em curso
+344,454,Investimentos em curso - Adiantamentos por conta de investimentos - Ativos fixos tangíveis em curso
+345,454,Investimentos em curso - Adiantamentos por conta de investimentos - Ativos intangíveis em curso
+346,459,Investimentos em curso - Perdas por imparidade acumuladas - Investimentos financeiros em curso
+347,459,Investimentos em curso - Perdas por imparidade acumuladas - Ativos fixos tangíveis em curso
+348,459,Investimentos em curso - Perdas por imparidade acumuladas - Ativos intangíveis em curso
+349,459,Investimentos em curso - Perdas por imparidade acumuladas investimentos - Investimentos financeiros em curso
+350,459,Investimentos em curso - Perdas por imparidade acumuladas investimentos - Ativos fixos tangíveis em curso
+351,459,Investimentos em curso - Perdas por imparidade acumuladas investimentos - Ativos intangíveis em curso
+352,46,Ativos não correntes detidos para venda venda - Investimentos financeiros Incluir contas 461 a
+353,46,Ativos não correntes detidos para venda venda - Ativos fixos tangíveis Incluir contas 461 a
+354,46,Ativos não correntes detidos para venda venda - Ativos intangíveis Incluir contas 461 a
+355,46,Ativos não correntes detidos para venda venda - Outros Incluir contas 461 a
+356,46,Ativos não correntes detidos para venda - Passivos não correntes detidos para venda Incluir contas 461 a
+357,469,Ativos não correntes detidos para venda Investimentos financeiros
+358,469,Ativos não correntes detidos para venda Ativos fixos tangíveis
+359,469,Ativos não correntes detidos para venda Ativos intangíveis
+360,469,Ativos não correntes detidos para venda - Perdas por imparidade acumuladas - Outros
+361,51,Capital
+362,521,Ações (quotas) próprias - Valor nominal
+363,522,Ações (quotas) próprias - Descontos e prémios
+364,53,Prestações suplementares e outros instrumentos de capital próprio
+365,54,Prémios de emissão
+366,5511,Ajustamentos em ativos financeiros equivalência patrimonial - Ajustamentos de transição
+367,5512,Ajustamentos em ativos financeiros equivalência patrimonial - Lucros não atribuídos
+368,5513,Ajustamentos em ativos financeiros equivalência patrimonial - Decorrentes de outras variações nos capitais próprios das participadas
+369,558,Ajustamentos em ativos financeiros - Outros Incluir contas 552 | 553
+370,5611,Excedentes de revalorização de ativos fixos tangíveis e intangíveis - Revalorizações decorrentes de diplomas legais - Antes de imposto sobre o rendimento
+371,5612,Excedentes de revalorização de ativos fixos tangíveis e intangíveis - Revalorizações decorrentes de diplomas legais - Impostos diferidos
+372,5681,Excedentes de revalorização de ativos fixos tangíveis e intangíveis - Outros excedentes - Antes de imposto sobre o rendimento Incluir contas 562 |
+373,5682,Excedentes de revalorização de ativos fixos tangíveis e intangíveis - Outros excedentes - Impostos diferidos
+374,571,Outras variações no capital próprio demonstrações financeiras
+375,572,Outras variações no capital próprio - Ajustamentos por impostos diferidos
+376,578,Outras variações no capital próprio - Outras Incluir contas 573 |
+377,581,Reservas - Reservas legais
+378,588,Reservas - Outras reservas Incluir contas 582 | 583
+379,591,Resultados – Resultados transitados
+380,592,Resultados – Resultado do período anterior a aguardar distribuição
+381,5931,Resultados – Resultado líquido do período – Resultado antes de impostos
+382,5932,Resultados – Resultado líquido do período – Imposto sobre o rendimento do período
+383,5933,Resultados – Resultado líquido do período – Resultado líquido- apuramento
+384,599,Resultados – dividendos antecipados
+385,6111,Gastos com inventários vendidos e consumidos e variação de produção matérias consumidas - Mercadorias
+386,6112,"Gastos com inventários vendidos e consumidos e variação de produção e matérias consumidas – Matérias- primas, subsidiárias e de consumo"
+387,6113,Gastos com inventários vendidos e consumidos e variação de produção matérias consumidas – Outros produtos de consumo
+388,612,Gastos com inventários vendidos e consumidos e variação de produção - Gastos com ativos biológicos - compras
+389,613,Gastos com inventários vendidos e consumidos e variação de produção produção
+390,6141,Gastos com inventários vendidos e consumidos e variação de produção – Variações nos inventários de produção
+391,6142,Gastos com inventários vendidos e consumidos e variação de produção – Variações nos inventários de produção refugos
+392,6143,Gastos com inventários vendidos e consumidos e variação de produção – Variações nos inventários de produção
+393,6144,Gastos com inventários vendidos e consumidos e variação de produção – Variações nos inventários de produção
+394,6211,Fornecimentos e serviços externos – Água
+395,6212,Fornecimentos e serviços externos – Eletricidade
+396,62131,Fornecimentos e serviços externos – Combustíveis e outros fluídos - Gasóleo
+397,62132,Fornecimentos e serviços externos – Combustíveis e outros fluídos – Gasolina
+398,62138,Fornecimentos e serviços externos – Combustíveis e outros fluídos – Outros combustíveis
+399,62139,Fornecimentos e serviços externos – Combustíveis e outros fluídos – Outros fluídos
+400,6214,Fornecimentos e serviços externos – Conservação e reparação
+401,6215,Fornecimentos e serviços externos – Ferramentas e utensílios de desgaste rápido
+402,6216,Fornecimentos e serviços externos – Material de escritório
+403,6217,Fornecimentos e serviços externos – Publicidade e propaganda
+404,6218,Fornecimentos e serviços externos – Livros e documentação técnica
+405,6219,"Fornecimentos e serviços externos – Limpeza, higiene e conforto"
+406,6221,Fornecimentos e serviços externos – Rendas e alugueres
+407,6222,Fornecimentos e serviços externos – Despesas de representação
+408,6224,Fornecimentos e serviços externos – Comunicação
+409,6225,Fornecimentos e serviços externos – Seguros
+410,6227,Fornecimentos e serviços externos – Vigilância e segurança
+411,6228,Fornecimentos e serviços externos – Royalties
+412,6229,Fornecimentos e serviços externos – Estudos e pareceres
+413,6230,Fornecimentos e serviços externos – Serviços de informática
+414,6231,Fornecimentos e serviços externos – Transporte de inventários
+415,6233,Fornecimentos e serviços externos – Deslocações e estadas
+416,6234,Fornecimentos e serviços externos – Comissões
+417,6235,Fornecimentos e serviços externos – Honorários
+418,6236,Fornecimentos e serviços externos – Contencioso e notariado
+419,6237,Fornecimentos e serviços externos – Serviços bancários
+420,6296,Fornecimentos e serviços externos – Equipamentos de baixo valor
+421,6297,Fornecimentos e serviços externos – Artigos para oferta
+422,6298,Fornecimentos e serviços externos – Outros fornecimentos e serviços Incluir contas 6220 |
+423,631,Gastos com o pessoal - Remunerações dos órgãos sociais
+424,632,Gastos com o pessoal - Remunerações do pessoal
+425,6331,Gastos com o pessoal - Benefícios pós
+426,6332,Gastos com o pessoal - Benefícios pós
+427,634,Gastos com o pessoal - Indemnizações
+428,635,Gastos com o pessoal - Encargos sobre remunerações
+429,636,Gastos com o pessoal - Seguros de acidentes no trabalho e doenças profissionais
+430,637,Gastos com o pessoal - Gastos de ação social
+431,638,Gastos com o pessoal - Outros gastos com o pessoal
+432,641,Gastos de depreciação e de amortização Terrenos e recursos naturais
+433,641,Gastos de depreciação e de amortização Edifícios e outras construções
+434,641,Gastos de depreciação e de amortização propriedades de investimento
+435,642,Gastos de depreciação e de amortização recursos naturais
+436,642,Gastos de depreciação e de amortização outras construções
+437,642,Gastos de depreciação e de amortização básico
+438,642,Gastos de depreciação e de amortização de transporte
+439,642,Gastos de depreciação e de amortização administrativo
+440,642,Gastos de depreciação e de amortização biológicos
+441,642,Gastos de depreciação e de amortização fixos tangíveis
+442,643,Gastos de depreciação e de amortização (Goodwill)
+443,643,Gastos de depreciação e de amortização industrial
+444,643,Gastos de depreciação e de amortização computador
+445,643,Gastos de depreciação e de amortização intangíveis
+446,64,Gastos de depreciação e de amortização
+447,64,Gastos de depreciação e de amortização
+448,64,Gastos de depreciação e de amortização (Goodwill)
+449,6511,Perdas por imparidade - Em dívidas a receber - Clientes
+450,6512,Perdas por imparidade - Em dívidas a receber - Outros devedores
+451,652,Perdas por imparidade – Ajustamentos em inventários
+452,653,Perdas por imparidade - Em investimentos financeiros - Participações de capital
+453,653,Perdas por imparidade - Em investimentos financeiros - Empréstimos concedidos
+454,653,Perdas por imparidade - Em investimentos financeiros - Outros investimentos financeiros
+455,653,Perdas por imparidade - Em investimentos financeiros – Trespasse (Goodwill)
+456,654,Perdas por imparidade - Em propriedades de investimento - Terrenos e recursos naturais
+457,654,Perdas por imparidade - Em propriedades de investimento - Edifícios e outras construções
+458,654,Perdas por imparidade - Em propriedades de investimento - Outras propriedades de investimento
+459,655,Perdas por imparidade - Em ativos fixos tangíveis - Terrenos e recursos naturais
+460,655,Perdas por imparidade - Em ativos fixos tangíveis - Edifícios e outras construções
+461,655,Perdas por imparidade - Em ativos fixos tangíveis - Equipamento básico
+462,655,Perdas por imparidade - Em ativos fixos tangíveis - Equipamento de transporte
+463,655,Perdas por imparidade - Em ativos fixos tangíveis - Equipamento administrativo
+464,655,Perdas por imparidade - Em ativos fixos tangíveis - Equipamentos biológicos
+465,655,Perdas por imparidade - Em ativos fixos tangíveis - Outros ativos fixos tangíveis
+466,656,Perdas por imparidade - Em ativos intangíveis – Trespasse (Goodwill)
+467,656,Perdas por imparidade - Em ativos intangíveis - Propriedade industrial
+468,656,Perdas por imparidade - Em ativos intangíveis - Programas de computador
+469,656,Perdas por imparidade - Em ativos intangíveis - Outros ativos intangíveis
+470,657,Perdas por imparidade - Em investimentos em curso - Investimentos financeiros em curso
+471,657,Perdas por imparidade - Em investimentos em curso - Ativos fixos tangíveis em curso
+472,657,Perdas por imparidade - Em investimentos em curso - Ativos intangíveis em curso
+473,658,Perdas por imparidade - Em ativos não correntes detidos para venda - Investimentos financeiros
+474,658,Perdas por imparidade - Em ativos não correntes detidos para venda - Propriedades de investimento
+475,658,Perdas por imparidade - Em ativos não correntes detidos para venda - Ativos fixos tangíveis
+476,658,Perdas por imparidade - Em ativos não correntes detidos para venda - Ativos intangíveis
+477,658,Perdas por imparidade - Em ativos não correntes detidos para venda - Outros
+478,661,Perdas por reduções de justo valor - Em instrumentos financeiros
+479,662,Perdas por reduções de justo valor Participações de capital
+480,662,Perdas por reduções de justo valor - Em investimentos financeiros - Outros investimentos financeiros
+481,663,Perdas por reduções de justo valor - Em propriedades de investimento - Terrenos e recursos naturais
+482,663,Perdas por reduções de justo valor - Em propriedades de investimento - Edifícios e outras construções
+483,663,Perdas por reduções de justo valor - Em propriedades de investimento - Outras propriedades de investimento
+484,664,Perdas por reduções de justo valor - Em ativos biológicos - Consumíveis
+485,664,Perdas por reduções de justo valor - Em ativos biológicos - De produção
+486,671,Provisões do período - Impostos
+487,672,Provisões do período - Garantias a clientes
+488,673,Provisões do período - Processos judiciais em curso
+489,674,Provisões do período - Acidentes no trabalho e doenças profissionais
+490,675,Provisões do período - Matérias ambientais
+491,676,Provisões do período - Contratos onerosos
+492,677,Provisões do período - Reestruturação
+493,678,Provisões do período - Outras provisões
+494,68111,Outros gastos - Impostos - Impostos diretos – Imposto de capitais
+495,68112,Outros gastos - Impostos - Impostos diretos – Imposto único sobre património
+496,68113,Outros gastos - Impostos - Impostos diretos – Imposto de circulação automóvel
+497,68118,Outros gastos - Impostos - Impostos diretos – Outros impostos diretos Incluir contas 68114
+498,68121,Outros gastos - Impostos - Impostos indiretos – Direitos Aduaneiros
+499,68122,Outros gastos - Impostos - Impostos indiretos – Imposto sobre o valor acrescentado
+500,68123,Outros gastos - Impostos - Impostos indiretos – Imposto de selo
+501,68128,Outros gastos - Impostos - Impostos indiretos – Outros impostos indiretos Incluir contas 68124
+502,6813,Outros gastos - Impostos - Taxas
+503,682,Outros gastos - Descontos de pronto pagamento concedidos
+504,683,Outros gastos - Dívidas incobráveis
+505,6841,Outros gastos - Perdas em inventários - Sinistros
+506,6842,Outros gastos - Perdas em inventários - Quebras
+507,6848,Outros gastos - Perdas em inventários - Outras perdas Incluir contas 6843 |
+508,6851,"Outros gastos - Gastos em subsidiárias, associadas e empreendimentos conjuntos - Cobertura de prejuízos"
+509,6852,"Outros gastos - Gastos em subsidiárias, associadas e empreendimentos conjuntos patrimonial"
+510,6853,"Outros gastos - Gastos em subsidiárias, associadas e empreendimentos conjuntos - Alienações"
+511,6858,"Outros gastos - Gastos em subsidiárias, associadas e empreendimentos conjuntos - Outros gastos"
+512,6861,Outros gastos - Gastos nos restantes investimentos financeiros - Cobertura de prejuízos
+513,6862,Outros gastos - Gastos nos restantes investimentos financeiros - Alienações
+514,6868,Outros gastos - Gastos nos restantes investimentos financeiros – Outros gastos
+515,6871,Outros gastos - Gastos em investimentos não financeiros - Alienações
+516,6872,Outros gastos - Gastos em investimentos não financeiros - Sinistros
+517,6873,Outros gastos - Gastos em investimentos não financeiros - Abates
+518,6874,Outros gastos - Gastos em investimentos não financeiros - Gastos em propriedades de investimento
+519,6875,Outros gastos - Gastos em investimentos não financeiros – Outros gastos
+520,6881,Outros gastos - Outros - Correções relativas a períodos anteriores
+521,6882,Outros gastos - Outros - Donativos
+522,6883,Outros gastos - Outros - Quotizações
+523,6884,Outros gastos - Outros - Ofertas e amostras de inventários
+524,6885,Outros gastos - Outros - Insuficiência da estimativa para impostos
+525,6886,Outros gastos - Outros - Perdas em instrumentos financeiros
+526,68888,Outros gastos - Outros - Outros não especificados
+527,6911,Gastos de financiamento - Juros suportados - Juros de financiamentos obtidos
+528,6918,Gastos de financiamento - Juros suportados - Outros juros
+529,6921,Gastos de financiamento - Diferenças de câmbio desfavoráveis - Relativas a financiamentos obtidos
+530,6928,Gastos de financiamento - Diferenças de câmbio desfavoráveis - Outras
+531,6981,Gastos de financiamento - Outras perdas de financiamento - Relativos a financiamentos obtidos
+532,6988,Gastos de financiamento - Outras perdas de financiamento - Outros
+533,711,Vendas - Mercadorias
+534,712,Vendas - Produtos acabados e intermédios
+535,713,"Vendas - Subprodutos, desperdícios, resíduos e refugos"
+536,714,Vendas - Ativos biológicos
+537,715,| 716 Vendas – outras vendas
+538,717,Vendas - Devoluções de vendas
+539,718,Vendas - Descontos e abatimentos em vendas
+540,719,Vendas – “Rappel” sobre vendas
+541,721,Prestações de serviços - Serviço A
+542,722,Prestações de serviços - Serviço B
+543,723,| 724 | 726 | 727 Prestações de serviços – Outros serviços
+544,725,Prestações de serviços - Serviços secundários
+545,728,Prestações de serviços - Descontos e abatimentos
+546,731,Trabalhos para a própria entidade - Ativos fixos tangíveis
+547,732,Trabalhos para a própria entidade - Ativos intangíveis
+548,733,Trabalhos para a própria entidade - Propriedades de investimento
+549,734,| 735 | 736 | 737 Trabalhos para a própria entidade - Outros
+550,741,Subsídios à exploração - Subsídios do Estado e outros entes públicos
+551,742,Subsídios à exploração - Subsídios de outras entidades
+552,75,Rendimentos - Outros rendimentos Incluir conta 751 a 759
+553,7611,Reversões - De depreciações e de amortizações - Propriedades de investimento - Terrenos e recursos naturais
+554,7611,Reversões - De depreciações e de amortizações - Propriedades de investimento - Edifícios e outras construções
+555,7611,Reversões - De depreciações e de amortizações - Propriedades de investimento - Outras propriedades de investimento
+556,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Terrenos e recursos naturais
+557,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Edifícios e outras construções
+558,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Equipamento básico
+559,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Equipamento de transporte
+560,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Equipamento administrativo
+561,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Equipamentos biológicos
+562,7612,Reversões - De depreciações e de amortizações - Ativos fixos tangíveis - Outros ativos fixos tangíveis
+563,7613,Reversões - De depreciações e de amortizações - Ativos intangíveis - Trespasse (Goodwill)
+564,7613,Reversões - De depreciações e de amortizações - Ativos intangíveis - Propriedade industrial
+565,7613,Reversões - De depreciações e de amortizações - Ativos intangíveis - Programas de computador
+566,7613,Reversões - De depreciações e de amortizações - Ativos intangíveis - Outros ativos intangíveis
+567,761,Reversões - De depreciações e de amortizações - Ativos biológicos - Consumíveis
+568,761,Reversões - De depreciações e de amortizações - Ativos biológicos - De produção
+569,761,Reversões - De depreciações e de amortizações - Investimentos financeiros
+570,76211,Reversões - De perdas por imparidade - Em dívidas a receber - Clientes
+571,76212,Reversões - De perdas por imparidade - Em dívidas a receber - Outros devedores
+572,7622,Reversões - De perdas por imparidade – Ajustamentos em inventários - Mercadorias
+573,7622,"Reversões - De perdas por imparidade Matérias-primas, subsidiárias e de consumo"
+574,7622,Reversões - De perdas por imparidade – Ajustamentos em inventários - Produtos acabados e intermédios
+575,7622,"Reversões - De perdas por imparidade Subprodutos, desperdícios, resíduos e refugos"
+576,7622,Reversões - De perdas por imparidade – Ajustamentos em inventários - Produtos e trabalhos em curso
+577,7622,Reversões - De perdas por imparidade biológicos consumíveis
+578,7622,Reversões - De perdas por imparidade biológicos de produção
+579,7623,Reversões - De perdas por imparidade Participações de capital
+580,7623,Reversões - De perdas por imparidade Empréstimos concedidos
+581,7623,Reversões - De perdas por imparidade - Em investimentos financeiros - Outros investimentos financeiros
+582,7624,Reversões - De perdas por imparidade Terrenos e recursos naturais
+583,7624,Reversões - De perdas por imparidade Edifícios e outras construções
+584,7624,Reversões - De perdas por imparidade Outras propriedades de investimento
+585,7625,Reversões - De perdas por imparidade recursos naturais
+586,7625,Reversões - De perdas por imparidade outras construções
+587,7625,Reversões - De perdas por imparidade - Em ativos fixos tangíveis - Equipamento básico
+588,7625,Reversões - De perdas por imparidade - Em ativos fixos tangíveis - Equipamento de transporte
+589,7625,Reversões - De perdas por imparidade - Em ativos fixos tangíveis - Equipamento administrativo
+590,7625,Reversões - De perdas por imparidade Equipamentos biológicos
+591,7625,Reversões - De perdas por imparidade - Em ativos fixos tangíveis - Outros ativos fixos tangíveis
+592,7626,Reversões - De perdas por imparidade industrial
+593,7626,Reversões - De perdas por imparidade computador
+594,7626,Reversões - De perdas por imparidade intangíveis
+595,7627,Reversões - De perdas por imparidade Investimentos financeiros em curso
+596,7627,Reversões - De perdas por imparidade Propriedades de investimento em curso
+597,7627,Reversões - De perdas por imparidade fixos tangíveis em curso
+598,7627,Reversões - De perdas por imparidade intangíveis em curso
+599,7627,Reversões - De perdas por imparidade - Em investimentos em curso - Adiantamentos por conta de investimentos - Investimentos financeiros em curso
+600,7627,Reversões - De perdas por imparidade - Em investimentos em curso - Adiantamentos por conta de investimentos - Propriedades de investimento em curso
+601,7627,Reversões - De perdas por imparidade - Em investimentos em curso - Adiantamentos por conta de investimentos - Ativos fixos tangíveis em curso
+602,7627,Reversões - De perdas por imparidade - Em investimentos em curso - Adiantamentos por conta de investimentos - Ativos intangíveis em curso
+603,7628,Reversões - De perdas por imparidade venda - Investimentos financeiros
+604,7628,Reversões - De perdas por imparidade venda - Propriedades de investimento
+605,7628,Reversões - De perdas por imparidade venda - Ativos fixos tangíveis
+606,7628,Reversões - De perdas por imparidade venda - Ativos intangíveis
+607,7628,Reversões - De perdas por imparidade venda - Outros
+608,7631,Reversões - De provisões - Impostos
+609,7632,Reversões - De provisões - Garantias a clientes
+610,7633,Reversões - De provisões - Processos judiciais em curso
+611,7634,Reversões - De provisões - Acidentes no trabalho e doenças profissionais
+612,7635,Reversões - De provisões - Matérias ambientais
+613,7636,Reversões - De provisões - Contratos onerosos
+614,7637,Reversões - De provisões - Reestruturação
+615,7638,Reversões - De provisões - Outras provisões
+616,771,Ganhos por aumentos de justo valor - Em instrumentos financeiros
+617,772,Ganhos por aumentos de justo valor Participações de capital
+618,772,Ganhos por aumentos de justo valor - Em investimentos financeiros - Outros investimentos financeiros
+619,773,Ganhos por aumentos de justo valor Terrenos e recursos naturais
+620,773,Ganhos por aumentos de justo valor Edifícios e outras construções
+621,773,Ganhos por aumentos de justo valor Outras propriedades de investimento
+622,773,Ganhos por aumentos de justo valor Propriedades de investimento em curso
+623,774,Ganhos por aumentos de justo valor - Em ativos biológicos - Consumíveis
+624,774,Ganhos por aumentos de justo valor - Em ativos biológicos - De produção
+625,7811,Outros rendimentos - Rendimentos suplementares - Serviços sociais
+626,7812,Outros rendimentos - Rendimentos suplementares - Aluguer de equipamento
+627,7813,"Outros rendimentos - Rendimentos suplementares - Estudos, projetos e assistência tecnológica"
+628,7814,Outros rendimentos - Rendimentos suplementares - Royalties
+629,7815,Outros rendimentos - Rendimentos suplementares - Desempenho de cargos sociais noutras empresas
+630,7816,Outros rendimentos - Rendimentos suplementares - Outros rendimentos suplementares
+631,782,Outros rendimentos - Descontos de pronto pagamento obtidos
+632,783,Outros rendimentos - Recuperação de dívidas a receber
+633,7841,Outros rendimentos - Ganhos em inventários - Sinistros
+634,7842,Outros rendimentos - Ganhos em inventários - Sobras
+635,7848,Outros rendimentos - Ganhos em inventários - Outros ganhos
+636,7851,"Outros rendimentos - Rendimentos em subsidiárias, associadas e empreendimentos conjuntos - Dividendos"
+637,7852,"Outros rendimentos - Rendimentos em subsidiárias, associadas e empreendimentos conjuntos - Aplicação do método da equivalência patrimonial"
+638,7853,"Outros rendimentos - Rendimentos em subsidiárias, associadas e empreendimentos conjuntos - Alienações"
+639,7858,"Outros rendimentos - Rendimentos em subsidiárias, associadas e empreendimentos conjuntos - Outros rendimentos"
+640,7861,Outros rendimentos - Rendimentos nos restantes investimentos financeiros - Dividendos
+641,7862,Outros rendimentos - Rendimentos nos restantes investimentos financeiros - Juros
+642,7863,Outros rendimentos - Rendimentos nos restantes investimentos financeiros - Diferenças de câmbio favoráveis
+643,7864,Outros rendimentos - Rendimentos nos restantes investimentos financeiros – Alienações
+644,7868,Outros rendimentos - Rendimentos nos restantes investimentos financeiros – Outros rendimentos
+645,7871,Outros rendimentos - Rendimentos em investimentos não financeiros - Alienações
+646,7872,Outros rendimentos - Rendimentos em investimentos não financeiros - Sinistros
+647,7873,Outros rendimentos - Rendimentos em investimentos não financeiros - Rendas e outros rendimentos em propriedades de investimento
+648,7878,Outros rendimentos - Rendimentos em investimentos não financeiros - Outros rendimentos
+649,7881,Outros rendimentos - Outros - Correções relativas a períodos anteriores
+650,7882,Outros rendimentos - Outros - Excesso da estimativa para impostos
+651,7883,Outros rendimentos - Outros investimentos
+652,7884,Outros rendimentos - Outros - Ganhos em outros instrumentos financeiros
+653,7885,Outros rendimentos - Outros - Restituição de impostos
+654,7888,Outros rendimentos - Outros - Outros não especificados
+655,7911,Ganhos de financiamento - Juros obtidos
+656,7918,Ganhos de financiamento - Juros obtidos
+657,7921,Ganhos de financiamento – Diferenças de câmbio favoráveis – Relativas a aplicações de financiamentos obtidos
+658,7928,Ganhos de financiamento – Diferenças de câmbio favoráveis – Outras
+659,7981,Outros ganhos de financiamento – Relativos a aplicações de financiamento obtidos
+660,7988,"Outros ganhos de financiamento – Outros Gabinete do Ministro das Finanças e do Fomento Empresarial, na Praia, aos 27 de setembro de 2021. — O Ministro das Finanças e do Fomento Empresarial, Olavo Avelino Garcia Correia."

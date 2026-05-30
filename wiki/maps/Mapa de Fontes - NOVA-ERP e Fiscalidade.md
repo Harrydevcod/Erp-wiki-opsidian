@@ -1,8 +1,8 @@
----
+nex---
 type: map
 status: active
 created: 2026-05-26
-updated: 2026-05-29
+updated: 2026-05-30
 tags: [map, sources, nova-erp, fiscalidade]
 sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2026-05-29 - Supabase Implementation Artifact Gap]]", "[[2026-05-27 - Manual Tecnico da Fatura Eletronica v10.0]]", "[[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]]", "[[2026-05-28 - Pacote XML XSD e-Fatura 2024-05-27]]", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]"]
 related: ["[[NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[e-Fatura Cabo Verde]]", "[[ERP SaaS Multi-Tenant]]", "[[NOVA-ERP Product Authority Synthesis]]", "[[2026-05-29 - Supabase Implementation Artifact Gap]]"]
@@ -34,24 +34,32 @@ confidence: high
 
 ### Fiscal And Legal Domain
 
-- `docs/docsfiscal/Código IVA.pdf`
+- `docs/docsfiscal/Código IVA.pdf` - ingested as [[2026-05-29 - Codigo do IVA Cabo Verde]]
 - `docs/docsfiscal/MANUAL DE FATURAS.pdf` - ingested as [[2026-05-28 - Manual de Faturas em Cabo Verde]]
 - `docs/docsfiscal/manual-tecnico-da-fatura-eletronica-v10.0-81ac76da0d05ec36abdb626087cda762.pdf` - ingested as [[2026-05-27 - Manual Tecnico da Fatura Eletronica v10.0]]; superseded for current implementation by [[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]]
-- `docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf`
-- `docs/docsfiscal/SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf`
+- Primary-law fiscal sources: [[2026-05-29 - Codigo do IVA Cabo Verde]], [[2013-01-10 - Portaria 5-2013 Retencao IUR Trabalho Dependente]], [[2008-12-29 - Tabela de Retencao IUR 2009]], [[2015-08-24 - Portaria 42-2015 Depreciacoes e Amortizacoes]].
+- `docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf` and `docs/docsfiscal/SV_Documentação_Fiscalidade_ERP_Cegid_Primavera.pdf` - **duplicate pair, not yet ingested** (dedup pending).
 
-These support [[Fiscalidade Cabo Verde]], [[e-Fatura Cabo Verde]], [[SAF-T CV]] and invoice compliance.
+### SAF-T (CV) Cluster
 
-### ERP Functional Reference
+- [[2021-10-07 - Portaria 47-2021 Estrutura SAF-T CV]] - primary law: data structure (Anexo I) + SNCRF taxonomies (Anexo II); in force 2022. Saved at `raw/assets/saft-cv/`.
+- [[2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis]] - the official DNRE XSD, parsed and preserved (`raw/assets/saft-cv/saftcv1.01_01.xsd`).
+- [[2026-05-30 - SAF-T CV Field Map to NOVA-ERP Schema]] - element→column map + capture-at-transaction-time checklist.
+- [[SAF-T CV Code Lists]] - the 14 enumerations. [[SAF-T CV Anexo II - SNCRF Account Taxonomy]] - 660-code chart taxonomy (`raw/assets/saft-cv/Anexo_II_SNCRF_taxonomia.csv`).
 
-- Treasury: `FPG001 - Using - Tesouraria`, `Exercícios - Using - Tesouraria`.
-- Accounting/fiscal: `FPG003 - Using - Contabilidade e Fiscalidade`, accounting exercises.
-- Finance configuration: `FPG032 - Configuring - Financeira`.
-- Logistics/inventory: `LPG018- Configuring - Logística`, `Using - Gestão de Inventário`, inventory exercises.
-- Purchases/sales: `Using - O Processo de Gestão de Compras e Vendas`, purchases/sales exercises.
-- Payroll/HR: `RPG001 - Using - Processamento de Salários`, HR configuration and exercises.
-- Assets: `FPG006 - Using - Gestão de Equipamentos e Ativos`.
-- Administration/extensibility: `TPG036`, `TPG037`.
+These support [[Fiscalidade Cabo Verde]], [[e-Fatura Cabo Verde]], [[SAF-T CV]], [[Contabilidade ERP]] and invoice/audit compliance.
+
+### ERP Functional Reference (Cegid legacy decks)
+
+All six "Using" workflow decks are ingested as legacy-reference source pages; remaining decks (Configuring/Implementing/Extensibility) are optional.
+
+- Treasury: [[2023 - Cegid Primavera Tesouraria (Legacy Reference)]] (FPG001). Exercises raw.
+- Accounting/fiscal: [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]] (FPG003). Exercises raw.
+- Purchases/sales: [[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]] (LPG015). Exercises raw.
+- Inventory: [[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]] (LPG003). Exercises raw.
+- Payroll/HR: [[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]] (RPG001). Exercises raw.
+- Assets: [[2020 - Cegid Primavera Gestao de Equipamentos e Ativos (Legacy Reference)]] (FPG006).
+- Not yet ingested (optional config/admin): `FPG032 - Configuring - Financeira`, `LPG018 - Configuring - Logística`, `Configuring - Recursos Humanos`, `TPG036 - Implementing`, `TPG037 - Extensibility`.
 
 ## Suggested Ingestion Order
 

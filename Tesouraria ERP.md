@@ -2,9 +2,9 @@
 type: concept
 status: active
 created: 2026-05-26
-updated: 2026-05-28
+updated: 2026-05-30
 tags: [erp-module, tesouraria, financeiro, bancos, caixa]
-sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Faturacao Eletronica]]", "[[Permissoes e Auditoria ERP]]", "docs/docsfiscal/FPG001 - Using - Tesouraria (2023-VC1-PT).pdf"]
+sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Faturacao Eletronica]]", "[[Permissoes e Auditoria ERP]]", "[[2023 - Cegid Primavera Tesouraria (Legacy Reference)]]"]
 related: ["[[NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Compras e Vendas ERP]]", "[[Faturacao Eletronica]]", "[[Fiscalidade Cabo Verde]]", "[[Permissoes e Auditoria ERP]]", "[[2026-05-28 - Schema Decision - Treasury Receivables Payables and Settlement]]"]
 confidence: medium
 ---
@@ -27,8 +27,8 @@ Source: [[2026-05-26 - Captura Raw e Docs]], [[2026-05-26 - SSD NOVA-ERP]], [[Co
 
 - Product intent: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
 - Backlog evidence: [[2026-05-26 - Backlog Estruturado NOVA-ERP]]
-- ERP workflow reference: `docs/docsfiscal/FPG001 - Using - Tesouraria (2023-VC1-PT).pdf`
-- Exercises: `docs/docsfiscal/Exercícios - Using - Tesouraria (2023-VC1-PT).docx`
+- ERP workflow reference: [[2023 - Cegid Primavera Tesouraria (Legacy Reference)]] (ingested; PT bank-export/cheque/letra workflows not authority)
+- Exercises (raw): `docs/docsfiscal/Exercícios - Using - Tesouraria (2023-VC1-PT).docx`
 - Fiscal/accounting boundary: [[Faturacao Eletronica]], [[Fiscalidade Cabo Verde]], [[Contabilidade ERP]]
 - Security boundary: [[Permissoes e Auditoria ERP]]
 
@@ -189,7 +189,7 @@ For the first sellable release, treasury is acceptable only if:
 
 ## Next Ingestion Targets
 
-- `docs/docsfiscal/FPG001 - Using - Tesouraria (2023-VC1-PT).pdf`
-- `docs/docsfiscal/Exercícios - Using - Tesouraria (2023-VC1-PT).docx`
+- ~~FPG001 — Using — Tesouraria~~ — **ingested** as [[2023 - Cegid Primavera Tesouraria (Legacy Reference)]].
+- `docs/docsfiscal/Exercícios - Using - Tesouraria (2023-VC1-PT).docx` (exercises — only if concrete workflow data is still needed).
 - `raw/assets/SSD/Backlog Estruturado — NOVA-ERP.MD`
 

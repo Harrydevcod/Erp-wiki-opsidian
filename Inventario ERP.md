@@ -2,9 +2,9 @@
 type: concept
 status: active
 created: 2026-05-26
-updated: 2026-05-28
+updated: 2026-05-30
 tags: [erp-module, inventario, logistica]
-sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[Compras e Vendas ERP]]", "[[Contabilidade ERP]]", "[[Permissoes e Auditoria ERP]]", "docs/docsfiscal/Using - Gestão de Inventário (2022-v1.0-GB - LPG003).pdf", "docs/docsfiscal/LPG018- Configuring - Logística (2022-v1.0-GB).pdf"]
+sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[Compras e Vendas ERP]]", "[[Contabilidade ERP]]", "[[Permissoes e Auditoria ERP]]", "[[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]]", "docs/docsfiscal/LPG018- Configuring - Logística (2022-v1.0-GB).pdf"]
 related: ["[[NOVA-ERP]]", "[[Compras e Vendas ERP]]", "[[Faturacao Eletronica]]", "[[SAF-T CV]]", "[[Contabilidade ERP]]", "[[Permissoes e Auditoria ERP]]", "[[2026-05-28 - Schema Decision - Inventory Movements and Valuation]]"]
 confidence: medium
 ---
@@ -26,8 +26,8 @@ Source: [[2026-05-26 - Captura Raw e Docs]], [[2026-05-26 - SSD NOVA-ERP]], [[Co
 ## Source Basis
 
 - Product intent: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
-- ERP workflow reference: `docs/docsfiscal/Using - Gestão de Inventário (2022-v1.0-GB - LPG003).pdf`
-- Configuration reference: `docs/docsfiscal/LPG018- Configuring - Logística (2022-v1.0-GB).pdf`
+- ERP workflow reference: [[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]] (ingested; PT inventory-to-AT communication not authority)
+- Configuration reference (raw): `docs/docsfiscal/LPG018- Configuring - Logística (2022-v1.0-GB).pdf`
 - Commercial boundary: [[Compras e Vendas ERP]]
 - Accounting/reporting boundary: [[Contabilidade ERP]], [[SAF-T CV]]
 - Security boundary: [[Permissoes e Auditoria ERP]]
@@ -206,8 +206,8 @@ For the first sellable release, inventory is acceptable only if:
 
 ## Next Ingestion Targets
 
-- `docs/docsfiscal/Using - Gestão de Inventário (2022-v1.0-GB - LPG003).pdf`
-- `docs/docsfiscal/LPG018- Configuring - Logística (2022-v1.0-GB).pdf`
-- `docs/docsfiscal/Exercícios - Using - Gestão de Inventário (2022-v1.0-GB - LPG003).pdf`
+- ~~Using — Gestão de Inventário (LPG003)~~ — **ingested** as [[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]].
+- `docs/docsfiscal/LPG018- Configuring - Logística (2022-v1.0-GB).pdf` (optional — deeper warehouse/location config).
+- `docs/docsfiscal/Exercícios - Using - Gestão de Inventário (2022-v1.0-GB - LPG003).pdf` (exercises — only if concrete data still needed).
 - SAF-T CV official/current inventory requirements.
 

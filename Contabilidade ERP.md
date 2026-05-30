@@ -28,8 +28,8 @@ Source: [[2026-05-26 - Captura Raw e Docs]], [[2026-05-26 - SSD NOVA-ERP]], [[Fi
 - Product intent: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
 - Fiscal authority/context: [[Fiscalidade Cabo Verde]], [[Faturacao Eletronica]]
 - e-Fatura schema boundary: [[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]
-- ERP workflow reference: `docs/docsfiscal/FPG003 - Using - Contabilidade e Fiscalidade (2022-VC1-PT).pdf`
-- Configuration reference: `docs/docsfiscal/FPG032 - Configuring - Financeira (2022-v1.0-PT).pdf`
+- ERP workflow reference: [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]] (ingested; PT fiscal maps not authority)
+- Configuration reference (raw): `docs/docsfiscal/FPG032 - Configuring - Financeira (2022-v1.0-PT).pdf`
 - Related concepts: [[SAF-T CV]], [[Tesouraria ERP]], [[Inventario ERP]]
 
 ## Design Gates Before Implementation
@@ -181,8 +181,8 @@ For the first sellable release, accounting is acceptable only if its scope is ex
 
 ## Next Ingestion Targets
 
-- `docs/docsfiscal/FPG003 - Using - Contabilidade e Fiscalidade (2022-VC1-PT).pdf`
-- `docs/docsfiscal/FPG032 - Configuring - Financeira (2022-v1.0-PT).pdf`
+- ~~FPG003 — Using — Contabilidade e Fiscalidade~~ — **ingested** as [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]].
+- `docs/docsfiscal/FPG032 - Configuring - Financeira (2022-v1.0-PT).pdf` (optional config detail).
 - `docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf`
-- SAF-T CV official/current source set.
+- ~~SAF-T CV official/current source set~~ — **ingested**: [[2021-10-07 - Portaria 47-2021 Estrutura SAF-T CV]], [[2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis]], [[SAF-T CV Anexo II - SNCRF Account Taxonomy]].
 

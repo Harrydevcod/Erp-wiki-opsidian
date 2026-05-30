@@ -26,7 +26,7 @@ NOVA-ERP models accounting as an **immutable double-entry journal driven by post
 ## Source Basis
 
 - Product source: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]], [[2026-05-26 - Backlog Estruturado NOVA-ERP]].
-- Compliance source: [[SAF-T CV]] accounting export readiness; Cabo Verde chart-of-accounts (PNC) and IVA maps (current legal verification still required — see [[Fiscalidade Cabo Verde]]).
+- Compliance source: [[SAF-T CV]] accounting export readiness; Cabo Verde chart-of-accounts (SNCRF, [[SAF-T CV Anexo II - SNCRF Account Taxonomy]]) and IVA maps. Corporate-tax parameters now primary-sourced from [[2015-01-07 - Lei 82-2015 Codigo do IRPC]]: IRPC **25%** (contabilidade organizada) / **4% TEU** (REMPE); **tributação autónoma** 40% (não documentadas) / 10% (viaturas, representação); **fiscal-loss carryforward 7 periods, capped at 50%** of each period's taxable profit (art. 59º); **impairment provisioning 25/50/75/100%** by arrears age (6–24 mo) — encode as `tax_maps`/posting rules and a receivables-provisioning rule. Current legal verification still required for IVA specifics — see [[Fiscalidade Cabo Verde]].
 - Technical source: [[2026-05-28 - DATABASE ER Diagram Snapshot]] (no real ledger present — accounting is a new build, not an adapt).
 - Inference: the posting-rule-over-events design and projection-based balances are architecture inferences grounded in standard double-entry practice.
 - Legacy workflow reference: [[2022 - Cegid Primavera Contabilidade e Fiscalidade (Legacy Reference)]] corroborates the spine — chart hierarchy with movement-only posting, posting by integration of upstream module events vs manual direct entries, periodic IVA apuramento, period open/close with year-end result apportionment, and SAF-T (SVAT) audit. It also validates **projection-based balances**: the legacy stored "Acumulados" require a "Reconstrução de Acumulados" step that computed balances eliminate. Legacy editable postings and stored accumulators are rejected.
@@ -43,8 +43,8 @@ This ADR fixes how those events become balanced entries so [[SAF-T CV]] accounti
 ## Data Model
 
 - Entity/table: `chart_of_accounts`
-  - Key fields: `id`, `tenant_id`, `code`, `name`, `type` (`asset|liability|equity|income|expense`), `parent_id` (hierarchy), `is_postable`, `tax_relevant`, `status`.
-  - Note: seeded from a Cabo Verde PNC template per tenant; the exact standard is an open legal question.
+  - Key fields: `id`, `tenant_id`, `code`, `name`, `type` (`asset|liability|equity|income|expense`), `parent_id` (hierarchy), `is_postable`, `tax_relevant`, `taxonomy_code` (SAF-T `TaxonomyCode`, 1–660), `status`; tenant carries a `taxonomy_reference` (`S`/`N`/`P`/`O`).
+  - Note: the Cabo Verde standard is the **SNCRF** (Sistema de Normalização Contabilística e de Relato Financeiro). Seed the default chart from the **SNCRF account set + Anexo II taxonomy** in [[SAF-T CV Anexo II - SNCRF Account Taxonomy]] (`raw/assets/saft-cv/Anexo_II_SNCRF_taxonomia.csv`); each account stores its `taxonomy_code` for SAF-T export.
 
 - Entity/table: `journals`
   - Key fields: `id`, `tenant_id`, `code`, `name`, `kind` (`sales|purchases|treasury|inventory|general|opening`).
@@ -117,7 +117,7 @@ This ADR fixes how those events become balanced entries so [[SAF-T CV]] accounti
 
 ## Open Questions
 
-- Which Cabo Verde chart-of-accounts standard (PNC) and version seeds the default? (Legal verification required.)
+- Resolved: the standard is the **SNCRF**; the default chart + per-account `taxonomy_code` seed from Anexo II of Portaria 47/2021 ([[SAF-T CV Anexo II - SNCRF Account Taxonomy]]). Remaining: which SNCRF chart **edition** ships as the tenant default and whether NRF-PE small-entity variants need a separate seed.
 - Should NOVA-ERP ship full accounting in MVP or SAF-T-ready data first? (Open product call — schema supports both.)
 - How closely must `journal_entry`/tax_map structures match official SAF-T CV accounting elements?
 - Auto-draft + manual post confirmed for MVP — when is per-event auto-post enabled?
@@ -126,6 +126,6 @@ This ADR fixes how those events become balanced entries so [[SAF-T CV]] accounti
 
 ## Maintenance Notes
 
-- Update when actual Supabase SQL/migrations/RLS are inspected, when `MCG001 - Contabilidade Geral` is deep-ingested, and when the official SAF-T CV accounting schema + Cabo Verde PNC are confirmed.
+- Update when actual Supabase SQL/migrations/RLS are inspected and when `MCG001 - Contabilidade Geral` is deep-ingested. The official SAF-T CV accounting schema and the **SNCRF** chart taxonomy are now confirmed ([[2021-10-07 - Portaria 47-2021 Estrutura SAF-T CV]], [[SAF-T CV Anexo II - SNCRF Account Taxonomy]]).
 - Depends on the foundation, document-core, treasury and inventory ADRs; feeds [[SAF-T CV]]. Closes the financial-core schema sequence; remaining modules (payroll, assets) add posting-rule event types.
 - Related log entry: 2026-05-28 accounting schema decision.

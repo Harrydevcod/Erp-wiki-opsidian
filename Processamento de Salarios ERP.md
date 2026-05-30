@@ -30,8 +30,8 @@ Source: [[2026-05-26 - Captura Raw e Docs]], [[2026-05-26 - SSD NOVA-ERP]], [[Pe
 
 - Product intent: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
 - Backlog evidence: [[2026-05-26 - Backlog Estruturado NOVA-ERP]]
-- ERP workflow reference: `docs/docsfiscal/RPG001 - Using - Processamento de Salários (2021-VC1).pdf`
-- HR configuration reference: `docs/docsfiscal/Configuring - Recursos Humanos (2023-v1.0-PT).pdf`
+- ERP workflow reference: [[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]] (ingested; PT fiscal maps not authority)
+- HR configuration reference (raw): `docs/docsfiscal/Configuring - Recursos Humanos (2023-v1.0-PT).pdf`
 - Exercises: `docs/docsfiscal/Exercícios - Using - Processamento Salarios (2023-v0.1-PT).pdf`
 - Security boundary: [[Permissoes e Auditoria ERP]]
 - Accounting/treasury boundary: [[Contabilidade ERP]], [[Tesouraria ERP]]
@@ -234,7 +234,7 @@ For the first sellable release, payroll is acceptable only if its scope is expli
 ## Next Ingestion Targets
 
 - Current Cabo Verde legal/payroll sources for deductions, social security, income tax, labor obligations and statutory reporting.
-- `docs/docsfiscal/RPG001 - Using - Processamento de Salários (2021-VC1).pdf`
-- `docs/docsfiscal/Configuring - Recursos Humanos (2023-v1.0-PT).pdf`
+- ~~RPG001 — Using — Processamento de Salários~~ — **ingested** as [[2021 - Cegid Primavera Processamento de Salarios (Legacy Reference)]].
+- `docs/docsfiscal/Configuring - Recursos Humanos (2023-v1.0-PT).pdf` (optional HR config detail).
 - `docs/docsfiscal/Exercícios - Using - Processamento Salarios (2023-v0.1-PT).pdf`
 - `docs/docsfiscal/Exercícios - Configuring - Recursos Humanos (2023-v1.0-PT) .docx`

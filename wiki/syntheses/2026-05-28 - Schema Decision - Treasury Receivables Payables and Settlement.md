@@ -2,10 +2,10 @@
 type: schema
 status: active
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-05-30
 decision_status: provisional
 tags: [schema, architecture, treasury, receivables, payables, settlement, nova-erp]
-sources: ["[[2026-05-28 - Current Database Snapshot Classification]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]"]
+sources: ["[[2026-05-28 - Current Database Snapshot Classification]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2023 - Cegid Primavera Tesouraria (Legacy Reference)]]"]
 related: ["[[NOVA-ERP]]", "[[Tesouraria ERP]]", "[[Compras e Vendas ERP]]", "[[Faturacao Eletronica]]", "[[Contabilidade ERP]]", "[[2026-05-28 - Schema Decision - Tenant Foundation and RLS]]", "[[2026-05-28 - Schema Decision - Commercial and Fiscal Document Core]]", "[[Contradiction - Current Database Snapshot vs Target ERP Architecture]]"]
 confidence: medium
 ---
@@ -27,6 +27,7 @@ NOVA-ERP models treasury as an **obligation-and-movement ledger**, not a `paid` 
 
 - Product source: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]], [[2026-05-26 - Backlog Estruturado NOVA-ERP]].
 - Technical source: [[2026-05-28 - DATABASE ER Diagram Snapshot]] (`financial_transactions`, `bank_accounts` as adapt candidates).
+- Legacy workflow reference: [[2023 - Cegid Primavera Tesouraria (Legacy Reference)]] — corroborates the obligation (*pendente*) / movement / allocation split, the derived (no stored `paid` flag) settlement model, reversal via anulação/estorno, and bank reconciliation; supplies the allocation operation taxonomy (total/partial/encontro/excesso/novo-pendente), the *Itens de Tesouraria* rubric dimension, the caixa session lifecycle and the withholding-to-State pattern. PT bank-export formats and cheque/letra workflows are not authority here.
 - Inference: the obligation/movement/allocation split is an architecture inference grounded in standard double-entry treasury practice and the snapshot's flat `financial_transactions`.
 
 ## Context
@@ -45,15 +46,24 @@ NOVA-ERP models treasury as an **obligation-and-movement ledger**, not a `paid` 
   - Constraints: `amount_total` immutable; status is a computed projection from allocations, not a hand-set column (may be a maintained cache refreshed on allocation change, but never directly editable).
 
 - Entity/table: `treasury_movements`
-  - Key fields: `id`, `tenant_id`, `account_id` (fk), `direction` (`in|out`), `amount`, `currency`, `value_date`, `method` (`cash|transfer|card|cheque|other`), `reference`, `counterparty_entity_id` (nullable), `reversed_by` (nullable self-fk), `created_at`, `created_by`.
+  - Key fields: `id`, `tenant_id`, `account_id` (fk), `direction` (`in|out`), `amount`, `currency`, `value_date`, `method` (`cash|transfer|card|cheque|other`), `reference`, `counterparty_entity_id` (nullable), `treasury_item_id` (nullable — *Item de Tesouraria* / rubric for budget-vs-actual, see below), `cash_session_id` (nullable — set for cash-account movements), `reversed_by` (nullable self-fk), `created_at`, `created_by`.
   - Constraints: append-only; a reversal is a new movement with opposite direction referencing the original via `reversed_by`.
+
+- Entity/table: `treasury_items` (rubrics) — legacy *Itens de Tesouraria*
+  - Key fields: `id`, `tenant_id`, `name`, `kind` (`receipt|payment|both`), optional `budget` link.
+  - Rationale: groups movement values for budget-vs-actual treasury analysis (Painel de Bordo, Acumulados por Item). Open question below: whether to reuse the generic analytical-dimension layer instead of a treasury-local catalog.
+
+- Entity/table: `cash_sessions` (caixa) — for `treasury_accounts.kind = cash`
+  - Key fields: `id`, `tenant_id`, `account_id`, `opened_at`, `opened_by`, `opening_balance`, `closed_at`, `closed_by`, `closing_balance`, `status` (`open|closed`).
+  - Rationale: legacy caixa lifecycle — open creates a session/diário assigned to all movements until close; close is gated on balance reconciliation; operator is attributed. Powers POS-style cash control and the Estado das Caixas history.
 
 - Entity/table: `allocations`
   - Key fields: `id`, `tenant_id`, `movement_id` (fk), `obligation_id` (fk), `amount`, `created_at`, `created_by`, `reversed_by` (nullable).
   - Constraints: unique active (`movement_id`, `obligation_id`); sum of active allocations on a movement cannot exceed the movement amount; sum on an obligation cannot exceed `amount_total` (overpayment handled as an explicit `on_account` obligation, see below).
   - Rationale: this is the join that makes settlement many-to-many and partial-safe.
 
-- Overpayment / advance handling: an unallocated inflow stays as a movement with remaining balance; an explicit `on_account` obligation (direction inverted) can absorb advances so the customer current account stays correct. Resolves the "over/underpayment" open question.
+- Overpayment / advance handling: an unallocated inflow stays as a movement with remaining balance; an explicit `on_account` obligation (direction inverted) can absorb advances so the customer current account stays correct. Resolves the "over/underpayment" open question. Legacy-corroborated by Cegid's auto-generated *valores em excesso* (VEC) document.
+- Allocation operation taxonomy (legacy-validated): an `allocations` row, or a small set of allocation operations over it, covers Cegid's settlement modes — *total*, *partial*, **encontro de valores** (offset two opposite-nature obligations to net zero via paired allocations), **valores em excesso** (overpayment → `on_account`), **liquidação com novo pendente** (carry remaining balance into a new obligation, e.g. letra), and contra-settlement across **entidades associadas** (a party that is both customer and supplier). All are representable as allocations + (optionally) a new obligation, with no stored status mutation.
 
 - Entity/table: `bank_statements`, `bank_statement_lines`
   - Key fields (lines): `id`, `tenant_id`, `statement_id`, `value_date`, `amount`, `direction`, `description`, `matched_movement_id` (nullable).
@@ -105,8 +115,13 @@ NOVA-ERP models treasury as an **obligation-and-movement ledger**, not a `paid` 
 - Multi-currency: are obligations and movements always same-currency, or does settlement need FX gain/loss handling in MVP? (Leaning: single-currency MVP, FX later.)
 - Should `obligations.status` be a maintained cache column or a pure view? (Performance vs simplicity.)
 - Should advances/`on_account` be a first-class obligation type or a separate `advances` table?
-- Bank reconciliation: manual-first MVP confirmed, but which import format (CSV/CAMT/API) ships first?
+- Bank reconciliation: manual-first MVP confirmed (legacy corroborates manual + automatic), but which CV import format (CSV/CAMT/API) ships first?
 - Should write-offs require accounting approval before treasury can close an obligation?
+- Should *Itens de Tesouraria* (rubrics) reuse the generic [[2026-05-29 - Schema Decision - Project and Analytical Dimensions]] layer, or be a treasury-local `treasury_items` catalog?
+- Is a full **cash-session (caixa)** model needed for POS-style use in MVP, or only bank/DO accounts first?
+- How is **withholding to the State** modeled — a treasury obligation to a State entity, an accounting-only tax map, or both? (Connects to [[Processamento de Salarios ERP]] IRPS/INPS and the document core.)
+- Obligation side-states beyond `written_off`: do we need an **approval** state (legacy `AGP→APR` payable approval) and a **doubtful-debtor** transfer, as statuses or as an account-transfer log?
+- Are **letras / pre-dated cheques / payment plans (installments)** in CV scope or deferred?
 
 ## Maintenance Notes
 

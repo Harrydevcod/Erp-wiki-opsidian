@@ -2,9 +2,9 @@
 type: concept
 status: active
 created: 2026-05-26
-updated: 2026-05-28
+updated: 2026-05-30
 tags: [erp-module, vendas, compras, documentos, faturacao]
-sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Faturacao Eletronica]]", "[[Fiscalidade Cabo Verde]]", "[[Tesouraria ERP]]", "[[Inventario ERP]]", "[[Permissoes e Auditoria ERP]]", "docs/docsfiscal/Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015.pdf", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]"]
+sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Faturacao Eletronica]]", "[[Fiscalidade Cabo Verde]]", "[[Tesouraria ERP]]", "[[Inventario ERP]]", "[[Permissoes e Auditoria ERP]]", "[[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]]", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]"]
 related: ["[[NOVA-ERP]]", "[[Faturacao Eletronica]]", "[[Inventario ERP]]", "[[Tesouraria ERP]]", "[[Contabilidade ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Permissoes e Auditoria ERP]]", "[[2026-05-28 - Schema Decision - Commercial and Fiscal Document Core]]"]
 confidence: medium
 ---
@@ -27,8 +27,8 @@ Source: [[2026-05-26 - Captura Raw e Docs]], [[2026-05-26 - SSD NOVA-ERP]], [[Fa
 
 - Product intent: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
 - Backlog evidence: [[2026-05-26 - Backlog Estruturado NOVA-ERP]]
-- ERP workflow reference: `docs/docsfiscal/Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015.pdf`
-- Exercises: `docs/docsfiscal/Exercícios-Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015 .pdf`
+- ERP workflow reference: [[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]] (ingested; PT fiscal obligations not authority)
+- Exercises (raw): `docs/docsfiscal/Exercícios-Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015 .pdf`
 - Fiscal/invoice rules: [[2026-05-28 - Manual de Faturas em Cabo Verde]], [[Fiscalidade Cabo Verde]]
 - Integration modules: [[Faturacao Eletronica]], [[Tesouraria ERP]], [[Inventario ERP]], [[Contabilidade ERP]], [[Permissoes e Auditoria ERP]]
 
@@ -222,7 +222,7 @@ For the first sellable release, the module is acceptable only if:
 
 ## Next Ingestion Targets
 
-- `docs/docsfiscal/Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015.pdf`
-- `docs/docsfiscal/Exercícios-Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015 .pdf`
+- ~~Using — O Processo de Gestão de Compras e Vendas (LPG015)~~ — **ingested** as [[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]].
+- `docs/docsfiscal/Exercícios-Using - O Processo de Gestão de Compras e Vendas (2022-v2.0-GB) LPG015 .pdf` (exercises — only if concrete workflow data is still needed).
 - Current legal sources for reverse charge, State/public works invoicing and transport documents.
 

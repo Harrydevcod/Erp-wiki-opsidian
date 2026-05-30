@@ -2,9 +2,9 @@
 type: concept
 status: active
 created: 2026-05-26
-updated: 2026-05-29
+updated: 2026-05-30
 tags: [erp-module, ativos, equipamentos, depreciacao]
-sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Compras e Vendas ERP]]", "[[Tesouraria ERP]]", "[[Projetos ERP]]", "docs/docsfiscal/FPG006 - Using - Gestão de Equipamentos e Ativos (2020-VC1-PT).pdf"]
+sources: ["[[2026-05-26 - Captura Raw e Docs]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Compras e Vendas ERP]]", "[[Tesouraria ERP]]", "[[Projetos ERP]]", "[[2020 - Cegid Primavera Gestao de Equipamentos e Ativos (Legacy Reference)]]"]
 related: ["[[NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Compras e Vendas ERP]]", "[[Tesouraria ERP]]", "[[Projetos ERP]]", "[[Permissoes e Auditoria ERP]]", "[[Fiscalidade Cabo Verde]]"]
 confidence: medium
 schema_decision: "[[2026-05-29 - Schema Decision - Fixed Assets and Depreciation]]"
@@ -28,7 +28,7 @@ Source: [[2026-05-26 - Captura Raw e Docs]], [[2026-05-26 - SSD NOVA-ERP]], [[Co
 
 - Product intent: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
 - Backlog evidence: [[2026-05-26 - Backlog Estruturado NOVA-ERP]]
-- ERP workflow reference: `docs/docsfiscal/FPG006 - Using - Gestão de Equipamentos e Ativos (2020-VC1-PT).pdf`
+- ERP workflow reference: [[2020 - Cegid Primavera Gestao de Equipamentos e Ativos (Legacy Reference)]] (ingested; PT Mapas Fiscais not authority)
 - Accounting boundary: [[Contabilidade ERP]]
 - Purchase/payment boundary: [[Compras e Vendas ERP]], [[Tesouraria ERP]]
 - Project/cost allocation boundary: [[Projetos ERP]]
@@ -219,6 +219,6 @@ For the first sellable release, assets are acceptable only if scope is explicit:
 
 ## Next Ingestion Targets
 
-- `docs/docsfiscal/FPG006 - Using - Gestão de Equipamentos e Ativos (2020-VC1-PT).pdf`
-- Current Cabo Verde legal/accounting sources for fixed asset depreciation, revaluation and disposal.
+- ~~FPG006 — Using — Gestão de Equipamentos e Ativos~~ — **ingested** as [[2020 - Cegid Primavera Gestao de Equipamentos e Ativos (Legacy Reference)]].
+- Current Cabo Verde legal/accounting sources for fixed asset depreciation, revaluation and disposal (esp. the Portaria 42/2015 **per-class rate annex**, still uncaptured).
 - SAF-T CV official/current source set if asset data is required for exports.

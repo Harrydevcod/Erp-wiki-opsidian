@@ -2,10 +2,10 @@
 type: schema
 status: active
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-05-30
 decision_status: provisional
 tags: [schema, architecture, documents, sales, purchases, fiscal, nova-erp]
-sources: ["[[2026-05-28 - Current Database Snapshot Classification]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]", "[[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]"]
+sources: ["[[2026-05-28 - Current Database Snapshot Classification]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]", "[[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]]"]
 related: ["[[NOVA-ERP]]", "[[Compras e Vendas ERP]]", "[[Faturacao Eletronica]]", "[[Inventario ERP]]", "[[Tesouraria ERP]]", "[[Contabilidade ERP]]", "[[2026-05-28 - Schema Decision - Tenant Foundation and RLS]]", "[[2026-05-28 - Schema Decision - e-Fatura DFE Payload and Transmission]]", "[[Contradiction - Current Database Snapshot vs Target ERP Architecture]]"]
 confidence: medium
 ---
@@ -28,6 +28,7 @@ NOVA-ERP separates **commercial documents** (quote, order, delivery, return — 
 - Product source: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]], [[2026-05-26 - Backlog Estruturado NOVA-ERP]].
 - Compliance source: [[2026-05-28 - Manual de Faturas em Cabo Verde]] (numbering, no-deletion-after-assignment, rectification documents), [[2026-05-28 - Manual Tecnico da Fatura Eletronica v11.0]] (fiscal document/DFE shape).
 - Technical source: [[2026-05-28 - DATABASE ER Diagram Snapshot]] (`documents`, `document_items`, `document_series` as adapt/split candidates).
+- Legacy workflow reference: [[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]] — corroborates the entity unification, the commercial/fiscal split (its *séries emissíveis vs não emissíveis*), the `document_links` graph (its five reproduction mechanisms over one quantity-traceable graph) and the no-deletion/two-correction-paths model (anulação vs estorno/crédito). PT fiscal obligations in that deck are explicitly **not** authority here.
 - Inference: the commercial/fiscal split, the `document_links` graph and the entity unification are architecture inferences grounded in those sources.
 
 ## Context
@@ -37,9 +38,9 @@ NOVA-ERP separates **commercial documents** (quote, order, delivery, return — 
 ## Data Model
 
 - Entity/table: `entities`
-  - Key fields: `id`, `tenant_id`, `kind` (`customer|supplier|both`), `name`, `tax_id` (NIF), `country`, `address` jsonb, `email`, `status`.
-  - Rationale: customers and suppliers unify into one party master with a role flag; a party is frequently both. Resolves the "unify customers/suppliers?" open question as **yes, unified with role kind**.
-  - Constraints: unique (`tenant_id`, `tax_id`) where tax_id not null.
+  - Key fields: `id`, `tenant_id`, `kind` (`customer|supplier|both`), `name` (commercial), `legal_name` (fiscal — printed on documents/maps when set, else falls back to `name`), `tax_id` (NIF), `country`, `address` jsonb, `email`, `status`, `is_generic` (sentinel for occasional/indiferenciados parties).
+  - Rationale: customers and suppliers unify into one party master with a role flag; a party is frequently both. Resolves the "unify customers/suppliers?" open question as **yes, unified with role kind**. The commercial-vs-fiscal name split and the generic-party sentinel come from [[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]] (Nome Comercial vs Nome Fiscal; `VD`/`FVD` occasional codes).
+  - Constraints: unique (`tenant_id`, `tax_id`) where tax_id not null and not generic. **`tax_id` is immutable once a certified/issued fiscal document references the entity** (legacy-validated); the NIF on a fiscal document is validated against the entity's `tax_id`. Generic parties carry `name`/`tax_id` inline on the document instead.
 
 - Entity/table: `commercial_documents`
   - Key fields: `id`, `tenant_id`, `type` (`sales_quote|sales_order|delivery_note|sales_return|purchase_order|goods_receipt|purchase_return`), `direction` (`sales|purchase`), `entity_id`, `number` (commercial series), `status`, `currency`, `issue_date`, `totals` (net/tax/gross), `notes`.
@@ -103,8 +104,10 @@ NOVA-ERP separates **commercial documents** (quote, order, delivery, return — 
 
 - Which commercial and fiscal document types are MVP-mandatory vs later? (Backlog ingestion needed for the exact cut.)
 - Should `document_links` integrity be trigger-enforced, app-enforced, or both?
-- How are partial deliveries and partial invoicing quantities tracked — on lines, on links, or a fulfilment table?
-- Should returns be modeled as negative commercial documents plus corrective fiscal documents, or distinct types? (Leaning: distinct commercial type + corrective fiscal document.)
+- How are partial deliveries and partial invoicing quantities tracked — on lines, on links, or a fulfilment table? (Legacy-informed by [[2022 - Cegid Primavera Compras e Vendas (Legacy Reference)]]: Cegid tracks **satisfied quantity per source line** ("controlo das quantidades satisfeitas", "fecho de linhas") — leaning toward fulfilled-qty on `*_document_lines` and/or `document_links` edges, still to fix.)
+- Should returns be modeled as negative commercial documents plus corrective fiscal documents, or distinct types? (Leaning: distinct commercial type + corrective fiscal document — reinforced by the legacy estorno/crédito model that creates a **distinct contrary-nature document with a mandatory origin reference**.)
+- How are occasional/indiferenciados parties modeled — `is_generic` sentinel entity vs inline name+NIF on a document with null `entity_id`? (Surfaced by the legacy `VD`/`FVD` pattern.)
+- What are the precondition guards for voiding/anulation? (Legacy guard list: not in a closed period, not transformed, not manually settled, not exported to assets, not already e-transmitted — to be reconciled with the e-Fatura FDC event path.)
 - Do `tax_rates`/`units` ship as system catalog, tenant catalog, or hybrid?
 
 ## Maintenance Notes

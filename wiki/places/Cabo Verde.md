@@ -4,7 +4,7 @@ status: active
 created: 2026-05-26
 updated: 2026-05-26
 tags: [cabo-verde, fiscalidade, market]
-sources: ["raw/assets/SSD/PRD.MD", "docs/docsfiscal/Código IVA.pdf", "docs/docsfiscal/MANUAL DE FATURAS.pdf"]
+sources: ["[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-29 - Codigo do IVA Cabo Verde]]", "[[2026-05-28 - Manual de Faturas em Cabo Verde]]"]
 related: ["[[NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[e-Fatura Cabo Verde]]"]
 confidence: high
 ---

@@ -17,7 +17,7 @@ The official Cape Verde regulation of asset depreciation/amortization for IRPC p
 
 Evidence: `docs/docsfiscal/Portaria nº 42 - 2015 -Depreciações e Amortização.pdf` (Boletim Oficial, primary source).
 
-> **Gap:** the per-asset-class **rate table (tabela anexa, art. 2º nº1)** — the actual percentages per asset type — is **not present in this PDF copy** (articles only). The numeric rates still need that annex.
+> **Gap CLOSED (2026-05-30):** the per-asset-class **rate annex (tabela anexa, art. 2º nº1)** has been obtained from the official **B.O. I Série nº 52, 28-08-2015** (Rectificação republication) and extracted to **310 rated rows** — see [[Portaria 42-2015 Tabelas de Taxas de Depreciacao]] and `raw/assets/irpc/Portaria_42_2015_Tabela_taxas.csv`. Tabela I (sector-specific) + Tabela II (generic by asset nature). Key generics: edifícios habitacionais 3%, industriais 5%, veículos ligeiros 14,28% (7 yr), pesados 20%, computadores/intangível 33,33%, mobiliário 12,5%.
 
 ## Core rules (by article)
 
@@ -59,5 +59,5 @@ Confirms and sharpens the [[2026-05-29 - Schema Decision - Fixed Assets and Depr
 
 ## Verification needs
 
-- **Obtain the annexed per-class rate table** (the actual percentages by asset type) to seed `asset_depreciation_policies.rate`.
+- ~~Obtain the annexed per-class rate table~~ **Done** — extracted to [[Portaria 42-2015 Tabelas de Taxas de Depreciacao]] (`raw/assets/irpc/Portaria_42_2015_Tabela_taxas.csv`, 310 rows) to seed `asset_depreciation_policies.rate`.
 - Confirm no post-2015 OE amendments altered the 20.000$ / 4.000.000$ thresholds or the coefficients.

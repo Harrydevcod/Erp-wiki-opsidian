@@ -2,10 +2,10 @@
 type: schema
 status: active
 created: 2026-05-28
-updated: 2026-05-28
+updated: 2026-05-30
 decision_status: provisional
 tags: [schema, architecture, inventory, stock, valuation, nova-erp]
-sources: ["[[2026-05-28 - Current Database Snapshot Classification]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]"]
+sources: ["[[2026-05-28 - Current Database Snapshot Classification]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-28 - DATABASE ER Diagram Snapshot]]", "[[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]]"]
 related: ["[[NOVA-ERP]]", "[[Inventario ERP]]", "[[Compras e Vendas ERP]]", "[[Contabilidade ERP]]", "[[SAF-T CV]]", "[[2026-05-28 - Schema Decision - Tenant Foundation and RLS]]", "[[2026-05-28 - Schema Decision - Commercial and Fiscal Document Core]]", "[[Contradiction - Current Database Snapshot vs Target ERP Architecture]]"]
 confidence: medium
 ---
@@ -28,6 +28,7 @@ NOVA-ERP models stock as the **derived sum of an append-only movement ledger**, 
 - Product source: [[2026-05-26 - PRD NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]], [[2026-05-26 - Backlog Estruturado NOVA-ERP]].
 - Compliance source: SAF-T CV inventory readiness ([[SAF-T CV]]) requires movement-grade history and valuation.
 - Technical source: [[2026-05-28 - DATABASE ER Diagram Snapshot]] (`inventory_movements`, `inventory_counts`, `inventory_count_items` as adapt candidates; `products` → `items`).
+- Legacy workflow reference: [[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]] — corroborates the derived-from-movements ledger (stock at any date, no stored quantity), the **PCM weighted-average** valuation method with cost-adjustment movement types, the reservation/previsional split, and the physical-count→adjustment reconciliation; supplies the PTS/TST/RST in-transit state machine, stock states, warehouse Localização, BOM/kit composition and inventory period locks. PT inventory-to-AT communication is not authority here.
 - Inference: the valuation-layer and reservation-vs-on-hand split are architecture inferences grounded in standard perpetual-inventory practice.
 
 ## Context
@@ -44,11 +45,13 @@ NOVA-ERP models stock as the **derived sum of an append-only movement ledger**, 
 - Entity/table: `warehouses`
   - Key fields: `id`, `tenant_id`, `code`, `name`, `is_default`, `status`.
   - MVP: multiple warehouses supported in schema; UI may default to one. Resolves the multi-warehouse gate at schema level (model many, ship simple).
+  - Optional `locations` sub-table (`warehouse_id`, `code`) for the legacy *Localização* dimension — schema-ready, off unless needed.
 
 - Entity/table: `stock_movements`
-  - Key fields: `id`, `tenant_id`, `item_id`, `warehouse_id`, `direction` (`in|out`), `qty`, `unit_cost` (for valuation), `movement_type` (`receipt|delivery|sales_return|purchase_return|adjustment|transfer_in|transfer_out|count_reconcile`), `source_document` (polymorphic + id, nullable for adjustments), `lot_id`/`serial_id` (nullable), `value_date`, `reversed_by` (nullable), `created_at`, `created_by`.
+  - Key fields: `id`, `tenant_id`, `item_id`, `warehouse_id`, `location_id` (nullable), `direction` (`in|out`), `qty`, `unit_cost` (for valuation), `movement_type` (`receipt|delivery|sales_return|purchase_return|adjustment|transfer_out|transfer_in_transit|transfer_in|count_reconcile|cost_adjustment|composition|decomposition`), `source_document` (polymorphic + id, nullable for adjustments), `lot_id`/`serial_id` (nullable), `value_date`, `reversed_by` (nullable), `created_at`, `created_by`.
   - Constraints: append-only; reversal = new opposite movement referencing original.
   - Indexes: (`tenant_id`, `item_id`, `warehouse_id`, `value_date`).
+  - Legacy-derived types: `transfer_in_transit` models the PTS→TST→RST leg (stock leaves origin into an unavailable in-transit state before `transfer_in` at destination); `cost_adjustment` carries value-only changes (legacy *Ajuste de Custo / Encargos / Descontos*) with `qty=0`; `composition`/`decomposition` are the paired BOM movements (post-MVP, ledger-ready).
 
 - Entity/table: `stock_reservations`
   - Key fields: `id`, `tenant_id`, `item_id`, `warehouse_id`, `qty`, `source_document` (e.g. sales_order), `status` (`active|fulfilled|released`), `created_at`.
@@ -65,7 +68,7 @@ NOVA-ERP models stock as the **derived sum of an append-only movement ledger**, 
 - Entity/table: `lots`, `serials`
   - Tenant-scoped; only enforced when `items.tracking` requires it. Off by default in MVP (resolves lot/serial gate: schema-ready, off unless needed).
 
-- Projections: `stock_on_hand` (sum of committed movement qty by item/warehouse), `stock_available` (= on_hand − active reservations). Both are views/materialized projections, not hand-maintained tables.
+- Projections: `stock_on_hand` (sum of committed movement qty by item/warehouse), `stock_available` (= on_hand − active reservations − in-transit out-legs). Both are views/materialized projections, not hand-maintained tables. The legacy *Estado* dimension (available/reserved/in-transit/blocked) is expressed through reservations + `transfer_in_transit` movements rather than a stored per-unit state, unless a richer state model proves necessary (open question).
 
 ## State And Events
 
@@ -107,11 +110,14 @@ NOVA-ERP models stock as the **derived sum of an append-only movement ledger**, 
 - Weighted-average confirmed as MVP default — is FIFO needed in first sellable release or deferred?
 - Should `stock_on_hand`/`stock_available` be materialized views (refresh cost) or computed on read (query cost)?
 - Are negative on-hand balances ever allowed (oversell), or hard-blocked at delivery?
-- How are inter-warehouse transfers costed — at source layer cost or a transfer price?
-- Does MVP enable lot/serial for any item category, or is it strictly post-MVP?
+- How are inter-warehouse transfers costed — at source layer cost or a transfer price? (Now framed by the PTS/TST/RST in-transit leg: cost likely held at source-layer cost while in transit, settled at `transfer_in`.)
+- Does MVP enable lot/serial for any item category, or is it strictly post-MVP? (Legacy supports FIFO/LIFO suggestion by validade/fabrico when enabled.)
+- Should stock state (available/reserved/in-transit/blocked) be a stored per-unit/per-layer dimension, or kept derived from reservations + in-transit movements?
+- Is **BOM / composed articles / kits** (composição/decomposição) in MVP scope or deferred? (Ledger supports paired movements; master-data/UI is the cost.)
+- Should an **inventory period lock** (legacy *Fechos de Inventário*) block quantity-only vs quantity+costing movements after a date, aligned with accounting period locks?
 
 ## Maintenance Notes
 
-- Update when actual Supabase SQL/migrations/RLS are inspected, when the logistics reference (`MGP001`) is ingested, and when the official SAF-T CV inventory schema is confirmed.
+- Update when actual Supabase SQL/migrations/RLS are inspected and when the official SAF-T CV inventory schema is confirmed. The inventory workflow reference is ingested ([[2022 - Cegid Primavera Gestao de Inventario (Legacy Reference)]]); the `Configuring - Logística (LPG018)` deck remains optional for deeper warehouse/location config.
 - Depends on [[2026-05-28 - Schema Decision - Tenant Foundation and RLS]] and [[2026-05-28 - Schema Decision - Commercial and Fiscal Document Core]]; feeds the accounting ADR (COGS) and [[SAF-T CV]].
 - Related log entry: 2026-05-28 inventory schema decision.

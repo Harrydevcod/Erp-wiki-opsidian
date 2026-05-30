@@ -2,9 +2,9 @@
 type: concept
 status: active
 created: 2026-05-26
-updated: 2026-05-28
+updated: 2026-05-30
 tags: [saft, cabo-verde, fiscalidade, reporting, export]
-sources: ["[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-26 - Prompt Implementacao NOVA-ERP]]", "[[2026-05-26 - Instrucoes Oficiais NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Contabilidade ERP]]", "[[Inventario ERP]]", "docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf", "docs/docsfiscal/SV_Documentacao_Fiscalidade_ERP_Cegid_Primavera.pdf"]
+sources: ["[[2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis]]", "[[2026-05-26 - PRD NOVA-ERP]]", "[[2026-05-26 - SSD NOVA-ERP]]", "[[2026-05-26 - Backlog Estruturado NOVA-ERP]]", "[[2026-05-26 - Prompt Implementacao NOVA-ERP]]", "[[2026-05-26 - Instrucoes Oficiais NOVA-ERP]]", "[[Fiscalidade Cabo Verde]]", "[[Contabilidade ERP]]", "[[Inventario ERP]]", "docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf", "docs/docsfiscal/SV_Documentacao_Fiscalidade_ERP_Cegid_Primavera.pdf"]
 related: ["[[Fiscalidade Cabo Verde]]", "[[NOVA-ERP]]", "[[Contabilidade ERP]]", "[[Inventario ERP]]", "[[Faturacao Eletronica]]", "[[Compras e Vendas ERP]]", "[[Supabase Deployment]]", "[[Permissoes e Auditoria ERP]]", "[[IA Assistente ERP]]"]
 confidence: medium
 ---
@@ -35,9 +35,23 @@ Source: [[2026-05-26 - SSD NOVA-ERP]], [[2026-05-26 - Prompt Implementacao NOVA-
 - Accounting/inventory dependencies: [[Contabilidade ERP]], [[Inventario ERP]]
 - ERP workflow reference: `docs/docsfiscal/Fiscalidade_ERP_Cegid_Primavera.pdf`, `docs/docsfiscal/SV_Documentacao_Fiscalidade_ERP_Cegid_Primavera.pdf`
 
+## Official Schema (Ingested)
+
+The official DNRE schema is ingested: **SAF-T (CV) XSD v1.01_01** (namespace `urn:OECD:StandardAuditFile-Tax:CV_1.01_01`, author DNRE, modified 2020-05-29), preserved at `raw/assets/saft-cv/saftcv1.01_01.xsd`. Full structure and legal basis in [[2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis]]. Authoritative shape:
+
+- `AuditFile` = **Header**, **MasterFiles**, **GeneralLedgerEntries?**, **SourceDocuments?**.
+- **One schema, four content types** selected by `Header.FileContentType` ∈ **`F` Faturação / `C` Contabilidade / `I` Inventário / `O` Outros**. There is no separate "Completo" — that product-doc term is unofficial.
+- **MasterFiles** → `GeneralLedgerAccounts` (chart), `Customer*`, `Supplier*` (both from unified `entities`), `Product*` (items), `TaxTable` (tax rates/maps).
+- **SourceDocuments** → `WorkingDocuments` (commercial docs), `Payments` (treasury), `PhysicalStock` (inventory).
+- **Header carries software certification** (`SoftwareCertificateNumber`, `ProductCompanyTaxID`, `ProductID`, `ProductVersion`) and **multi-part splitting** (`NumberOfParts`/`PartNumber`).
+- Legal basis **confirmed against Boletim Oficial**: **Portaria nº 47/2021, de 7 de outubro** ([[2021-10-07 - Portaria 47-2021 Estrutura SAF-T CV]]) defines the data structure (Anexo I) + taxonomies (Anexo II) under IRPC art. 107.º nº6; **in force 1 Jan 2022** for exercises 2022+; obligated = organized-accounting IRPC subjects + Category B organized (exempt if turnover ≤ 5.000.000$). e-Fatura under **DL 79/2020** + Portarias 62/2020, 74/2020, 16/2022, Despacho 43/2022.
+- **Taxonomy resolved:** account codes reference the **SNCRF Base / NIC taxonomies in Anexo II** of Portaria 47/2021 (`chart_of_accounts.taxonomy_code`); the XSD v1.01_01 and the portaria's Anexo I are the **same structure** — see the now-resolved [[Contradiction - SAF-T CV Schema Version vs Portaria 47-2021 Taxonomy]].
+- **Field-by-field mapping** to NOVA-ERP tables and the capture-at-transaction-time checklist: [[2026-05-30 - SAF-T CV Field Map to NOVA-ERP Schema]].
+- **Code lists / seed values** (all 14 enumerations): [[SAF-T CV Code Lists]].
+
 ## Design Gates Before Implementation
 
-- Official schema gate: obtain and ingest the current official SAF-T CV schema/XSD/specification before production export claims.
+- Official schema gate: **met** for structure (v1.01_01 ingested); still confirm version currency for the accounting taxonomy before production export claims.
 - Scope gate: decide first-release scope across SAF-T Faturacao, SAF-T Contabilidade, SAF-T Inventario, SAF-T Completo and any "Outros" categories.
 - Source-data gate: define which source tables/records become export authority for each file type.
 - Accounting gate: do not finalize accounting SAF-T until chart, periods, journal entries, postings and reversals are implementation-grade.
@@ -49,17 +63,9 @@ Source: [[2026-05-26 - SSD NOVA-ERP]], [[2026-05-26 - Prompt Implementacao NOVA-
 
 ## SAF-T Export Types
 
-Current product sources reference the following export territory:
+**Resolved by the official schema:** SAF-T (CV) v1.01_01 defines a single `FileContentType` enumeration with **four values — `F` Faturação, `C` Contabilidade, `I` Inventário, `O` Outros**. The product-doc "SAF-T **Completo**" is not an official type; treat any "completo" request as the combination of F/C/I blocks within one `AuditFile`, not a fifth code. NOVA-ERP's `saft_export_jobs.type` should map to F/C/I/O.
 
-- SAF-T Faturacao;
-- SAF-T Contabilidade;
-- SAF-T Inventario;
-- SAF-T Completo;
-- SAF-T Outros.
-
-The official instructions mention three obligatory types: Faturacao, Contabilidade and Inventario. The SSD additionally names Completo and Outros. This page should preserve both until current official SAF-T CV source material resolves exact production categories.
-
-Source: [[2026-05-26 - Instrucoes Oficiais NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
+Source: [[2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis]], [[2026-05-26 - Instrucoes Oficiais NOVA-ERP]], [[2026-05-26 - SSD NOVA-ERP]]
 
 ## Core Workflows
 
@@ -250,9 +256,9 @@ For the first sellable release, SAF-T is acceptable only if its scope is explici
 
 ## Open Questions
 
-- What is the current official SAF-T CV schema/XSD version?
-- Which SAF-T types are mandatory in production: Faturacao, Contabilidade, Inventario, Completo, Outros?
-- Which fields must be captured at transaction time to avoid impossible exports later?
+- Resolved: official schema is **v1.01_01** (DNRE, 2020-05-29); types are **F/C/I/O** (no "Completo"). Remaining: is v1.01_01 current for the **Contabilidade** file, or did Portaria 47/2021 publish a newer SNCRF taxonomy version? ([[Contradiction - SAF-T CV Schema Version vs Portaria 47-2021 Taxonomy]])
+- Which fields must be captured at transaction time to avoid impossible exports later? (Now answerable element-by-element from `raw/assets/saft-cv/saftcv1.01_01.xsd`.)
+- Exact `FileContentType` business rules: which blocks are mandatory per F/C/I/O?
 - Should base SAF-T ship before full accounting, or only as "SAF-T-ready" job/data structure?
 - Which validation errors are blocking versus warning?
 - Where should generated XML files live: Supabase Storage, external object storage or database-backed artifact storage?
@@ -260,7 +266,7 @@ For the first sellable release, SAF-T is acceptable only if its scope is explici
 
 ## Next Ingestion Targets
 
-- Current official SAF-T CV schema/XSD/specification.
-- Cegid Primavera fiscalidade materials for workflow reference only.
-- Accounting legal/source material for Cabo Verde chart/reporting requirements.
-- Inventory SAF-T field requirements and valuation implications.
+- ~~Current official SAF-T CV schema/XSD~~ — **ingested** ([[2026-05-30 - SAF-T CV Official XSD v1.01_01 and Legal Basis]]; `raw/assets/saft-cv/saftcv1.01_01.xsd`).
+- **Element-by-element field map** of `Customer`/`Supplier`/`Product`/`WorkDocument`/`GeneralLedgerEntries`/`PhysicalStock` from the saved XSD → NOVA-ERP columns, when SAF-T implementation starts.
+- **Portaria 47/2021** full text (Boletim Oficial) + the SNCRF Contabilidade **taxonomy** and confirm the current accounting-SAF-T version.
+- DNRE FAQ Q&A (HTML at efatura.cv/docs/faqs or OCR of the slide PDF): deadlines, penalties, submission channel.
